@@ -18,7 +18,7 @@ class ContactGroupStore {
       return [];
     }
     final prefs = PrefsManager.instance;
-    String? jsonString = prefs.getString(_keyPrefix);
+    String? jsonString = prefs.getString(keyFor);
     if (jsonString == null || jsonString.isEmpty) {
       // Attempt migration from legacy unscoped key on first load
       final legacyJsonString = prefs.getString(_keyPrefix);
@@ -30,9 +30,6 @@ class ContactGroupStore {
         await prefs.setString(keyFor, legacyJsonString);
         jsonString = legacyJsonString;
       }
-    }
-    if (jsonString == null || jsonString.isEmpty) {
-      jsonString = prefs.getString(keyFor);
     }
     if (jsonString == null || jsonString.isEmpty) {
       return [];
