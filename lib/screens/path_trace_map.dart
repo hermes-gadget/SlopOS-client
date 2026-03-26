@@ -283,9 +283,7 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
       if (widget.pathContacts != null) {
         pathContacts = {for (var c in widget.pathContacts!) c.publicKey[0]: c};
       } else {
-        final contacts = connector.allContactsUnfiltered
-            .map((c) => connector.getFromDiscovered(c))
-            .toList();
+        final contacts = connector.allContactsUnfiltered;
         contacts.where((c) => c.type != advTypeChat).forEach((repeater) {
           if (lastContact.latitude != null &&
               lastContact.longitude != null &&

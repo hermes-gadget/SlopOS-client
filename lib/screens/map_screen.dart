@@ -139,9 +139,7 @@ class _MapScreenState extends State<MapScreen> {
       builder: (context, connector, settingsService, pathHistory, child) {
         final tileCache = context.read<MapTileCacheService>();
         final settings = settingsService.settings;
-        final allContacts = connector.allContacts
-            .map((c) => connector.getFromDiscovered(c))
-            .toList();
+        final allContacts = connector.allContacts;
 
         final contacts = settings.mapShowDiscoveryContacts
             ? allContacts
@@ -491,10 +489,11 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                             ),
                           ),
-                        ..._buildGuessedMarker(
-                          guessedLocations,
-                          showLabels: _showNodeLabels,
-                        ),
+                        if (!settings.mapShowOverlaps)
+                          ..._buildGuessedMarker(
+                            guessedLocations,
+                            showLabels: _showNodeLabels,
+                          ),
                         ..._buildMarkers(
                           contactsWithLocation,
                           settings,
@@ -881,21 +880,27 @@ class _MapScreenState extends State<MapScreen> {
         addContact = true;
       }
 
-      final hasOverlap = contacts
-          .where(
-            (c) =>
-                c.publicKeyHex != contact.publicKeyHex &&
-                c.publicKey.first == contact.publicKey.first &&
-                (c.type == advTypeRepeater || c.type == advTypeRoom) &&
-                (contact.type == advTypeRepeater ||
-                    contact.type == advTypeRoom),
-          )
-          .firstOrNull;
-
-      if (hasOverlap == null &&
-          settings.mapShowOverlaps &&
-          !_isBuildingPathTrace) {
+      if (contact.type == advTypeChat && _isBuildingPathTrace) {
         addContact = false;
+      }
+
+      if (settings.mapShowOverlaps) {
+        final hasOverlap = contacts
+            .where(
+              (c) =>
+                  c.publicKeyHex != contact.publicKeyHex &&
+                  c.publicKey.first == contact.publicKey.first &&
+                  (c.type == advTypeRepeater || c.type == advTypeRoom) &&
+                  (contact.type == advTypeRepeater ||
+                      contact.type == advTypeRoom),
+            )
+            .firstOrNull;
+
+        if (hasOverlap == null &&
+            settings.mapShowOverlaps &&
+            !_isBuildingPathTrace) {
+          addContact = false;
+        }
       }
 
       if (addContact) {

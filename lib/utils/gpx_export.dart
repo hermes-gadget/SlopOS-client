@@ -58,10 +58,9 @@ class GpxExport {
   }
 
   void addRepeaters() {
-    final contacts = _connector.allContacts
-        .where((c) => c.type == advTypeRepeater || c.type == advTypeRoom)
-        .map((c) => _connector.getFromDiscovered(c))
-        .toList();
+    final contacts = _connector.allContacts.where(
+      (c) => c.type == advTypeRepeater || c.type == advTypeRoom,
+    );
     for (var contact in contacts) {
       if (contact.latitude == null || contact.longitude == null) {
         continue;
@@ -80,10 +79,7 @@ class GpxExport {
   }
 
   void addContacts() {
-    final contacts = _connector.allContacts
-        .where((c) => c.type == advTypeChat)
-        .map((c) => _connector.getFromDiscovered(c))
-        .toList();
+    final contacts = _connector.allContacts.where((c) => c.type == advTypeChat);
     for (var contact in contacts) {
       if (contact.latitude == null || contact.longitude == null) {
         continue;
@@ -102,9 +98,7 @@ class GpxExport {
   }
 
   void addAll() {
-    final contacts = _connector.allContacts
-        .map((c) => _connector.getFromDiscovered(c))
-        .toList();
+    final contacts = _connector.allContacts;
     for (var contact in contacts) {
       if (contact.latitude == null || contact.longitude == null) {
         continue;
