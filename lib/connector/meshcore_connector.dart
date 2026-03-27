@@ -2252,7 +2252,6 @@ class MeshCoreConnector extends ChangeNotifier {
   void setPollingInterval(int i) {
     _pollingInterval = i.clamp(1, 60);
     if (isConnected) {
-      _radioStatsPollRefCount = 0;
       _startRadioStatsPolling();
     }
   }
