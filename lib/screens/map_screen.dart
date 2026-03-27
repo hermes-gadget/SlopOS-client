@@ -2165,9 +2165,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void _removePath() {
     setState(() {
-      _pathTraceContacts.remove(
-        _pathTrace.last,
-      ); // Remove last contact from path trace
+      _pathTraceContacts.removeLast();
       _pathTrace.removeLast(); // Remove last node from path trace
       _points.removeLast(); // Remove last point from points list
       _polylines.clear(); // Clear polylines
