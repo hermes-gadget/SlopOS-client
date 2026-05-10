@@ -1123,6 +1123,9 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
 
   Widget _buildMessageComposer() {
     final connector = context.watch<MeshCoreConnector>();
+    if (!connector.isConnected) {
+      return const SizedBox.shrink();
+    }
     final maxBytes = maxChannelMessageBytes(connector.selfName);
     final settings = context.watch<AppSettingsService>().settings;
     return Column(
@@ -1274,6 +1277,9 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
   }
 
   Future<void> _sendMessage() async {
+    final connector = context.read<MeshCoreConnector>();
+    if (!connector.isConnected) return;
+
     final text = _textController.text.trim();
     if (text.isEmpty) return;
 
@@ -1288,7 +1294,6 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
     }
     _lastChannelSendAt = now;
 
-    final connector = context.read<MeshCoreConnector>();
     final settings = context.read<AppSettingsService>().settings;
     final translationService = context.read<TranslationService>();
 
