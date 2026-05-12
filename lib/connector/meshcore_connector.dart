@@ -999,7 +999,9 @@ class MeshCoreConnector extends ChangeNotifier {
     _conversations.clear();
     _loadedConversationKeys.clear();
     _channelMessages.clear();
+    _channels.clear();
     _cachedChannels.clear();
+    _previousChannelsCache.clear();
     _knownContactKeys.clear();
     _contactUnreadCount.clear();
     _unreadStateLoaded = false;
