@@ -1022,6 +1022,7 @@ class MeshCoreConnector extends ChangeNotifier {
     await restoreLastCompanionScope();
     await loadContactCache();
     await _loadDiscoveredContactCache();
+    notifyListeners();
   }
 
   Future<void> _loadDiscoveredContactCache() async {
