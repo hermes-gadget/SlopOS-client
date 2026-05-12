@@ -377,7 +377,7 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                   final reversedMessages = messages.reversed.toList();
                   final itemCount =
                       reversedMessages.length + (_isLoadingOlder ? 1 : 0);
-                    final keyedMessageIds = <String>{};
+                  final keyedMessageIds = <String>{};
 
                   // Auto-scroll to bottom if user is already at bottom
                   WidgetsBinding.instance.addPostFrameCallback((_) {
