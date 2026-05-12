@@ -977,6 +977,7 @@ class MeshCoreConnector extends ChangeNotifier {
         lastCompanionPublicKeyHex.trim().isEmpty) {
       return;
     }
+    _selfPublicKey = hexToPubKey(lastCompanionPublicKeyHex);
     _setScopedStorePublicKey(lastCompanionPublicKeyHex);
   }
 
