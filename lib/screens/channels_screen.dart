@@ -394,7 +394,7 @@ class _ChannelsScreenState extends State<ChannelsScreen> {
     }
 
     return Card(
-      key: ValueKey('channel_${channel.index}'),
+      key: ValueKey('${channel.index}_${channel.pskHex}_${channel.name}'),
       margin: const EdgeInsets.only(bottom: 12),
       child: GestureDetector(
         onSecondaryTapUp: PlatformInfo.isDesktop

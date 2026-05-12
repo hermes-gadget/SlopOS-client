@@ -827,6 +827,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
                         contact,
                       );
                       return _ContactTile(
+                        key: ValueKey(contact.publicKeyHex),
                         contact: contact,
                         lastSeen: _resolveLastSeen(contact),
                         unreadCount: unreadCount,
@@ -1495,6 +1496,7 @@ class _ContactTile extends StatelessWidget {
   final VoidCallback onLongPress;
 
   const _ContactTile({
+    super.key,
     required this.contact,
     required this.lastSeen,
     required this.unreadCount,

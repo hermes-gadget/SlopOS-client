@@ -451,6 +451,7 @@ class _ChatScreenState extends State<ChatScreen> {
   ) {
     // Reverse messages so newest appear at bottom with reverse: true
     final reversedMessages = messages.reversed.toList();
+    var unreadAnchorKeyAssigned = false;
     final itemCount = reversedMessages.length + (_isLoadingOlder ? 1 : 0);
 
     // Auto-scroll to bottom if user is already at bottom
@@ -525,7 +526,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       children: [const UnreadDivider(), bubble],
                     )
                   : bubble;
-              if (identical(message, _pendingUnreadScrollTarget)) {
+              final shouldAttachUnreadScrollKey =
+                  !unreadAnchorKeyAssigned &&
+                  identical(message, _pendingUnreadScrollTarget);
+              if (shouldAttachUnreadScrollKey) {
+                unreadAnchorKeyAssigned = true;
                 return KeyedSubtree(key: _unreadScrollKey, child: child);
               }
               return child;
