@@ -5151,7 +5151,8 @@ class MeshCoreConnector extends ChangeNotifier {
         _channelSyncRetries = 0; // Reset retry counter on success
 
         // Only add non-empty channels
-        if (!channel.isEmpty) {
+        if (!channel.isEmpty &&
+            _channels.any((c) => c.pskHex != channel.pskHex)) {
           _channels.add(channel);
         }
 
