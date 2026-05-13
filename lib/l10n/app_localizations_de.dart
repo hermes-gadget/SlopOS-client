@@ -1978,6 +1978,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sind Sie sicher, dass Sie sich von diesem Gerät trennen möchten?';
 
   @override
+  String get dialog_disconnectedTitle => 'Getrennt';
+
+  @override
+  String get dialog_disconnectedMessage =>
+      'Du wurdest von deinem Begleiter getrennt.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Verbinden Sie sich mit einem Companion, um auf die Funktionen des Repeaters und des Raumservers zuzugreifen.';
+
+  @override
   String get login_repeaterLogin => 'Beim Repeater anmelden';
 
   @override
@@ -4305,8 +4316,4 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Verbinden Sie sich mit einem Companion, um auf die Funktionen des Repeaters und des Raumservers zuzugreifen.';
 }

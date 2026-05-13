@@ -2312,5 +2312,8 @@
   "chat_newMessages": "Nya meddelanden",
   "settings_companionDebugLogSubtitle": "BLE/TCP/USB-kommandon, svar och rådata",
   "repeater_chanUtil": "Användning av kanal",
-  "contact_connectCompanion": "Anslut till en sällskapstjänst för att komma åt upprepning och rumsserverfunktioner."
+  "dialog_connectCompanion": "Anslut till en sällskapstjänst för att komma åt upprepning och rumsserverfunktioner.",
+  "dialog_disconnectedTitle": "Ansluten ej",
+  "dialog_disconnectedMessage": "Du har kopplats från din companion.",
+  "contact_connectCompanion": "Anslut till en companion för att få tillgång till repeater- och rumsserverfunktioner."
 }

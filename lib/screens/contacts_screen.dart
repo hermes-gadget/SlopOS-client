@@ -313,63 +313,64 @@ class _ContactsScreenState extends State<ContactsScreen> {
           title: AppBarTitle(context.l10n.contacts_title),
           automaticallyImplyLeading: false,
           actions: [
-            PopupMenuButton(
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Row(
-                    children: [
-                      const Icon(Icons.connect_without_contact),
-                      const SizedBox(width: 8),
-                      Text(context.l10n.contacts_zeroHopAdvert),
-                    ],
-                  ),
-                  onTap: () => {
-                    connector.sendSelfAdvert(flood: false),
-                    showDismissibleSnackBar(
-                      context,
-                      content: Text(context.l10n.settings_advertisementSent),
+            if (connector.isConnected)
+              PopupMenuButton(
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        const Icon(Icons.connect_without_contact),
+                        const SizedBox(width: 8),
+                        Text(context.l10n.contacts_zeroHopAdvert),
+                      ],
                     ),
-                  },
-                ),
-                PopupMenuItem(
-                  child: Row(
-                    children: [
-                      const Icon(Icons.cell_tower),
-                      const SizedBox(width: 8),
-                      Text(context.l10n.contacts_floodAdvert),
-                    ],
+                    onTap: () => {
+                      connector.sendSelfAdvert(flood: false),
+                      showDismissibleSnackBar(
+                        context,
+                        content: Text(context.l10n.settings_advertisementSent),
+                      ),
+                    },
                   ),
-                  onTap: () => {
-                    connector.sendSelfAdvert(flood: true),
-                    showDismissibleSnackBar(
-                      context,
-                      content: Text(context.l10n.settings_advertisementSent),
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        const Icon(Icons.cell_tower),
+                        const SizedBox(width: 8),
+                        Text(context.l10n.contacts_floodAdvert),
+                      ],
                     ),
-                  },
-                ),
-                PopupMenuItem(
-                  child: Row(
-                    children: [
-                      const Icon(Icons.copy),
-                      const SizedBox(width: 8),
-                      Text(context.l10n.contacts_copyAdvertToClipboard),
-                    ],
+                    onTap: () => {
+                      connector.sendSelfAdvert(flood: true),
+                      showDismissibleSnackBar(
+                        context,
+                        content: Text(context.l10n.settings_advertisementSent),
+                      ),
+                    },
                   ),
-                  onTap: () => _contactExport(Uint8List.fromList([])),
-                ),
-                PopupMenuItem(
-                  child: Row(
-                    children: [
-                      const Icon(Icons.paste),
-                      const SizedBox(width: 8),
-                      Text(context.l10n.contacts_addContactFromClipboard),
-                    ],
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        const Icon(Icons.copy),
+                        const SizedBox(width: 8),
+                        Text(context.l10n.contacts_copyAdvertToClipboard),
+                      ],
+                    ),
+                    onTap: () => _contactExport(Uint8List.fromList([])),
                   ),
-                  onTap: () => _contactImport(),
-                ),
-              ],
-              icon: const Icon(Icons.connect_without_contact),
-            ),
+                  PopupMenuItem(
+                    child: Row(
+                      children: [
+                        const Icon(Icons.paste),
+                        const SizedBox(width: 8),
+                        Text(context.l10n.contacts_addContactFromClipboard),
+                      ],
+                    ),
+                    onTap: () => _contactImport(),
+                  ),
+                ],
+                icon: const Icon(Icons.connect_without_contact),
+              ),
             PopupMenuButton(
               itemBuilder: (context) => [
                 if (connector.isConnected)
@@ -1048,7 +1049,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(context.l10n.scanner_notConnected),
-        content: Text(context.l10n.contact_connectCompanion),
+        content: Text(context.l10n.dialog_connectCompanion),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),

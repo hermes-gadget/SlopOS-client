@@ -1939,6 +1939,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to disconnect from this device?';
 
   @override
+  String get dialog_disconnectedTitle => 'Disconnected';
+
+  @override
+  String get dialog_disconnectedMessage =>
+      'You have been disconnected from your companion.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Connect to a companion to access repeater and room server features.';
+
+  @override
   String get login_repeaterLogin => 'Repeater Login';
 
   @override
@@ -4210,8 +4221,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Connect to a companion to access repeater and room server features.';
 }

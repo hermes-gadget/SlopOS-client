@@ -1962,6 +1962,17 @@ class AppLocalizationsSl extends AppLocalizations {
       'Ste prepričani, da želite se odklopiti s tega naprave?';
 
   @override
+  String get dialog_disconnectedTitle => 'Prekinjeno';
+
+  @override
+  String get dialog_disconnectedMessage =>
+      'Prekinjena povezava s vašim spre伴ovalcem.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Povežite se s spremljevalnikom za dostop do funkcij ponavljalnika in strežnika sob.';
+
+  @override
   String get login_repeaterLogin => 'Ponovni vnos';
 
   @override
@@ -4267,8 +4278,4 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Povežite se s spremljevalnikom za dostop do funkcij ponavljalnika in strežnika sob.';
 }

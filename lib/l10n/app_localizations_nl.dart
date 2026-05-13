@@ -1964,6 +1964,17 @@ class AppLocalizationsNl extends AppLocalizations {
       'Ben je er zeker van dat je verbinding met dit apparaat wilt verbreken?';
 
   @override
+  String get dialog_disconnectedTitle => 'Verbroken';
+
+  @override
+  String get dialog_disconnectedMessage =>
+      'Je bent verbonden met je companion.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Maak verbinding met een companion om repeater- en kamerserverfuncties te gebruiken.';
+
+  @override
   String get login_repeaterLogin => 'Inloggen Repeater';
 
   @override
@@ -4273,8 +4284,4 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Maak verbinding met een companion om repeater- en kamerserverfuncties te gebruiken.';
 }

@@ -1975,6 +1975,17 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Está seguro de que desea desconectarse de este dispositivo?';
 
   @override
+  String get dialog_disconnectedTitle => 'Desconectado';
+
+  @override
+  String get dialog_disconnectedMessage =>
+      'Te has desconectado de tu compañero.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Conéctate a un compañero para acceder a las funciones de repetidor y servidor de sala.';
+
+  @override
   String get login_repeaterLogin => 'Iniciar sesión en el Repetidor';
 
   @override
@@ -4292,8 +4303,4 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Conéctate a un compañero para acceder a las funciones de repetidor y servidor de sala.';
 }

@@ -1987,6 +1987,16 @@ class AppLocalizationsHu extends AppLocalizations {
       'Biztosan szeretné kiírni ezt a készüléket?';
 
   @override
+  String get dialog_disconnectedTitle => 'Lejárat';
+
+  @override
+  String get dialog_disconnectedMessage => 'Lehentetőtől megszakadtál.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Csatlakozzon egy kísérőhöz a ismétlő és szobaszerver funkciók eléréséhez.';
+
+  @override
   String get login_repeaterLogin => 'Ismételt bejelentkezés';
 
   @override
@@ -4309,8 +4319,4 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Csatlakozzon egy kísérőhöz a ismétlő és szobaszerver funkciók eléréséhez.';
 }

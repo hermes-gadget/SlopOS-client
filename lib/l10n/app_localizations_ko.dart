@@ -1891,6 +1891,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get dialog_disconnectConfirm => '이 장치와의 연결을 해제하시겠습니까?';
 
   @override
+  String get dialog_disconnectedTitle => '연결 끊김';
+
+  @override
+  String get dialog_disconnectedMessage => '컴패니언과의 연결이 끊어졌습니다.';
+
+  @override
+  String get dialog_connectCompanion => '리피터 및 룸 서버 기능에 액세스하려면 컴패니언에 연결하세요.';
+
+  @override
   String get login_repeaterLogin => '다시 로그인';
 
   @override
@@ -4064,7 +4073,4 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion => '리피터 및 룸 서버 기능에 액세스하려면 컴패니언에 연결하세요.';
 }

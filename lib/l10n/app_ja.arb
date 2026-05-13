@@ -2350,5 +2350,8 @@
   "chat_newMessages": "新しいメッセージ",
   "chat_markAsUnread": "未読としてマークする",
   "repeater_chanUtil": "チャンネルの利用状況",
-  "contact_connectCompanion": "コネクトしてリピーターとルームサーバー機能にアクセス"
+  "dialog_connectCompanion": "コネクトしてリピーターとルームサーバー機能にアクセス",
+  "dialog_disconnectedTitle": "切断済み",
+  "dialog_disconnectedMessage": "コンパニオンとの接続が切れました。",
+  "contact_connectCompanion": "リピーターおよびルームサーバー機能にアクセスするには、コンパニオンに接続してください。"
 }

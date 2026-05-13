@@ -416,7 +416,7 @@ class _MapScreenState extends State<MapScreen> {
               centerTitle: true,
               automaticallyImplyLeading: false,
               actions: [
-                if (!_isBuildingPathTrace)
+                if (!_isBuildingPathTrace && connector.isConnected)
                   IconButton(
                     icon: const Icon(Icons.radar),
                     onPressed: () => _startPath(
@@ -1500,7 +1500,28 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void _showCompanionRequiredDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.l10n.scanner_notConnected),
+        content: Text(context.l10n.dialog_connectCompanion),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(context.l10n.common_ok),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showRepeaterLogin(BuildContext context, Contact repeater) {
+    final connector = context.read<MeshCoreConnector>();
+    if (!connector.isConnected) {
+      _showCompanionRequiredDialog(context);
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) => RepeaterLoginDialog(
@@ -1523,6 +1544,11 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   void _showRoomLogin(BuildContext context, Contact room) {
+    final connector = context.read<MeshCoreConnector>();
+    if (!connector.isConnected) {
+      _showCompanionRequiredDialog(context);
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) => RoomLoginDialog(

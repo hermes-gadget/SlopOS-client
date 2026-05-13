@@ -1980,6 +1980,17 @@ class AppLocalizationsBg extends AppLocalizations {
       'Сигурни ли сте, че искате да се откъснете от това устройство?';
 
   @override
+  String get dialog_disconnectedTitle => 'Прекъснато';
+
+  @override
+  String get dialog_disconnectedMessage =>
+      'Свързването ви с вашия спътник е прекъснато.';
+
+  @override
+  String get dialog_connectCompanion =>
+      'Свържете се с придружител, за да получите достъп до функциите на ретранслатора и сървъра за стаи.';
+
+  @override
   String get login_repeaterLogin => 'Повторител Вход';
 
   @override
@@ -4288,8 +4299,4 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get contact_typeUnknown => 'Unknown';
-
-  @override
-  String get contact_connectCompanion =>
-      'Свържете се с придружител, за да получите достъп до функциите на ретранслатора и сървъра за стаи.';
 }
