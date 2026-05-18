@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'screens/chrome_required_screen.dart';
 import 'utils/platform_info.dart';
+import 'theme/slopos_theme.dart';
 
 import 'connector/meshcore_connector.dart';
 import 'screens/scanner_screen.dart';
@@ -90,7 +91,7 @@ void main() async {
   await connector.loadUnreadState();
 
   runApp(
-    MeshCoreApp(
+    SlopOSApp(
       connector: connector,
       retryService: retryService,
       pathHistoryService: pathHistoryService,
@@ -128,7 +129,7 @@ https://creativecommons.org/licenses/by/4.0/
   });
 }
 
-class MeshCoreApp extends StatelessWidget {
+class SlopOSApp extends StatelessWidget {
   final MeshCoreConnector connector;
   final MessageRetryService retryService;
   final PathHistoryService pathHistoryService;
@@ -142,7 +143,7 @@ class MeshCoreApp extends StatelessWidget {
   final UiViewStateService uiViewStateService;
   final TimeoutPredictionService timeoutPredictionService;
 
-  const MeshCoreApp({
+  const SlopOSApp({
     super.key,
     required this.connector,
     required this.retryService,
@@ -178,7 +179,7 @@ class MeshCoreApp extends StatelessWidget {
       child: Consumer<AppSettingsService>(
         builder: (context, settingsService, child) {
           return MaterialApp(
-            title: 'MeshCore Open',
+            title: 'SlopOS',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: const [
               AppLocalizations.delegate,
@@ -190,23 +191,8 @@ class MeshCoreApp extends StatelessWidget {
             locale: _localeFromSetting(
               settingsService.settings.languageOverride,
             ),
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-              useMaterial3: true,
-              snackBarTheme: const SnackBarThemeData(
-                behavior: SnackBarBehavior.floating,
-              ),
-            ),
-            darkTheme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.blue,
-                brightness: Brightness.dark,
-              ),
-              useMaterial3: true,
-              snackBarTheme: const SnackBarThemeData(
-                behavior: SnackBarBehavior.floating,
-              ),
-            ),
+            theme: SlopOSTheme.light(),
+            darkTheme: SlopOSTheme.dark(),
             themeMode: _themeModeFromSetting(
               settingsService.settings.themeMode,
             ),

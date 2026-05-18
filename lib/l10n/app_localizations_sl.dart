@@ -9,7 +9,7 @@ class AppLocalizationsSl extends AppLocalizations {
   AppLocalizationsSl([String locale = 'sl']) : super(locale);
 
   @override
-  String get appTitle => 'MeshCore Open';
+  String get appTitle => 'SlopOS';
 
   @override
   String get nav_contacts => 'Stiki';
@@ -3951,11 +3951,11 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get settings_gpxExportShareText =>
-      'Podatki kart izvoženi iz meshcore-open';
+      'Podatki kart izvoženi iz slopos-client';
 
   @override
   String get settings_gpxExportShareSubject =>
-      'meshcore-open izvoz podatkov GPX karte';
+      'slopos-client izvoz podatkov GPX karte';
 
   @override
   String get snrIndicator_nearByRepeaters => 'Bližnji ponovitelji';

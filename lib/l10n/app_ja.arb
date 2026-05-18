@@ -1,6 +1,6 @@
 {
   "@@locale": "ja",
-  "appTitle": "MeshCore Open",
+  "appTitle": "SlopOS",
   "nav_contacts": "連絡先",
   "nav_channels": "チャンネル",
   "nav_map": "地図",
@@ -46,7 +46,7 @@
       }
     }
   },
-  "scanner_title": "MeshCore オープン",
+  "scanner_title": "SlopOS",
   "connectionChoiceUsbLabel": "USB",
   "connectionChoiceBluetoothLabel": "ブルートゥース",
   "connectionChoiceTcpLabel": "TCP (Transmission Control Protocol)",
@@ -186,7 +186,7 @@
   "settings_appDebugLog": "アプリケーションのデバッグログ",
   "settings_appDebugLogSubtitle": "アプリケーションのデバッグメッセージ",
   "settings_about": "概要",
-  "settings_aboutVersion": "MeshCore Open {version}版",
+  "settings_aboutVersion": "SlopOS {version}版",
   "@settings_aboutVersion": {
     "placeholders": {
       "version": {
@@ -2011,8 +2011,8 @@
   "settings_gpxExportRepeatersRoom": "中継装置およびルームサーバーの設置場所",
   "settings_gpxExportChat": "関連施設",
   "settings_gpxExportAllContacts": "すべての連絡先場所",
-  "settings_gpxExportShareText": "meshcore-openからエクスポートされた地図データ",
-  "settings_gpxExportShareSubject": "meshcore-open GPX形式の地図データのエクスポート",
+  "settings_gpxExportShareText": "slopos-clientからエクスポートされた地図データ",
+  "settings_gpxExportShareSubject": "slopos-client GPX形式の地図データのエクスポート",
   "snrIndicator_nearByRepeaters": "近くの電波中継局",
   "snrIndicator_lastSeen": "最後に確認された場所",
   "contactsSettings_title": "連絡先設定",

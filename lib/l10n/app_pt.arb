@@ -8,7 +8,7 @@
     }
   },
   "@@locale": "pt",
-  "appTitle": "MeshCore Open",
+  "appTitle": "SlopOS",
   "nav_contacts": "Contactos",
   "nav_channels": "Canais",
   "nav_map": "Mapa",
@@ -123,7 +123,7 @@
   "settings_appDebugLog": "Log de Depuração do Aplicativo",
   "settings_appDebugLogSubtitle": "Mensagens de depuração do aplicativo",
   "settings_about": "Sobre",
-  "settings_aboutVersion": "MeshCore Open v{version}",
+  "settings_aboutVersion": "SlopOS v{version}",
   "@settings_aboutVersion": {
     "placeholders": {
       "version": {
@@ -1684,8 +1684,8 @@
   "settings_gpxExportChat": "Localizações de companheiros",
   "settings_gpxExportNoContacts": "Nenhum contato para exportar.",
   "settings_gpxExportAllContacts": "Todos os locais de contatos",
-  "settings_gpxExportShareText": "Dados do mapa exportados do meshcore-open",
-  "settings_gpxExportShareSubject": "meshcore-open exportação de dados de mapa GPX",
+  "settings_gpxExportShareText": "Dados do mapa exportados do slopos-client",
+  "settings_gpxExportShareSubject": "slopos-client exportação de dados de mapa GPX",
   "pathTrace_someHopsNoLocation": "Um ou mais dos lúpulos estão sem localização!",
   "map_runTrace": "Executar Traçado de Caminho",
   "map_pathTraceCancelled": "Rastreamento de caminho cancelado.",

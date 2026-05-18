@@ -5,15 +5,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:meshcore_open/connector/meshcore_connector.dart';
-import 'package:meshcore_open/connector/meshcore_protocol.dart';
-import 'package:meshcore_open/l10n/l10n.dart';
-import 'package:meshcore_open/models/app_settings.dart';
-import 'package:meshcore_open/models/contact.dart';
-import 'package:meshcore_open/services/app_settings_service.dart';
-import 'package:meshcore_open/services/map_tile_cache_service.dart';
-import 'package:meshcore_open/utils/app_logger.dart';
-import 'package:meshcore_open/widgets/snr_indicator.dart';
+import 'package:slopos_client/connector/meshcore_connector.dart';
+import 'package:slopos_client/connector/meshcore_protocol.dart';
+import 'package:slopos_client/l10n/l10n.dart';
+import 'package:slopos_client/models/app_settings.dart';
+import 'package:slopos_client/models/contact.dart';
+import 'package:slopos_client/services/app_settings_service.dart';
+import 'package:slopos_client/services/map_tile_cache_service.dart';
+import 'package:slopos_client/utils/app_logger.dart';
+import 'package:slopos_client/widgets/snr_indicator.dart';
 import 'package:provider/provider.dart';
 
 double getPathDistanceMeters(List<LatLng> points) {

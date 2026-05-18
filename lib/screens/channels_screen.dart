@@ -3,9 +3,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:meshcore_open/storage/channel_message_store.dart';
-import 'package:meshcore_open/utils/platform_info.dart';
-import 'package:meshcore_open/widgets/app_bar.dart';
+import 'package:slopos_client/storage/channel_message_store.dart';
+import 'package:slopos_client/utils/platform_info.dart';
+import 'package:slopos_client/widgets/app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 

@@ -1,5 +1,5 @@
-name: meshcore_open
-description: "A new Flutter project."
+name: slopos_client
+description: "SlopOS — Cross-platform Flutter client for MeshCore LoRa mesh networking"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -116,6 +116,8 @@ flutter_launcher_icons:
   ios: true
   image_path: "mesh-icon.png"
   remove_alpha_ios: true
+  adaptive_icon_background: "#0F0F0F"
+  adaptive_icon_foreground: "mesh-icon.png"
 
   # To add assets to your application, add an assets section, like this:
   # assets:

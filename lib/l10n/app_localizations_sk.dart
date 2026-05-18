@@ -9,7 +9,7 @@ class AppLocalizationsSk extends AppLocalizations {
   AppLocalizationsSk([String locale = 'sk']) : super(locale);
 
   @override
-  String get appTitle => 'MeshCore Open';
+  String get appTitle => 'SlopOS';
 
   @override
   String get nav_contacts => 'Kontakty';
@@ -512,7 +512,7 @@ class AppLocalizationsSk extends AppLocalizations {
   }
 
   @override
-  String get settings_aboutLegalese => 'MeshCore Open Source Projekt 2024';
+  String get settings_aboutLegalese => 'SlopOS Source Projekt 2024';
 
   @override
   String get settings_aboutDescription =>
@@ -3954,11 +3954,11 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get settings_gpxExportShareText =>
-      'Mapové údaje exportované z meshcore-open';
+      'Mapové údaje exportované z slopos-client';
 
   @override
   String get settings_gpxExportShareSubject =>
-      'meshcore-open export dát GPX mapových údajov';
+      'slopos-client export dát GPX mapových údajov';
 
   @override
   String get snrIndicator_nearByRepeaters => 'Miestne opakovače';

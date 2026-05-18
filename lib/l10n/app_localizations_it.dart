@@ -9,7 +9,7 @@ class AppLocalizationsIt extends AppLocalizations {
   AppLocalizationsIt([String locale = 'it']) : super(locale);
 
   @override
-  String get appTitle => 'MeshCore Open';
+  String get appTitle => 'SlopOS';
 
   @override
   String get nav_contacts => 'Contatti';
@@ -112,7 +112,7 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get scanner_title => 'MeshCore Open';
+  String get scanner_title => 'SlopOS';
 
   @override
   String get connectionChoiceUsbLabel => 'USB';
@@ -514,7 +514,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String settings_aboutVersion(String version) {
-    return 'MeshCore Open versione $version';
+    return 'SlopOS versione $version';
   }
 
   @override
@@ -3979,11 +3979,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get settings_gpxExportShareText =>
-      'Dati mappa esportati da meshcore-open';
+      'Dati mappa esportati da slopos-client';
 
   @override
   String get settings_gpxExportShareSubject =>
-      'meshcore-open esportazione dati mappa GPX';
+      'slopos-client esportazione dati mappa GPX';
 
   @override
   String get snrIndicator_nearByRepeaters => 'Ripetitori vicini';

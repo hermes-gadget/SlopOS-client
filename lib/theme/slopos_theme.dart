@@ -1,76 +1,85 @@
 import 'package:flutter/material.dart';
 
-/// MeshCore redesign palette — warm field-journal dark theme with
-/// phosphor-green signal accents. Mirrors values from the redesign spec.
-class MeshPalette {
-  MeshPalette._();
+/// SlopOS palette — deep-black Discord-inspired dark theme with
+/// cyan (#00BFFF) accents. Matches the SlopOS T-Deck firmware theme.
+class SlopOSPalette {
+  SlopOSPalette._();
 
-  // Surfaces (warm near-black, olive undertone)
-  static const bg = Color(0xFF0F1412);
-  static const bg1 = Color(0xFF161C19);
-  static const bg2 = Color(0xFF1D2521);
-  static const bg3 = Color(0xFF28322D);
-  static const bg4 = Color(0xFF34403A);
+  // Surfaces (deep blacks)
+  static const bg = Color(0xFF0F0F0F);
+  static const bg1 = Color(0xFF181818);
+  static const bg2 = Color(0xFF1E1E1E);
+  static const bg3 = Color(0xFF252525);
+  static const bg4 = Color(0xFF2E2E2E);
 
   // Lines
-  static const line = Color(0xFF232C28);
-  static const line2 = Color(0xFF34403A);
-  static const line3 = Color(0xFF48564F);
+  static const line = Color(0xFF1E1E1E);
+  static const line2 = Color(0xFF2E2E2E);
+  static const line3 = Color(0xFF40444B);
 
-  // Ink
-  static const ink = Color(0xFFEFF3E8);
-  static const ink2 = Color(0xFFBAC4B5);
-  static const ink3 = Color(0xFF7C8B82);
-  static const ink4 = Color(0xFF55635B);
+  // Ink (text)
+  static const ink = Color(0xFFF2F3F5);
+  static const ink2 = Color(0xFF949BA4);
+  static const ink3 = Color(0xFF5C6067);
+  static const ink4 = Color(0xFF40444B);
 
-  // Signal (phosphor)
-  static const signal = Color(0xFF7BEFA8);
-  static const signalDim = Color(0xFF4DC580);
-  static const signalBg = Color(0x177BEFA8); // ~9% alpha
-  static const signalLine = Color(0x427BEFA8); // ~26%
-  static const signalGlow = Color(0x597BEFA8); // ~35%
+  // Signal (cyan accent)
+  static const signal = Color(0xFF00BFFF);
+  static const signalDim = Color(0xFF0099CC);
+  static const signalBg = Color(0x1700BFFF); // ~9% alpha
+  static const signalLine = Color(0x4200BFFF); // ~26%
+  static const signalGlow = Color(0x5900BFFF); // ~35%
 
-  // Warn (ember)
-  static const warn = Color(0xFFFFA552);
+  // Warn (orange)
+  static const warn = Color(0xFFFAA61A);
   static const warnDim = Color(0xFFC27E3C);
-  static const warnBg = Color(0x1CFFA552);
-  static const warnLine = Color(0x4DFFA552);
+  static const warnBg = Color(0x1CFAA61A);
+  static const warnLine = Color(0x4DFAA61A);
 
-  // Alert (coral)
-  static const alert = Color(0xFFFF6A5C);
-  static const alertBg = Color(0x1CFF6A5C);
-  static const alertLine = Color(0x52FF6A5C);
+  // Alert (red)
+  static const alert = Color(0xFFED4245);
+  static const alertBg = Color(0x1CED4245);
+  static const alertLine = Color(0x52ED4245);
 
-  // Blue (dusk sky)
-  static const blue = Color(0xFF7FCBF5);
-  static const blueBg = Color(0x1C7FCBF5);
-  static const blueLine = Color(0x477FCBF5);
+  // Green (success)
+  static const green = Color(0xFF3BA55D);
+  static const greenBg = Color(0x1C3BA55D);
+  static const greenLine = Color(0x473BA55D);
+
+  // Blue (secondary accent)
+  static const blue = Color(0xFF5865F2);
+  static const blueBg = Color(0x1C5865F2);
+  static const blueLine = Color(0x475865F2);
 
   // Magenta
   static const magenta = Color(0xFFDE7FDB);
   static const magentaBg = Color(0x1CDE7FDB);
   static const magentaLine = Color(0x47DE7FDB);
 
-  // Me bubble (mossy)
-  static const me = Color(0xFF1E3527);
-  static const meBorder = Color(0xFF2D5039);
-  static const meInk = Color(0xFFDEF0DC);
+  // Me bubble (outgoing — cyan-tinted)
+  static const me = Color(0xFF003952);
+  static const meBorder = Color(0xFF00BFFF);
+  static const meInk = Color(0xFFF2F3F5);
 
-  // ── Light variant (used when user explicitly picks light theme)
+  // Incoming bubble
+  static const incoming = Color(0xFF3A4560);
+  static const incomingBorder = Color(0xFF4A5568);
+
+  // Light variant (used when user explicitly picks light theme)
   static const lightBg = Color(0xFFF5F3EC);
   static const lightBg1 = Color(0xFFECE9DF);
   static const lightBg2 = Color(0xFFE2DED2);
   static const lightLine = Color(0xFFCAC5B4);
-  static const lightInk = Color(0xFF0F1410);
+  static const lightInk = Color(0xFF0F0F0F);
   static const lightInk2 = Color(0xFF3D463E);
   static const lightInk3 = Color(0xFF6A756D);
-  static const lightSignal = Color(0xFF1A7A44);
+  static const lightSignal = Color(0xFF0088CC);
 }
 
 /// Named font stacks — Flutter falls back to system fonts when the named
 /// family isn't installed, keeping things working without bundled assets.
-class MeshFonts {
-  MeshFonts._();
+class SlopOSFonts {
+  SlopOSFonts._();
 
   static const sans = 'Inter';
   static const mono = 'JetBrains Mono';
@@ -99,8 +108,8 @@ class MeshFonts {
 }
 
 /// Radii used consistently across the app.
-class MeshRadii {
-  MeshRadii._();
+class SlopOSRadii {
+  SlopOSRadii._();
   static const xs = 6.0;
   static const sm = 10.0;
   static const md = 14.0;
@@ -109,64 +118,64 @@ class MeshRadii {
   static const pill = 999.0;
 }
 
-/// Shared helpers exposed via [MeshTheme.of].
-class MeshTheme {
-  MeshTheme._();
+/// Shared helpers exposed via [SlopOSTheme].
+class SlopOSTheme {
+  SlopOSTheme._();
 
   static ThemeData dark() {
     const scheme = ColorScheme.dark(
-      primary: MeshPalette.signal,
+      primary: SlopOSPalette.signal,
       onPrimary: Color(0xFF0A1810),
-      primaryContainer: MeshPalette.signalBg,
-      onPrimaryContainer: MeshPalette.signal,
-      secondary: MeshPalette.blue,
+      primaryContainer: SlopOSPalette.signalBg,
+      onPrimaryContainer: SlopOSPalette.signal,
+      secondary: SlopOSPalette.blue,
       onSecondary: Color(0xFF0A1520),
-      tertiary: MeshPalette.magenta,
+      tertiary: SlopOSPalette.magenta,
       onTertiary: Color(0xFF201020),
-      error: MeshPalette.alert,
+      error: SlopOSPalette.alert,
       onError: Color(0xFF1A0A08),
-      errorContainer: MeshPalette.alertBg,
-      onErrorContainer: MeshPalette.alert,
-      surface: MeshPalette.bg,
-      onSurface: MeshPalette.ink,
-      surfaceContainerLowest: MeshPalette.bg,
-      surfaceContainerLow: MeshPalette.bg1,
-      surfaceContainer: MeshPalette.bg1,
-      surfaceContainerHigh: MeshPalette.bg2,
-      surfaceContainerHighest: MeshPalette.bg3,
-      onSurfaceVariant: MeshPalette.ink2,
-      outline: MeshPalette.line2,
-      outlineVariant: MeshPalette.line,
+      errorContainer: SlopOSPalette.alertBg,
+      onErrorContainer: SlopOSPalette.alert,
+      surface: SlopOSPalette.bg,
+      onSurface: SlopOSPalette.ink,
+      surfaceContainerLowest: SlopOSPalette.bg,
+      surfaceContainerLow: SlopOSPalette.bg1,
+      surfaceContainer: SlopOSPalette.bg1,
+      surfaceContainerHigh: SlopOSPalette.bg2,
+      surfaceContainerHighest: SlopOSPalette.bg3,
+      onSurfaceVariant: SlopOSPalette.ink2,
+      outline: SlopOSPalette.line2,
+      outlineVariant: SlopOSPalette.line,
       shadow: Colors.black,
       scrim: Colors.black54,
-      inverseSurface: MeshPalette.ink,
-      onInverseSurface: MeshPalette.bg,
-      inversePrimary: MeshPalette.signalDim,
+      inverseSurface: SlopOSPalette.ink,
+      onInverseSurface: SlopOSPalette.bg,
+      inversePrimary: SlopOSPalette.signalDim,
     );
     return _build(scheme, Brightness.dark);
   }
 
   static ThemeData light() {
     const scheme = ColorScheme.light(
-      primary: MeshPalette.lightSignal,
+      primary: SlopOSPalette.lightSignal,
       onPrimary: Colors.white,
       primaryContainer: Color(0xFFD4E8D8),
-      onPrimaryContainer: MeshPalette.lightSignal,
+      onPrimaryContainer: SlopOSPalette.lightSignal,
       secondary: Color(0xFF2F6EA8),
       onSecondary: Colors.white,
       tertiary: Color(0xFF8C4A8A),
       onTertiary: Colors.white,
       error: Color(0xFFB53D2F),
       onError: Colors.white,
-      surface: MeshPalette.lightBg,
-      onSurface: MeshPalette.lightInk,
-      surfaceContainerLowest: MeshPalette.lightBg,
-      surfaceContainerLow: MeshPalette.lightBg1,
-      surfaceContainer: MeshPalette.lightBg1,
-      surfaceContainerHigh: MeshPalette.lightBg2,
+      surface: SlopOSPalette.lightBg,
+      onSurface: SlopOSPalette.lightInk,
+      surfaceContainerLowest: SlopOSPalette.lightBg,
+      surfaceContainerLow: SlopOSPalette.lightBg1,
+      surfaceContainer: SlopOSPalette.lightBg1,
+      surfaceContainerHigh: SlopOSPalette.lightBg2,
       surfaceContainerHighest: Color(0xFFD5D0C0),
-      onSurfaceVariant: MeshPalette.lightInk2,
-      outline: MeshPalette.lightLine,
+      onSurfaceVariant: SlopOSPalette.lightInk2,
+      outline: SlopOSPalette.lightLine,
       outlineVariant: Color(0xFFDBD6C6),
     );
     return _build(scheme, Brightness.light);
@@ -180,8 +189,8 @@ class MeshTheme {
         ).black.apply(
           bodyColor: scheme.onSurface,
           displayColor: scheme.onSurface,
-          fontFamily: MeshFonts.sans,
-          fontFamilyFallback: MeshFonts.sansFallback,
+          fontFamily: SlopOSFonts.sans,
+          fontFamilyFallback: SlopOSFonts.sansFallback,
         );
 
     return ThemeData(
@@ -190,8 +199,8 @@ class MeshTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: scheme.surface,
       canvasColor: scheme.surface,
-      fontFamily: MeshFonts.sans,
-      fontFamilyFallback: MeshFonts.sansFallback,
+      fontFamily: SlopOSFonts.sans,
+      fontFamilyFallback: SlopOSFonts.sansFallback,
       textTheme: baseText,
       dividerColor: scheme.outlineVariant,
       dividerTheme: DividerThemeData(
@@ -207,8 +216,8 @@ class MeshTheme {
         scrolledUnderElevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
-          fontFamily: MeshFonts.sans,
-          fontFamilyFallback: MeshFonts.sansFallback,
+          fontFamily: SlopOSFonts.sans,
+          fontFamilyFallback: SlopOSFonts.sansFallback,
           fontSize: 20,
           fontWeight: FontWeight.w600,
           letterSpacing: -0.2,
@@ -224,7 +233,7 @@ class MeshTheme {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
           side: BorderSide(color: scheme.outlineVariant, width: 1),
         ),
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
@@ -234,7 +243,7 @@ class MeshTheme {
         textColor: scheme.onSurface,
         tileColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
         ),
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -245,11 +254,11 @@ class MeshTheme {
         hoverElevation: 0,
         highlightElevation: 2,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.pill),
+          borderRadius: BorderRadius.circular(SlopOSRadii.pill),
         ),
         extendedTextStyle: const TextStyle(
-          fontFamily: MeshFonts.sans,
-          fontFamilyFallback: MeshFonts.sansFallback,
+          fontFamily: SlopOSFonts.sans,
+          fontFamilyFallback: SlopOSFonts.sansFallback,
           fontWeight: FontWeight.w700,
           letterSpacing: 0.2,
         ),
@@ -261,11 +270,11 @@ class MeshTheme {
           elevation: 0,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(MeshRadii.pill),
+            borderRadius: BorderRadius.circular(SlopOSRadii.pill),
           ),
           textStyle: const TextStyle(
-            fontFamily: MeshFonts.sans,
-            fontFamilyFallback: MeshFonts.sansFallback,
+            fontFamily: SlopOSFonts.sans,
+            fontFamilyFallback: SlopOSFonts.sansFallback,
             fontWeight: FontWeight.w600,
             fontSize: 14,
           ),
@@ -277,7 +286,7 @@ class MeshTheme {
           side: BorderSide(color: scheme.outline),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(MeshRadii.pill),
+            borderRadius: BorderRadius.circular(SlopOSRadii.pill),
           ),
         ),
       ),
@@ -286,7 +295,7 @@ class MeshTheme {
           foregroundColor: scheme.primary,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(MeshRadii.pill),
+            borderRadius: BorderRadius.circular(SlopOSRadii.pill),
           ),
         ),
       ),
@@ -299,15 +308,15 @@ class MeshTheme {
           vertical: 12,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
           borderSide: BorderSide(color: scheme.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
           borderSide: BorderSide(color: scheme.outlineVariant),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
           borderSide: BorderSide(color: scheme.primary, width: 1.5),
         ),
       ),
@@ -315,14 +324,14 @@ class MeshTheme {
         backgroundColor: scheme.surfaceContainerLow,
         side: BorderSide(color: scheme.outlineVariant),
         labelStyle: TextStyle(
-          fontFamily: MeshFonts.sans,
-          fontFamilyFallback: MeshFonts.sansFallback,
+          fontFamily: SlopOSFonts.sans,
+          fontFamilyFallback: SlopOSFonts.sansFallback,
           fontSize: 12.5,
           fontWeight: FontWeight.w600,
           color: scheme.onSurfaceVariant,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.pill),
+          borderRadius: BorderRadius.circular(SlopOSRadii.pill),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       ),
@@ -331,13 +340,13 @@ class MeshTheme {
         surfaceTintColor: Colors.transparent,
         indicatorColor: scheme.primary.withValues(alpha: 0.14),
         indicatorShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
         ),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           return TextStyle(
-            fontFamily: MeshFonts.mono,
-            fontFamilyFallback: MeshFonts.monoFallback,
+            fontFamily: SlopOSFonts.mono,
+            fontFamilyFallback: SlopOSFonts.monoFallback,
             fontSize: 10,
             fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
             letterSpacing: 0.1,
@@ -358,7 +367,7 @@ class MeshTheme {
         modalBackgroundColor: scheme.surfaceContainerLow,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(MeshRadii.lg),
+            top: Radius.circular(SlopOSRadii.lg),
           ),
         ),
       ),
@@ -366,7 +375,7 @@ class MeshTheme {
         backgroundColor: scheme.surfaceContainerLow,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.lg),
+          borderRadius: BorderRadius.circular(SlopOSRadii.lg),
         ),
       ),
       snackBarTheme: SnackBarThemeData(
@@ -374,14 +383,14 @@ class MeshTheme {
         contentTextStyle: TextStyle(color: scheme.onSurface),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
         ),
       ),
       popupMenuTheme: PopupMenuThemeData(
         color: scheme.surfaceContainerHigh,
         surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(MeshRadii.md),
+          borderRadius: BorderRadius.circular(SlopOSRadii.md),
         ),
       ),
       iconTheme: IconThemeData(color: scheme.onSurfaceVariant, size: 22),
@@ -397,8 +406,8 @@ class MeshTheme {
     double? letterSpacing,
   }) {
     return TextStyle(
-      fontFamily: MeshFonts.mono,
-      fontFamilyFallback: MeshFonts.monoFallback,
+      fontFamily: SlopOSFonts.mono,
+      fontFamilyFallback: SlopOSFonts.monoFallback,
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,
@@ -415,8 +424,8 @@ class MeshTheme {
     double? letterSpacing,
   }) {
     return TextStyle(
-      fontFamily: MeshFonts.display,
-      fontFamilyFallback: MeshFonts.displayFallback,
+      fontFamily: SlopOSFonts.display,
+      fontFamilyFallback: SlopOSFonts.displayFallback,
       fontSize: fontSize,
       fontWeight: fontWeight ?? FontWeight.w400,
       color: color,
@@ -427,8 +436,8 @@ class MeshTheme {
   /// Small-caps mono label — used for section accents and chip labels.
   static TextStyle accentLabel({Color? color, double? fontSize}) {
     return TextStyle(
-      fontFamily: MeshFonts.mono,
-      fontFamilyFallback: MeshFonts.monoFallback,
+      fontFamily: SlopOSFonts.mono,
+      fontFamilyFallback: SlopOSFonts.monoFallback,
       fontSize: fontSize ?? 9.5,
       fontWeight: FontWeight.w600,
       letterSpacing: 1.8,
@@ -438,10 +447,10 @@ class MeshTheme {
 
   /// Color-code an SNR value for consistency across the app.
   static Color snrColor(num? snr, {required bool blocked}) {
-    if (blocked) return MeshPalette.alert;
-    if (snr == null) return MeshPalette.ink3;
-    if (snr > -5) return MeshPalette.signal;
-    if (snr > -12) return MeshPalette.warn;
-    return MeshPalette.alert;
+    if (blocked) return SlopOSPalette.alert;
+    if (snr == null) return SlopOSPalette.ink3;
+    if (snr > -5) return SlopOSPalette.green;
+    if (snr > -12) return SlopOSPalette.warn;
+    return SlopOSPalette.alert;
   }
 }

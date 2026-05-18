@@ -9,7 +9,7 @@ class AppLocalizationsHu extends AppLocalizations {
   AppLocalizationsHu([String locale = 'hu']) : super(locale);
 
   @override
-  String get appTitle => 'MeshCore Open';
+  String get appTitle => 'SlopOS';
 
   @override
   String get nav_contacts => 'Kapcsolatok';
@@ -513,7 +513,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String settings_aboutVersion(String version) {
-    return 'MeshCore Open $version verzió';
+    return 'SlopOS $version verzió';
   }
 
   @override
@@ -3990,11 +3990,11 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get settings_gpxExportShareText =>
-      'A meshcore-open-ból exportált térkéadatumok';
+      'A slopos-client-ból exportált térkéadatumok';
 
   @override
   String get settings_gpxExportShareSubject =>
-      'meshcore-open GPX formátumú térképi adatok export';
+      'slopos-client GPX formátumú térképi adatok export';
 
   @override
   String get snrIndicator_nearByRepeaters => 'Helyszíni erősítők';

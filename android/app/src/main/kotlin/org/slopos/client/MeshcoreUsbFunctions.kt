@@ -1,4 +1,4 @@
-package com.meshcore.meshcore_open
+package org.slopos.client
 
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
@@ -30,9 +30,9 @@ class MeshcoreUsbFunctions(
         const val usbRecipientInterface = 0x01
     }
 
-    private val usbMethodChannelName = "meshcore_open/android_usb_serial"
-    private val usbEventChannelName = "meshcore_open/android_usb_serial_events"
-    private val usbPermissionAction = "com.meshcore.meshcore_open.USB_PERMISSION"
+    private val usbMethodChannelName = "slopos_client/android_usb_serial"
+    private val usbEventChannelName = "slopos_client/android_usb_serial_events"
+    private val usbPermissionAction = "org.slopos.client.USB_PERMISSION"
 
     private val usbManager by lazy {
         activity.getSystemService(Context.USB_SERVICE) as UsbManager

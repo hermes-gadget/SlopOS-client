@@ -1,6 +1,9 @@
-# MeshCore Open
+# SlopOS Client
 
-Open-source Flutter client for MeshCore LoRa mesh networking devices.
+Open-source Flutter client for SlopOS / MeshCore LoRa mesh networking devices.
+Licensed under GPL-3.0-or-later.
+
+This is a community fork of the upstream [meshcore-open](https://github.com/zjs81/meshcore-open) client, adapted with the SlopOS dark theme and branding.
 
 ## Overview
 
