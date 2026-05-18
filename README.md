@@ -1,17 +1,17 @@
 # SlopOS Client
 
-Open-source Flutter client for SlopOS / MeshCore LoRa mesh networking devices.
+Open-source Flutter client for [SlopOS](https://github.com/hermes-gadget/SlopOS) / MeshCore LoRa mesh networking devices.
 Licensed under GPL-3.0-or-later.
 
-This is a community fork of the upstream [meshcore-open](https://github.com/zjs81/meshcore-open) client, adapted with the SlopOS dark theme and branding.
+> ⚡ **This is a community fork** of the upstream [meshcore-open](https://github.com/zjs81/meshcore-open) client by [zjs81](https://github.com/zjs81), rebranded with the SlopOS dark pixel theme and ecosystem integration. See [meshcore-open](https://github.com/zjs81/meshcore-open) for the original project.
 
 ## Overview
 
-MeshCore Open is a cross-platform mobile application for communicating with MeshCore LoRa mesh network devices via Bluetooth Low Energy (BLE). The app enables long-range, off-grid communication through peer-to-peer messaging, public channels, and mesh networking capabilities.
+SlopOS Client is a cross-platform mobile application for communicating with MeshCore LoRa mesh network devices via Bluetooth Low Energy (BLE), USB, and TCP. The app enables long-range, off-grid communication through peer-to-peer messaging, public channels, and mesh networking capabilities — all wrapped in a retro pixel-art aesthetic.
 
-**Website:** [meshcoreopen.org](https://meshcoreopen.org/)
+**Upstream project:** [meshcoreopen.org](https://meshcoreopen.org/)
 
-<a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/zjs81/meshcore-open">
+<a href="http://apps.obtainium.imranr.dev/redirect.html?r=obtainium://add/https://github.com/hermes-gadget/SlopOS-client">
         <img src="assets/badges/badge_obtainium.png" height="80" align="center" alt="Get it on Obtainium"/>
 </a>
 
@@ -118,8 +118,8 @@ MeshCore Open is a cross-platform mobile application for communicating with Mesh
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/zjs81/meshcore-open.git
-   cd meshcore-open
+   git clone https://github.com/hermes-gadget/SlopOS-client.git
+   cd SlopOS-client
    ```
 
 2. **Install dependencies**
@@ -245,7 +245,13 @@ This is an open-source project. Contributions are welcome!
 ## Support
 
 For issues, questions, or feature requests, please open an issue on GitHub:
-<https://github.com/zjs81/meshcore-open/issues>
+<https://github.com/hermes-gadget/SlopOS-client/issues>
+
+## Upstream
+
+This project is a fork of [meshcore-open](https://github.com/zjs81/meshcore-open) by [zjs81](https://github.com/zjs81).
+All credit for the core Flutter client, BLE protocol integration, and cross-platform architecture goes to the upstream project.
+SlopOS Client adds the dark pixel theme, SlopOS branding, and ecosystem-specific integrations on top of the upstream codebase.
 
 ## Donate
 

@@ -6,6 +6,10 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 const String kMapTileUrlTemplate =
+    'https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png';
+
+/// Fallback light tile set (user-toggleable in settings).
+const String kMapTileUrlTemplateLight =
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 class MapTileCacheProgress {

@@ -71,7 +71,7 @@ dependencies:
   flutter_blue_plus_platform_interface: ^8.2.1
   ml_algo: ^16.0.0
   ml_dataframe: ^1.0.0
-  llamadart: '>=0.6.8 <0.7.0'
+  llamadart: '>=0.1.0 <0.7.0'
 
 hooks:
   user_defines:
@@ -110,14 +110,23 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/fonts/
+
+  fonts:
+    - family: PressStart2P
+      fonts:
+        - asset: assets/fonts/PressStart2P-Regular.ttf
+    - family: PixelifySans
+      fonts:
+        - asset: assets/fonts/PixelifySans.ttf
 
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "mesh-icon.png"
+  image_path: "SlopOS-logo.png"
   remove_alpha_ios: true
   adaptive_icon_background: "#0F0F0F"
-  adaptive_icon_foreground: "mesh-icon.png"
+  adaptive_icon_foreground: "SlopOS-logo.png"
 
   # To add assets to your application, add an assets section, like this:
   # assets:

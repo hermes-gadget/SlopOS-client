@@ -112,7 +112,7 @@ class AppLocalizationsBg extends AppLocalizations {
   }
 
   @override
-  String get scanner_title => 'MeshCore – Отворена версия';
+  String get scanner_title => 'SlopOS';
 
   @override
   String get connectionChoiceUsbLabel => 'USB';
@@ -520,11 +520,11 @@ class AppLocalizationsBg extends AppLocalizations {
   }
 
   @override
-  String get settings_aboutLegalese => 'Проект MeshCore с отворен код 2024 г.';
+  String get settings_aboutLegalese => 'SlopOS Open Source Project';
 
   @override
   String get settings_aboutDescription =>
-      'Отворен софтуер за Flutter клиент за MeshCore LoRa мрежови устройства.';
+      'SlopOS – Flutter клиент за MeshCore LoRa мрежови устройства.';
 
   @override
   String get settings_aboutOpenMeteoAttribution =>

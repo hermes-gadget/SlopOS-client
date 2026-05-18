@@ -112,7 +112,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get scanner_title => 'MeshCore オープン';
+  String get scanner_title => 'SlopOS';
 
   @override
   String get connectionChoiceUsbLabel => 'USB';
