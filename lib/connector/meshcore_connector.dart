@@ -3405,7 +3405,7 @@ class MeshCoreConnector extends ChangeNotifier {
 
   Future<void> rebootDevice() async {
     if (!isConnected) return;
-    await sendFrame(buildRebootFrame());
+    await sendCliCommand('reboot');
   }
 
   Future<void> setPrivacyMode(bool enabled) async {
@@ -3808,8 +3808,8 @@ class MeshCoreConnector extends ChangeNotifier {
       _advertLocPolicy = reader.readByte();
       final telemetryFlag = reader.readByte();
       _telemetryModeBase = telemetryFlag & 0x03;
-      _telemetryModeEnv = telemetryFlag >> 2 & 0x03;
-      _telemetryModeLoc = telemetryFlag >> 4 & 0x03;
+      _telemetryModeLoc = telemetryFlag >> 2 & 0x03;
+      _telemetryModeEnv = telemetryFlag >> 4 & 0x03;
 
       _manualAddContacts = reader.readByte() & 0x01 == 0x00;
 

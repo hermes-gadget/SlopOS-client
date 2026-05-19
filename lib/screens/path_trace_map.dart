@@ -255,7 +255,12 @@ class _PathTraceMapScreenState extends State<PathTraceMapScreen> {
       0, //auth
       payload: path,
     );
-    connector.sendFrame(frame);
+    try {
+      await connector.sendFrame(frame);
+    } catch (e) {
+      if (!mounted) return;
+      appLogger.error('Path trace send failed: $e', tag: 'PathTraceMap');
+    }
   }
 
   void _setupFrameListener() {

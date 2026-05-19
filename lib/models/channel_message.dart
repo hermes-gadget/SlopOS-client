@@ -164,11 +164,12 @@ class ChannelMessage {
         reader.skipBytes(1); // Skip reserved byte
         channelIdx = reader.readByte();
         pathLen = reader.readInt8();
-        txtType = reader.readByte();
+        // Read path bytes BEFORE txtType — when hasPath, byte 6
+        // is the first path byte, not txtType
         if (hasPath && pathLen > 0) {
-          reader.rewind(); // Rewind to read path length again for pathBytes
           pathBytes = reader.readBytes(pathLen);
         }
+        txtType = reader.readByte();
       } else {
         channelIdx = reader.readByte();
         pathLen = reader.readInt8();

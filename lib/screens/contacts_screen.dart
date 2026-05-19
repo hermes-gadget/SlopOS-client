@@ -291,7 +291,8 @@ class _ContactsScreenState extends State<ContactsScreen>
       final bytes = hex2Uint8List(hexString);
       final importContactFrame = buildImportContactFrame(bytes);
       _pendingOperations.add(ContactOperationType.import);
-      connector.importContact(importContactFrame);
+      await connector.sendFrame(importContactFrame,
+          expectsGenericAck: true);
     } catch (e) {
       if (mounted) {
         showDismissibleSnackBar(

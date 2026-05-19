@@ -971,7 +971,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  void _sendSettings(
+  Future<void> _sendSettings(
     MeshCoreConnector connector,
     bool autoAddChat,
     bool autoAddRepeater,
@@ -979,15 +979,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     bool autoAddSensor,
     bool overwriteOldest,
   ) async {
-    final frame = buildSetAutoAddConfigFrame(
-      autoAddChat: autoAddChat,
-      autoAddRepeater: autoAddRepeater,
-      autoAddRoomServer: autoAddRoomServer,
-      autoAddSensor: autoAddSensor,
-      overwriteOldest: overwriteOldest,
-    );
-    await connector.sendFrame(frame);
-    await connector.sendFrame(buildGetAutoAddFlagsFrame());
+    try {
+      final frame = buildSetAutoAddConfigFrame(
+        autoAddChat: autoAddChat,
+        autoAddRepeater: autoAddRepeater,
+        autoAddRoomServer: autoAddRoomServer,
+        autoAddSensor: autoAddSensor,
+        overwriteOldest: overwriteOldest,
+      );
+      await connector.sendFrame(frame);
+      await connector.sendFrame(buildGetAutoAddFlagsFrame());
+    } catch (e) {
+      if (!mounted) return;
+      showDismissibleSnackBar(
+        context,
+        content: Text(context.l10n.settings_error('$e')),
+      );
+    }
   }
 }
 
