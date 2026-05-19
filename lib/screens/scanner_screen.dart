@@ -133,41 +133,38 @@ class _ScannerScreenState extends State<ScannerScreen> {
           return SafeArea(
             top: false,
             minimum: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (usbSupported)
-                    FloatingActionButton.extended(
-                      onPressed: () {
-                        appLogger.info(
-                          'USB selected, opening UsbScreen',
-                          tag: 'ScannerScreen',
-                        );
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const UsbScreen()),
-                        );
-                      },
-                      heroTag: 'scanner_usb_action',
-                      icon: const Icon(Icons.usb),
-                      label: Text(context.l10n.connectionChoiceUsbLabel),
-                    ),
-                  if (usbSupported) const SizedBox(width: 12),
-                  if (tcpSupported)
-                    FloatingActionButton.extended(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const TcpScreen()),
-                        );
-                      },
-                      heroTag: 'scanner_tcp_action',
-                      icon: const Icon(Icons.lan),
-                      label: Text(context.l10n.connectionChoiceTcpLabel),
-                    ),
-                  if (tcpSupported) const SizedBox(width: 12),
+            child: Wrap(
+              alignment: WrapAlignment.end,
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                if (usbSupported)
                   FloatingActionButton.extended(
+                    onPressed: () {
+                      appLogger.info(
+                        'USB selected, opening UsbScreen',
+                        tag: 'ScannerScreen',
+                      );
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const UsbScreen()),
+                      );
+                    },
+                    heroTag: 'scanner_usb_action',
+                    icon: const Icon(Icons.usb),
+                    label: Text(context.l10n.connectionChoiceUsbLabel),
+                  ),
+                if (tcpSupported)
+                  FloatingActionButton.extended(
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const TcpScreen()),
+                      );
+                    },
+                    heroTag: 'scanner_tcp_action',
+                    icon: const Icon(Icons.lan),
+                    label: Text(context.l10n.connectionChoiceTcpLabel),
+                  ),
+                FloatingActionButton.extended(
                     heroTag: 'scanner_ble_action',
                     onPressed: isBluetoothOff
                         ? null
@@ -198,8 +195,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                           : context.l10n.scanner_scan,
                     ),
                   ),
-                ],
-              ),
+              ],
             ),
           );
         },
@@ -243,9 +239,16 @@ class _ScannerScreenState extends State<ScannerScreen> {
         children: [
           Icon(Icons.circle, size: 12, color: statusColor),
           const SizedBox(width: 8),
-          Text(
-            statusText,
-            style: TextStyle(color: statusColor, fontWeight: FontWeight.w500),
+          Expanded(
+            child: Text(
+              statusText,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: statusColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
         ],
       ),
@@ -260,11 +263,17 @@ class _ScannerScreenState extends State<ScannerScreen> {
           children: [
             Icon(Icons.bluetooth, size: 64, color: Colors.grey[400]),
             const SizedBox(height: 16),
-            Text(
-              connector.state == MeshCoreConnectionState.scanning
-                  ? context.l10n.scanner_searchingDevices
-                  : context.l10n.scanner_tapToScan,
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                connector.state == MeshCoreConnectionState.scanning
+                    ? context.l10n.scanner_searchingDevices
+                    : context.l10n.scanner_tapToScan,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+              ),
             ),
           ],
         ),
@@ -420,6 +429,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       color: errorColor.withValues(alpha: 0.15),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(Icons.bluetooth_disabled, size: 24, color: errorColor),
           const SizedBox(width: 12),
@@ -429,6 +439,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
               children: [
                 Text(
                   context.l10n.scanner_bluetoothOff,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: errorColor,
                     fontWeight: FontWeight.w600,
@@ -438,6 +450,8 @@ class _ScannerScreenState extends State<ScannerScreen> {
                 const SizedBox(height: 4),
                 Text(
                   context.l10n.scanner_bluetoothOffMessage,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: errorColor.withValues(alpha: 0.85),
                     fontSize: 12,
@@ -449,7 +463,11 @@ class _ScannerScreenState extends State<ScannerScreen> {
           if (PlatformInfo.isAndroid)
             TextButton(
               onPressed: () => FlutterBluePlus.turnOn(),
-              child: Text(context.l10n.scanner_enableBluetooth),
+              child: Text(
+                context.l10n.scanner_enableBluetooth,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
         ],
       ),

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
+import '../theme/slopos_theme.dart';
 
 class QuickSwitchBar extends StatelessWidget {
   final int selectedIndex;
@@ -26,7 +27,7 @@ class QuickSwitchBar extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(SlopOSRadii.pixel),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
           child: DecoratedBox(
@@ -34,6 +35,7 @@ class QuickSwitchBar extends StatelessWidget {
               color: Colors.transparent,
               border: Border.all(
                 color: colorScheme.outlineVariant.withValues(alpha: 0.4),
+                width: 2,
               ),
             ),
             child: NavigationBarTheme(
@@ -64,6 +66,7 @@ class QuickSwitchBar extends StatelessWidget {
                 height: 60,
                 selectedIndex: selectedIndex,
                 onDestinationSelected: onDestinationSelected,
+                labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
                 destinations: [
                   NavigationDestination(
                     icon: _buildIconWithBadge(
@@ -104,23 +107,26 @@ class QuickSwitchBar extends StatelessWidget {
   Widget _buildIconWithBadge(Icon icon, int count) {
     if (count <= 0) return icon;
 
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        icon,
-        Positioned(
-          right: -2,
-          top: -2,
-          child: Container(
-            width: 8,
-            height: 8,
-            decoration: const BoxDecoration(
-              color: Colors.redAccent,
-              shape: BoxShape.circle,
+    return Semantics(
+      label: '$count unread',
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          icon,
+          Positioned(
+            right: -2,
+            top: -2,
+            child: Container(
+              width: 8,
+              height: 8,
+              decoration: const BoxDecoration(
+                color: Colors.redAccent,
+                shape: BoxShape.circle,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

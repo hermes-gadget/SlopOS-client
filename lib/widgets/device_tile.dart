@@ -62,10 +62,21 @@ class DeviceTile extends StatelessWidget {
           ],
         ],
       ),
-      subtitle: Text(device.remoteId.toString()),
-      trailing: ElevatedButton(
-        onPressed: onTap,
-        child: Text(context.l10n.common_connect),
+      subtitle: Text(
+        device.remoteId.toString(),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      trailing: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 96),
+        child: ElevatedButton(
+          onPressed: onTap,
+          child: Text(
+            context.l10n.common_connect,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ),
       onTap: onTap,
     );

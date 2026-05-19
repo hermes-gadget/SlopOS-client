@@ -269,7 +269,7 @@ class SlopOSTheme {
           fontFamilyFallback: SlopOSFonts.pixelFallback,
           fontWeight: FontWeight.w400,
           fontSize: 12,
-          letterSpacing: 1.0,
+          letterSpacing: 0.5,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -277,7 +277,7 @@ class SlopOSTheme {
           backgroundColor: scheme.primary,
           foregroundColor: scheme.onPrimary,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(SlopOSRadii.pixel),
             side: const BorderSide(color: SlopOSPalette.signalDim, width: 2),
@@ -287,7 +287,7 @@ class SlopOSTheme {
             fontFamilyFallback: SlopOSFonts.pixelFallback,
             fontWeight: FontWeight.w400,
             fontSize: 11,
-            letterSpacing: 1.0,
+            letterSpacing: 0.5,
           ),
         ),
       ),
@@ -312,7 +312,7 @@ class SlopOSTheme {
             fontFamily: SlopOSFonts.pixel,
             fontFamilyFallback: SlopOSFonts.pixelFallback,
             fontSize: 11,
-            letterSpacing: 1.0,
+            letterSpacing: 0.5,
           ),
         ),
       ),
@@ -349,7 +349,7 @@ class SlopOSTheme {
           fontSize: 9,
           fontWeight: FontWeight.w400,
           color: scheme.onSurfaceVariant,
-          letterSpacing: 1.0,
+          letterSpacing: 0.5,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(SlopOSRadii.pixel),
@@ -370,7 +370,7 @@ class SlopOSTheme {
             fontFamilyFallback: SlopOSFonts.pixelFallback,
             fontSize: 8,
             fontWeight: FontWeight.w400,
-            letterSpacing: 1.0,
+            letterSpacing: 0.2,
             color: selected ? scheme.primary : scheme.onSurfaceVariant,
           );
         }),
@@ -437,7 +437,7 @@ class SlopOSTheme {
       fontSize: fontSize ?? 16,
       fontWeight: FontWeight.w400,
       color: color,
-      letterSpacing: letterSpacing ?? 1.0,
+      letterSpacing: letterSpacing ?? 0.5,
     );
   }
 
@@ -481,7 +481,7 @@ class SlopOSTheme {
       fontFamilyFallback: SlopOSFonts.pixelFallback,
       fontSize: fontSize ?? 8,
       fontWeight: FontWeight.w400,
-      letterSpacing: 1.5,
+      letterSpacing: 0.5,
       color: color,
     );
   }

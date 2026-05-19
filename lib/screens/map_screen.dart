@@ -284,18 +284,15 @@ class _MapScreenState extends State<MapScreen> {
             ? _cachedGuessedLocations
             : <_GuessedLocation>[];
 
-        _polylines.clear();
-        _polylines.addAll(
-          _points.length > 1
-              ? [
-                  Polyline(
-                    points: _points,
-                    strokeWidth: 4,
-                    color: Colors.blueAccent,
-                  ),
-                ]
-              : <Polyline>[],
-        );
+        final pathTracePolylines = _points.length > 1
+            ? [
+                Polyline(
+                  points: _points,
+                  strokeWidth: 4,
+                  color: Colors.blueAccent,
+                ),
+              ]
+            : <Polyline>[];
 
         // Collect polylines for shared markers' history with dashed lines
         final List<Polyline> sharedMarkerPolylines = [];
@@ -418,9 +415,13 @@ class _MapScreenState extends State<MapScreen> {
                 if (!_isBuildingPathTrace)
                   IconButton(
                     icon: const Icon(Icons.radar),
-                    onPressed: () => _startPath(
-                      LatLng(connector.selfLatitude!, connector.selfLongitude!),
-                    ),
+                    onPressed: connector.selfLatitude != null &&
+                            connector.selfLongitude != null
+                        ? () => _startPath(
+                              LatLng(connector.selfLatitude!,
+                                  connector.selfLongitude!),
+                            )
+                        : null,
                     tooltip: context.l10n.contacts_pathTrace,
                   ),
                 if (!_isBuildingPathTrace)
@@ -569,8 +570,8 @@ class _MapScreenState extends State<MapScreen> {
                           MapTileCacheService.userAgentPackageName,
                       maxZoom: 19,
                     ),
-                    if (_polylines.isNotEmpty && _isBuildingPathTrace)
-                      PolylineLayer(polylines: _polylines),
+                    if (pathTracePolylines.isNotEmpty && _isBuildingPathTrace)
+                      PolylineLayer(polylines: pathTracePolylines),
                     if (sharedMarkerPolylines.isNotEmpty)
                       PolylineLayer(polylines: sharedMarkerPolylines),
                     MarkerLayer(
@@ -1030,13 +1031,16 @@ class _MapScreenState extends State<MapScreen> {
         point: LatLng(contact.latitude!, contact.longitude!),
         width: 35,
         height: 35,
-        child: GestureDetector(
-          onLongPress: () =>
-              _isBuildingPathTrace ? _showNodeInfo(context, contact) : null,
-          onTap: () => _isBuildingPathTrace
-              ? _addToPath(context, contact)
-              : _showNodeInfo(context, contact),
-          child: Column(
+        child: Semantics(
+          button: true,
+          label: contact.name,
+          child: GestureDetector(
+            onLongPress: () =>
+                _isBuildingPathTrace ? _showNodeInfo(context, contact) : null,
+            onTap: () => _isBuildingPathTrace
+                ? _addToPath(context, contact)
+                : _showNodeInfo(context, contact),
+            child: Column(
             children: [
               Container(
                 padding: const EdgeInsets.all(4),
@@ -1063,6 +1067,7 @@ class _MapScreenState extends State<MapScreen> {
             ],
           ),
         ),
+      ),
       );
 
       markers.add(marker);

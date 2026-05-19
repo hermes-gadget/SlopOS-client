@@ -181,8 +181,6 @@
   "settings_rebootDeviceSubtitle": "MeshCore 장치를 재부팅하세요.",
   "settings_rebootDeviceConfirm": "정말로 장치를 재부팅하시겠습니까? 이 경우 연결이 끊어집니다.",
   "settings_debug": "디버깅",
-  "settings_bleDebugLog": "BLE 디버그 로그",
-  "settings_bleDebugLogSubtitle": "BLE 명령어, 응답 및 원시 데이터",
   "settings_appDebugLog": "앱 디버깅 로그",
   "settings_appDebugLogSubtitle": "애플리케이션 디버깅 메시지",
   "settings_about": "소개",

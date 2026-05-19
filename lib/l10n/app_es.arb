@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Reiniciar el dispositivo MeshCore",
   "settings_rebootDeviceConfirm": "¿Está seguro de que desea reiniciar el dispositivo? Se desconectará.",
   "settings_debug": "Depurar",
-  "settings_bleDebugLog": "Registro de Depuración BLE",
-  "settings_bleDebugLogSubtitle": "Comandos, respuestas y datos brutos de BLE",
   "settings_appDebugLog": "Registro de Depuración de la App",
   "settings_appDebugLogSubtitle": "Mensajes de depuración de la aplicación",
   "settings_about": "Acerca de",

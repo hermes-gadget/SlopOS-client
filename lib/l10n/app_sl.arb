@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Ponovno zaženi MeshCore napravo",
   "settings_rebootDeviceConfirm": "Ste prepričani, da želite ponovno zagnati napravo? Povezava bo prekinjena.",
   "settings_debug": "Odpravljanje napak",
-  "settings_bleDebugLog": "BLE debug log (razhroščevanje)",
-  "settings_bleDebugLogSubtitle": "BLE ukazi, odgovori in surovi podatki",
   "settings_appDebugLog": "Logi aplikacije",
   "settings_appDebugLogSubtitle": "Debug sporočila aplikacije",
   "settings_about": "Oglejte si",

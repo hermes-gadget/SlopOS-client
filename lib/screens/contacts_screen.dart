@@ -326,7 +326,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.connect_without_contact),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_zeroHopAdvert),
+                      Text(context.l10n.contacts_zeroHopAdvert,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => {
@@ -342,7 +344,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.cell_tower),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_floodAdvert),
+                      Text(context.l10n.contacts_floodAdvert,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => {
@@ -358,7 +362,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.copy),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_copyAdvertToClipboard),
+                      Text(context.l10n.contacts_copyAdvertToClipboard,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => _contactExport(Uint8List.fromList([])),
@@ -368,7 +374,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.paste),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_addContactFromClipboard),
+                      Text(context.l10n.contacts_addContactFromClipboard,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => _contactImport(),
@@ -383,7 +391,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.logout, color: Colors.red),
                       const SizedBox(width: 8),
-                      Text(context.l10n.common_disconnect),
+                      Text(context.l10n.common_disconnect,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => _disconnect(context, connector),
@@ -393,7 +403,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.person_add_rounded),
                       const SizedBox(width: 8),
-                      Text(context.l10n.discoveredContacts_Title),
+                      Text(context.l10n.discoveredContacts_Title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => Navigator.push(
@@ -408,7 +420,9 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.settings),
                       const SizedBox(width: 8),
-                      Text(context.l10n.settings_title),
+                      Text(context.l10n.settings_title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,),
                     ],
                   ),
                   onTap: () => Navigator.push(

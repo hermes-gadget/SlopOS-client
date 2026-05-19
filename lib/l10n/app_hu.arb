@@ -181,8 +181,6 @@
   "settings_rebootDeviceSubtitle": "Indítsa újra a MeshCore eszközt.",
   "settings_rebootDeviceConfirm": "Biztosan szeretné újraindítani a készüléket? Ebben az esetben a kapcsolat megszűnik.",
   "settings_debug": "Hibakeresés",
-  "settings_bleDebugLog": "BLE hibaelhárítási napló",
-  "settings_bleDebugLogSubtitle": "BLE parancsok, válaszok és alapvető adatok",
   "settings_appDebugLog": "App-debug log",
   "settings_appDebugLogSubtitle": "Programozási hibajelzések",
   "settings_about": "Ról",

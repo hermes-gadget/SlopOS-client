@@ -48,7 +48,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
   List<Community> _communities = [];
   Timer? _searchDebounce;
 
-  ChannelMessageStore get _channelMessageStore => ChannelMessageStore();
+  final ChannelMessageStore _channelMessageStore = ChannelMessageStore();
 
   @override
   void initState() {
@@ -86,7 +86,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
     final connector = context.watch<MeshCoreConnector>();
     final viewState = context.watch<UiViewStateService>();
 
-    final channelMessageStore = ChannelMessageStore();
+    final channelMessageStore = _channelMessageStore;
     channelMessageStore.setPublicKeyHex = connector.selfPublicKeyHex;
 
     // Auto-navigate back to scanner if disconnected
@@ -273,8 +273,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                           ),
                           buildDefaultDragHandles: false,
                           itemCount: filteredChannels.length,
-                          onReorder: (oldIndex, newIndex) {
-                            if (newIndex > oldIndex) newIndex -= 1;
+                          onReorderItem: (oldIndex, newIndex) {
                             final reordered = List<Channel>.from(
                               filteredChannels,
                             );
@@ -858,7 +857,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                         children: [
                           Expanded(
                             child: FilledButton(
-                              onPressed: () {
+                              onPressed: () async {
                                 final name = nameController.text.trim();
                                 final pskHex = pskController.text.trim();
                                 if (name.isEmpty) {
@@ -887,14 +886,26 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                   return;
                                 }
                                 Navigator.pop(dialogContext);
-                                connector.setChannel(nextIndex, name, psk);
-                                if (context.mounted) {
-                                  showDismissibleSnackBar(
-                                    context,
-                                    content: Text(
-                                      context.l10n.channels_channelAdded(name),
-                                    ),
-                                  );
+                                try {
+                                  await connector.setChannel(
+                                      nextIndex, name, psk);
+                                  if (context.mounted) {
+                                    showDismissibleSnackBar(
+                                      context,
+                                      content: Text(
+                                        context.l10n
+                                            .channels_channelAdded(name),
+                                      ),
+                                    );
+                                  }
+                                } catch (e) {
+                                  if (context.mounted) {
+                                    showDismissibleSnackBar(
+                                      context,
+                                      content: Text(context
+                                          .l10n.settings_error('$e')),
+                                    );
+                                  }
                                 }
                               },
                               child: Text(dialogContext.l10n.common_add),
@@ -916,19 +927,30 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                     children: [
                       Expanded(
                         child: FilledButton(
-                          onPressed: () {
+                          onPressed: () async {
                             final psk = Channel.parsePskHex(
                               Channel.publicChannelPsk,
                             );
                             Navigator.pop(dialogContext);
-                            connector.setChannel(nextIndex, 'Public', psk);
-                            if (context.mounted) {
-                              showDismissibleSnackBar(
-                                context,
-                                content: Text(
-                                  context.l10n.channels_publicChannelAdded,
-                                ),
-                              );
+                            try {
+                              await connector.setChannel(
+                                  nextIndex, 'Public', psk);
+                              if (context.mounted) {
+                                showDismissibleSnackBar(
+                                  context,
+                                  content: Text(
+                                    context.l10n.channels_publicChannelAdded,
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              if (context.mounted) {
+                                showDismissibleSnackBar(
+                                  context,
+                                  content: Text(
+                                      context.l10n.settings_error('$e')),
+                                );
+                              }
                             }
                           },
                           child: Text(dialogContext.l10n.common_add),
@@ -1102,20 +1124,30 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                 if (dialogContext.mounted) {
                                   Navigator.pop(dialogContext);
                                 }
-                                connector.setChannel(
-                                  nextIndex,
-                                  channelName,
-                                  psk,
-                                );
-                                if (context.mounted) {
-                                  showDismissibleSnackBar(
-                                    context,
-                                    content: Text(
-                                      context.l10n.channels_channelAdded(
-                                        channelName,
-                                      ),
-                                    ),
+                                try {
+                                  await connector.setChannel(
+                                    nextIndex,
+                                    channelName,
+                                    psk,
                                   );
+                                  if (context.mounted) {
+                                    showDismissibleSnackBar(
+                                      context,
+                                      content: Text(
+                                        context.l10n.channels_channelAdded(
+                                          channelName,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                } catch (e) {
+                                  if (context.mounted) {
+                                    showDismissibleSnackBar(
+                                      context,
+                                      content: Text(context
+                                          .l10n.settings_error('$e')),
+                                    );
+                                  }
                                 }
                               },
                               child: Text(dialogContext.l10n.common_add),
@@ -1231,29 +1263,42 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                       .deriveCommunityPublicPsk();
                                   final channelName =
                                       '${community.name} Public';
-                                  connector.setChannel(
-                                    nextIndex,
-                                    channelName,
-                                    psk,
-                                  );
-                                }
-
-                                if (dialogContext.mounted) {
-                                  Navigator.pop(dialogContext);
+                                  try {
+                                    await connector.setChannel(
+                                      nextIndex,
+                                      channelName,
+                                      psk,
+                                    );
+                                    if (context.mounted) {
+                                      showDismissibleSnackBar(
+                                        context,
+                                        content: Text(
+                                          context.l10n
+                                              .community_created(
+                                            community.name,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  } catch (e) {
+                                    if (context.mounted) {
+                                      showDismissibleSnackBar(
+                                        context,
+                                        content: Text(context
+                                            .l10n.settings_error('$e')),
+                                      );
+                                    }
+                                  }
                                 }
 
                                 // Refresh communities list
                                 _loadCommunities();
 
-                                if (context.mounted) {
-                                  showDismissibleSnackBar(
-                                    context,
-                                    content: Text(
-                                      context.l10n.community_created(name),
-                                    ),
-                                  );
+                                if (dialogContext.mounted) {
+                                  Navigator.pop(dialogContext);
+                                }
 
-                                  // Show QR code dialog
+                                if (context.mounted) {
                                   await QrCodeShareDialog.show(
                                     context: context,
                                     data: community.toQrJson(),
@@ -1594,13 +1639,23 @@ class _ChannelsScreenState extends State<ChannelsScreen>
     );
   }
 
-  void _addPublicChannel(BuildContext context, MeshCoreConnector connector) {
+  Future<void> _addPublicChannel(
+      BuildContext context, MeshCoreConnector connector) async {
     final psk = Channel.parsePskHex(Channel.publicChannelPsk);
-    connector.setChannel(0, 'Public', psk);
-    showDismissibleSnackBar(
-      context,
-      content: Text(context.l10n.channels_publicChannelAdded),
-    );
+    try {
+      await connector.setChannel(0, 'Public', psk);
+      if (!context.mounted) return;
+      showDismissibleSnackBar(
+        context,
+        content: Text(context.l10n.channels_publicChannelAdded),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      showDismissibleSnackBar(
+        context,
+        content: Text(context.l10n.settings_error('$e')),
+      );
+    }
   }
 
   int _findNextAvailableIndex(List<Channel> channels, int maxChannels) {

@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Рестартирайте устройството MeshCore",
   "settings_rebootDeviceConfirm": "Сигурни ли сте, че искате да рестартирате устройството? Ще бъдете откъснати.",
   "settings_debug": "Отстрани",
-  "settings_bleDebugLog": "Лог за отстраняване на грешки на BLE",
-  "settings_bleDebugLogSubtitle": "Команди, отговори и сурови данни BLE",
   "settings_appDebugLog": "Лог на отстраняване на грешки на приложението",
   "settings_appDebugLogSubtitle": "Съобщения за отстраняване на грешки на приложението",
   "settings_about": "За нас",

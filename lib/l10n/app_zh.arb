@@ -123,8 +123,6 @@
   "settings_rebootDeviceSubtitle": "重启 MeshCore 设备",
   "settings_rebootDeviceConfirm": "确定要重启设备吗？这将断开与设备的连接。",
   "settings_debug": "调试",
-  "settings_bleDebugLog": "BLE 调试日志",
-  "settings_bleDebugLogSubtitle": "BLE 命令、响应和原始数据",
   "settings_appDebugLog": "应用调试日志",
   "settings_appDebugLogSubtitle": "应用调试消息",
   "settings_about": "关于",
@@ -146,9 +144,6 @@
   "settings_infoContactsCount": "联系人数量",
   "settings_infoChannelCount": "频道数量",
   "settings_presets": "预设",
-  "settings_preset915Mhz": "915 MHz",
-  "settings_preset868Mhz": "868 MHz",
-  "settings_preset433Mhz": "433 MHz",
   "settings_frequency": "频率 (MHz)",
   "settings_frequencyHelper": "300.0 - 2500.0",
   "settings_frequencyInvalid": "无效频率范围（300-2500 MHz）",
@@ -158,8 +153,6 @@
   "settings_txPower": "TX 功率 (dBm)",
   "settings_txPowerHelper": "0 - 22",
   "settings_txPowerInvalid": "无效的发射功率（0-22 dBm）",
-  "settings_longRange": "远距离",
-  "settings_fastSpeed": "高速",
   "settings_error": "错误：{message}",
   "@settings_error": {
     "placeholders": {

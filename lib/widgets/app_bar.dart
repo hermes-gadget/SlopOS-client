@@ -36,9 +36,12 @@ class AppBarTitle extends StatelessWidget {
         final compact = availableWidth < 170;
         final showSubtitle =
             !compact && connector.isConnected && selfName != null && subtitle;
-        final showBattery = showBatteryIndicator && availableWidth >= 60;
-        final showSnr = availableWidth >= 110;
-        final showIndicators = (showBattery || showSnr) && indicators;
+        final showBattery = showBatteryIndicator && availableWidth >= 180;
+        final showSnr = availableWidth >= 230;
+        final showStats =
+            connector.supportsCompanionRadioStats && availableWidth >= 280;
+        final showIndicators =
+            (showBattery || showSnr || showStats) && indicators;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -68,7 +71,7 @@ class AppBarTitle extends StatelessWidget {
                 children: [
                   if (showBattery) BatteryIndicator(connector: connector),
                   if (showSnr) SNRIndicator(connector: connector),
-                  if (connector.supportsCompanionRadioStats)
+                  if (showStats)
                     const RadioStatsIconButton(compact: true),
                 ],
               ),

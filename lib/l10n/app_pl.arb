@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Zrestartuj urządzenie MeshCore",
   "settings_rebootDeviceConfirm": "Czy na pewno chcesz zrestartować urządzenie? Będziesz odłączony.",
   "settings_debug": "Naprawianie błędów",
-  "settings_bleDebugLog": "Dziennik debugowania BLE",
-  "settings_bleDebugLogSubtitle": "Polecenia BLE, odpowiedzi i surowe dane",
   "settings_appDebugLog": "Dziennik debugowania aplikacji",
   "settings_appDebugLogSubtitle": "Komunikaty debugowania aplikacji",
   "settings_about": "O aplikacji",

@@ -705,13 +705,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  void _syncTime(BuildContext context, MeshCoreConnector connector) {
+  Future<void> _syncTime(
+      BuildContext context, MeshCoreConnector connector) async {
     final l10n = context.l10n;
-    connector.syncTime();
-    showDismissibleSnackBar(
-      context,
-      content: Text(l10n.settings_timeSynchronized),
-    );
+    try {
+      await connector.syncTime();
+      if (!context.mounted) return;
+      showDismissibleSnackBar(
+        context,
+        content: Text(l10n.settings_timeSynchronized),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      showDismissibleSnackBar(
+        context,
+        content: Text(l10n.settings_error('$e')),
+      );
+    }
   }
 
   void _confirmReboot(BuildContext context, MeshCoreConnector connector) {

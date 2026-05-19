@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Restartujte zariadenie MeshCore.",
   "settings_rebootDeviceConfirm": "Ste si istý, že chcete zariadenie reštartovať? Budete odpojení.",
   "settings_debug": "Ladenie",
-  "settings_bleDebugLog": "Log BLE Debug",
-  "settings_bleDebugLogSubtitle": "Príkazy BLE, odpovede a surové dáta",
   "settings_appDebugLog": "Záznam ladenia aplikácie",
   "settings_appDebugLogSubtitle": "Správy z ladenia aplikácie",
   "settings_about": "O nás",

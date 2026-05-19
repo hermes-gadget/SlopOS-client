@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "MeshCore-Gerät neu starten",
   "settings_rebootDeviceConfirm": "Sind Sie sicher, dass Sie das Gerät neu starten möchten? Sie werden getrennt.",
   "settings_debug": "Fehlerbehebung",
-  "settings_bleDebugLog": "BLE-Debug-Protokoll",
-  "settings_bleDebugLogSubtitle": "BLE-Befehle, Antworten und Rohdaten",
   "settings_appDebugLog": "App-Debug-Protokoll",
   "settings_appDebugLogSubtitle": "Anwendung Debug-Nachrichten",
   "settings_about": "Über",

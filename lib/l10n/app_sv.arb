@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Starta MeshCore-enheten",
   "settings_rebootDeviceConfirm": "Är du säker på att du vill starta om enheten? Du kommer att bli avkopplad.",
   "settings_debug": "Felsök",
-  "settings_bleDebugLog": "BLE-felsökning",
-  "settings_bleDebugLogSubtitle": "BLE-kommandon, svar och rådata",
   "settings_appDebugLog": "Appfelsökning",
   "settings_appDebugLogSubtitle": "Applikations felsökningsmeddelanden",
   "settings_about": "Om",

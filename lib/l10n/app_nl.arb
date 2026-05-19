@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Herstart het MeshCore-apparaat",
   "settings_rebootDeviceConfirm": "Ben je er zeker van dat je het apparaat opnieuw wilt opstarten? Je wordt losgekoppeld.",
   "settings_debug": "Foutopsporing",
-  "settings_bleDebugLog": "BLE Debug Log",
-  "settings_bleDebugLogSubtitle": "BLE commando's, antwoorden en ruwe data",
   "settings_appDebugLog": "Debuglog van de app",
   "settings_appDebugLogSubtitle": "Toepassingsdebugberichten",
   "settings_about": "Over",

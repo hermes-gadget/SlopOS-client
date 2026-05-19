@@ -18,6 +18,7 @@ import '../widgets/message_status_icon.dart';
 import '../helpers/chat_scroll_controller.dart';
 import '../helpers/gif_helper.dart';
 import '../helpers/path_helper.dart';
+import '../theme/slopos_theme.dart';
 import '../models/channel_message.dart';
 import '../models/contact.dart';
 import '../l10n/contact_localization.dart';
@@ -72,6 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Message? _pendingUnreadScrollTarget;
   String? _unreadDividerMessageId;
   DateTime? _lastTextSendAt;
+  int _lastMessageCount = 0;
 
   @override
   void initState() {
@@ -453,12 +455,16 @@ class _ChatScreenState extends State<ChatScreen> {
     final reversedMessages = messages.reversed.toList();
     final itemCount = reversedMessages.length + (_isLoadingOlder ? 1 : 0);
 
-    // Auto-scroll to bottom if user is already at bottom
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      if (_pendingUnreadScrollTarget != null) return;
-      _scrollController.scrollToBottomIfAtBottom();
-    });
+    // Auto-scroll to bottom if user is already at bottom and message count changed
+    final prevCount = _lastMessageCount;
+    _lastMessageCount = messages.length;
+    if (prevCount != messages.length) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        if (_pendingUnreadScrollTarget != null) return;
+        _scrollController.scrollToBottomIfAtBottom();
+      });
+    }
 
     return ChatZoomWrapper(
       child: ListView.builder(
@@ -763,13 +769,21 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _textController.clear();
     _textFieldFocusNode.requestFocus();
-    connector.sendMessage(
-      _resolveContact(connector),
-      outgoingText,
-      originalText: originalText,
-      translatedLanguageCode: translatedLanguageCode,
-      translationModelId: translationModelId,
-    );
+    try {
+      await connector.sendMessage(
+        _resolveContact(connector),
+        outgoingText,
+        originalText: originalText,
+        translatedLanguageCode: translatedLanguageCode,
+        translationModelId: translationModelId,
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+      showDismissibleSnackBar(
+        context,
+        content: Text(context.l10n.settings_error('$e')),
+      );
+    }
   }
 
   void _showPathHistory(BuildContext context) {
@@ -1806,7 +1820,13 @@ class _MessageBubble extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       color: bubbleColor,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(SlopOSRadii.pixel),
+                      border: Border.all(
+                        color: isOutgoing
+                            ? SlopOSPalette.meBorder
+                            : SlopOSPalette.incomingBorder,
+                        width: 2,
+                      ),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1822,6 +1842,8 @@ class _MessageBubble extends StatelessWidget {
                                 : EdgeInsets.zero,
                             child: Text(
                               senderName,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
@@ -1944,6 +1966,8 @@ class _MessageBubble extends StatelessWidget {
                                       .settings
                                       .maxMessageRetries,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: metaColor,
@@ -2074,6 +2098,8 @@ class _MessageBubble extends StatelessWidget {
               if (poi.label.isNotEmpty)
                 Text(
                   poi.label,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: metaColor, fontSize: 12 * textScale),
                 ),
             ],

@@ -95,8 +95,6 @@
   "settings_rebootDeviceSubtitle": "Перезапустить устройство MeshCore",
   "settings_rebootDeviceConfirm": "Вы уверены, что хотите перезагрузить устройство? Вы будете отключены.",
   "settings_debug": "Отладка",
-  "settings_bleDebugLog": "Журнал отладки BLE",
-  "settings_bleDebugLogSubtitle": "Команды BLE, ответы и сырые данные",
   "settings_appDebugLog": "Журнал отладки приложения",
   "settings_appDebugLogSubtitle": "Сообщения отладки приложения",
   "settings_about": "О программе",
@@ -581,11 +579,9 @@
   "repeater_refreshBasicSettings": "Обновить основные настройки",
   "repeater_refreshRadioSettings": "Обновить настройки радио",
   "repeater_refreshTxPower": "Обновить мощность передачи",
-  "repeater_refreshLocationSettings": "Обновить настройки местоположения",
   "repeater_refreshPacketForwarding": "Обновить пересылку пакетов",
   "repeater_refreshGuestAccess": "Обновить гостевой доступ",
   "repeater_refreshPrivacyMode": "Обновить режим конфиденциальности",
-  "repeater_refreshAdvertisementSettings": "Обновить настройки анонсирований",
   "repeater_refreshed": "{label} обновлён",
   "repeater_errorRefreshing": "Ошибка обновления {label}",
   "repeater_cliTitle": "CLI репитера",
@@ -692,7 +688,6 @@
   "neighbors_repeatersNeighbors": "Соседи репитеров",
   "neighbors_noData": "Данные о соседях недоступны.",
   "neighbors_unknownContact": "Неизвестный {pubkey}",
-  "neighbors_heardA ago": "Слышали: {time} назад",
   "channelPath_title": "Путь пакета",
   "channelPath_viewMap": "Посмотреть на карте",
   "channelPath_otherObservedPaths": "Другие наблюдаемые пути",
@@ -1476,13 +1471,6 @@
   "@repeater_settingsPartialFailure": {
     "placeholders": {
       "failures": {
-        "type": "String"
-      }
-    }
-  },
-  "@settings_multiAck": {
-    "placeholders": {
-      "value": {
         "type": "String"
       }
     }

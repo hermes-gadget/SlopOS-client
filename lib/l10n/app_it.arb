@@ -118,8 +118,6 @@
   "settings_rebootDeviceSubtitle": "Riavviare il dispositivo MeshCore",
   "settings_rebootDeviceConfirm": "Sei sicuro di voler riavviare il dispositivo? Sarai disconnesso.",
   "settings_debug": "Risoluzione dei problemi",
-  "settings_bleDebugLog": "Log di Debug BLE",
-  "settings_bleDebugLogSubtitle": "Comandi, risposte e dati grezzi BLE",
   "settings_appDebugLog": "Log di Debug dell'App",
   "settings_appDebugLogSubtitle": "Messaggi di debug dell'applicazione",
   "settings_about": "Informazioni",
