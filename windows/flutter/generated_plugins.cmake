@@ -12,7 +12,6 @@ list(APPEND FLUTTER_FFI_PLUGIN_LIST
   flserial
   flutter_local_notifications_windows
   jni
-  llamadart
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
