@@ -61,7 +61,7 @@ class _DiscoveryScreenState extends State<DiscoveryScreen> {
       appBar: AppBar(
         title: AppBarTitle(
           l10n.discoveredContacts_Title,
-          indicators: false,
+          showBatteryIndicator: false,
           subtitle: false,
         ),
         centerTitle: true,

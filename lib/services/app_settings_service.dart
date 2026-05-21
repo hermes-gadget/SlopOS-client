@@ -204,6 +204,10 @@ class AppSettingsService extends ChangeNotifier {
     await updateSettings(_settings.copyWith(unitSystem: value));
   }
 
+  Future<void> setUsePixelFonts(bool value) async {
+    await updateSettings(_settings.copyWith(usePixelFonts: value));
+  }
+
   bool isChannelMuted(String channelName) {
     return _settings.mutedChannels.contains(channelName);
   }

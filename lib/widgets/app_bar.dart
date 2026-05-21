@@ -3,21 +3,19 @@ import 'package:slopos_client/connector/meshcore_connector.dart';
 import 'package:slopos_client/widgets/battery_indicator.dart';
 import 'package:provider/provider.dart';
 
-import 'radio_stats_entry.dart';
-import 'snr_indicator.dart';
-
 class AppBarTitle extends StatelessWidget {
-  final String title;
+  @Deprecated('Title is now always "SlopOS" — this parameter is ignored')
+  final String? title;
   final Widget? leading;
   final Widget? trailing;
-  final bool indicators;
   final bool showBatteryIndicator;
   final bool subtitle;
+
+  // ignore: use_key_in_widget_constructors
   const AppBarTitle(
     this.title, {
     this.leading,
     this.trailing,
-    this.indicators = true,
     this.showBatteryIndicator = true,
     this.subtitle = true,
     super.key,
@@ -33,15 +31,9 @@ class AppBarTitle extends StatelessWidget {
         final availableWidth = constraints.hasBoundedWidth
             ? constraints.maxWidth
             : MediaQuery.sizeOf(context).width;
-        final compact = availableWidth < 170;
         final showSubtitle =
-            !compact && connector.isConnected && selfName != null && subtitle;
-        final showBattery = showBatteryIndicator && availableWidth >= 180;
-        final showSnr = availableWidth >= 230;
-        final showStats =
-            connector.supportsCompanionRadioStats && availableWidth >= 280;
-        final showIndicators =
-            (showBattery || showSnr || showStats) && indicators;
+            connector.isConnected && selfName != null && subtitle;
+        final showBattery = showBatteryIndicator && availableWidth >= 160;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -52,30 +44,32 @@ class AppBarTitle extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(title, maxLines: 1, overflow: TextOverflow.ellipsis),
+                  const Text(
+                    'SlopOS',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   if (showSubtitle)
                     Text(
                       selfName,
-                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                 ],
               ),
             ),
-            if (showIndicators) const SizedBox(width: 6),
-            if (showIndicators)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (showBattery) BatteryIndicator(connector: connector),
-                  if (showSnr) SNRIndicator(connector: connector),
-                  if (showStats)
-                    const RadioStatsIconButton(compact: true),
-                ],
-              ),
-            trailing ?? const SizedBox.shrink(),
+            if (showBattery) ...[
+              const SizedBox(width: 6),
+              BatteryIndicator(connector: connector),
+            ],
+            if (trailing != null) ...[
+              const SizedBox(width: 4),
+              trailing!,
+            ],
           ],
         );
       },

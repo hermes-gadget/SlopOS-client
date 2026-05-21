@@ -663,6 +663,13 @@ class AppLocalizationsSl extends AppLocalizations {
       'Prikaži podrobne metapodatke o usmerjanju in časovnem usklajevanju sporočil';
 
   @override
+  String get appSettings_pixelFonts => 'Pixel Fonts';
+
+  @override
+  String get appSettings_pixelFontsSubtitle =>
+      'Use retro pixel fonts for headings and UI';
+
+  @override
   String get appSettings_notifications => 'Obvestila';
 
   @override

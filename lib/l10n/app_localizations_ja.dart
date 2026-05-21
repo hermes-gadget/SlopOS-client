@@ -645,6 +645,13 @@ class AppLocalizationsJa extends AppLocalizations {
       'メッセージに関する詳細な経路およびタイミングに関するメタデータを表示する';
 
   @override
+  String get appSettings_pixelFonts => 'Pixel Fonts';
+
+  @override
+  String get appSettings_pixelFontsSubtitle =>
+      'Use retro pixel fonts for headings and UI';
+
+  @override
   String get appSettings_notifications => '通知';
 
   @override

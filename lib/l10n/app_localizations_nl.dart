@@ -666,6 +666,13 @@ class AppLocalizationsNl extends AppLocalizations {
       'Gedetailleerde routerings- en timing-metadata voor berichten weergeven';
 
   @override
+  String get appSettings_pixelFonts => 'Pixel Fonts';
+
+  @override
+  String get appSettings_pixelFontsSubtitle =>
+      'Use retro pixel fonts for headings and UI';
+
+  @override
   String get appSettings_notifications => 'Notificaties';
 
   @override

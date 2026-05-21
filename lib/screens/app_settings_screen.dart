@@ -121,6 +121,18 @@ class AppSettingsScreen extends StatelessWidget {
               settingsService.setEnableMessageTracing(value);
             },
           ),
+          const Divider(height: 1),
+          SwitchListTile(
+            secondary: const Icon(Icons.font_download_outlined),
+            title: Text(context.l10n.appSettings_pixelFonts),
+            subtitle: Text(
+              context.l10n.appSettings_pixelFontsSubtitle,
+            ),
+            value: settingsService.settings.usePixelFonts,
+            onChanged: (value) {
+              settingsService.setUsePixelFonts(value);
+            },
+          ),
         ],
       ),
     );

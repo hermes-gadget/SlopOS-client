@@ -671,6 +671,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Mostrar metadatos detallados de enrutamiento y tiempo para los mensajes';
 
   @override
+  String get appSettings_pixelFonts => 'Pixel Fonts';
+
+  @override
+  String get appSettings_pixelFontsSubtitle =>
+      'Use retro pixel fonts for headings and UI';
+
+  @override
   String get appSettings_notifications => 'Notificaciones';
 
   @override

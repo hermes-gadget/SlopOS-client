@@ -666,6 +666,13 @@ class AppLocalizationsSk extends AppLocalizations {
       'Zobraziť podrobné metadáta o smerovaní a časovaní správ';
 
   @override
+  String get appSettings_pixelFonts => 'Pixel Fonts';
+
+  @override
+  String get appSettings_pixelFontsSubtitle =>
+      'Use retro pixel fonts for headings and UI';
+
+  @override
   String get appSettings_notifications => 'Upozornenia';
 
   @override

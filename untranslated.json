@@ -1,5 +1,7 @@
 {
   "bg": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -23,6 +25,8 @@
   ],
 
   "de": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -46,6 +50,8 @@
   ],
 
   "es": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -69,6 +75,8 @@
   ],
 
   "fr": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -92,6 +100,8 @@
   ],
 
   "hu": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -115,6 +125,8 @@
   ],
 
   "it": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -138,6 +150,8 @@
   ],
 
   "ja": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -161,6 +175,8 @@
   ],
 
   "ko": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -184,6 +200,8 @@
   ],
 
   "nl": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -207,6 +225,8 @@
   ],
 
   "pl": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -230,6 +250,8 @@
   ],
 
   "pt": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -253,6 +275,8 @@
   ],
 
   "ru": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -276,6 +300,8 @@
   ],
 
   "sk": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -299,6 +325,8 @@
   ],
 
   "sl": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -322,6 +350,8 @@
   ],
 
   "sv": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -345,6 +375,8 @@
   ],
 
   "uk": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",
@@ -368,6 +400,8 @@
   ],
 
   "zh": [
+    "appSettings_pixelFonts",
+    "appSettings_pixelFontsSubtitle",
     "contacts_pinToTop",
     "contacts_unpin",
     "chat_messageInfo",

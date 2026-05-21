@@ -673,6 +673,13 @@ class AppLocalizationsRu extends AppLocalizations {
       'Показывать подробные метаданные о маршрутизации и времени для сообщений';
 
   @override
+  String get appSettings_pixelFonts => 'Pixel Fonts';
+
+  @override
+  String get appSettings_pixelFontsSubtitle =>
+      'Use retro pixel fonts for headings and UI';
+
+  @override
   String get appSettings_notifications => 'Уведомления';
 
   @override

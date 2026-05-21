@@ -77,6 +77,7 @@ class Cyr2LatProfile {
 class AppSettings {
   static const Object _unset = Object();
 
+  final bool usePixelFonts;
   final bool clearPathOnMaxRetry;
   final bool mapShowRepeaters;
   final bool mapShowChatNodes;
@@ -130,6 +131,7 @@ class AppSettings {
   }
 
   AppSettings({
+    this.usePixelFonts = true,
     this.clearPathOnMaxRetry = false,
     this.mapShowRepeaters = true,
     this.mapShowChatNodes = true,
@@ -190,6 +192,7 @@ class AppSettings {
 
   Map<String, dynamic> toJson() {
     return {
+      'use_pixel_fonts': usePixelFonts,
       'clear_path_on_max_retry': clearPathOnMaxRetry,
       'map_show_repeaters': mapShowRepeaters,
       'map_show_chat_nodes': mapShowChatNodes,
@@ -249,6 +252,7 @@ class AppSettings {
     }
 
     return AppSettings(
+      usePixelFonts: json['use_pixel_fonts'] as bool? ?? true,
       clearPathOnMaxRetry: json['clear_path_on_max_retry'] as bool? ?? false,
       mapShowRepeaters: json['map_show_repeaters'] as bool? ?? true,
       mapShowChatNodes: json['map_show_chat_nodes'] as bool? ?? true,
@@ -360,6 +364,7 @@ class AppSettings {
   }
 
   AppSettings copyWith({
+    bool? usePixelFonts,
     bool? clearPathOnMaxRetry,
     bool? mapShowRepeaters,
     bool? mapShowChatNodes,
@@ -405,6 +410,7 @@ class AppSettings {
     String? selectedCyr2latProfileId,
   }) {
     return AppSettings(
+      usePixelFonts: usePixelFonts ?? this.usePixelFonts,
       clearPathOnMaxRetry: clearPathOnMaxRetry ?? this.clearPathOnMaxRetry,
       mapShowRepeaters: mapShowRepeaters ?? this.mapShowRepeaters,
       mapShowChatNodes: mapShowChatNodes ?? this.mapShowChatNodes,

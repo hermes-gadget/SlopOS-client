@@ -191,8 +191,12 @@ class SlopOSApp extends StatelessWidget {
             locale: _localeFromSetting(
               settingsService.settings.languageOverride,
             ),
-            theme: SlopOSTheme.light(),
-            darkTheme: SlopOSTheme.dark(),
+            theme: SlopOSTheme.light(
+              usePixelFonts: settingsService.settings.usePixelFonts,
+            ),
+            darkTheme: SlopOSTheme.dark(
+              usePixelFonts: settingsService.settings.usePixelFonts,
+            ),
             themeMode: _themeModeFromSetting(
               settingsService.settings.themeMode,
             ),

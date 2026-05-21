@@ -64,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(
         title: AppBarTitle(
           l10n.settings_title,
-          indicators: false,
+          showBatteryIndicator: false,
           subtitle: false,
         ),
       ),

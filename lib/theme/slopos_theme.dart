@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// SlopOS pixel palette — deep-black retro blocky theme with
 /// cyan (#00BFFF) accents. Sharp edges, thick borders, pixel fonts.
@@ -129,7 +130,7 @@ class SlopOSRadii {
 class SlopOSTheme {
   SlopOSTheme._();
 
-  static ThemeData dark() {
+  static ThemeData dark({bool usePixelFonts = true}) {
     const scheme = ColorScheme.dark(
       primary: SlopOSPalette.signal,
       onPrimary: Color(0xFF0A1810),
@@ -159,10 +160,10 @@ class SlopOSTheme {
       onInverseSurface: SlopOSPalette.bg,
       inversePrimary: SlopOSPalette.signalDim,
     );
-    return _build(scheme, Brightness.dark);
+    return _build(scheme, Brightness.dark, usePixelFonts: usePixelFonts);
   }
 
-  static ThemeData light() {
+  static ThemeData light({bool usePixelFonts = true}) {
     const scheme = ColorScheme.light(
       primary: SlopOSPalette.lightSignal,
       onPrimary: Colors.white,
@@ -185,10 +186,14 @@ class SlopOSTheme {
       outline: SlopOSPalette.lightLine,
       outlineVariant: Color(0xFFDBD6C6),
     );
-    return _build(scheme, Brightness.light);
+    return _build(scheme, Brightness.light, usePixelFonts: usePixelFonts);
   }
 
-  static ThemeData _build(ColorScheme scheme, Brightness brightness) {
+  static ThemeData _build(ColorScheme scheme, Brightness brightness, {bool usePixelFonts = true}) {
+    final headingFont = usePixelFonts ? SlopOSFonts.pixel : 'Inter';
+    final headingFallback = usePixelFonts ? SlopOSFonts.pixelFallback : null;
+    final bodyFont = usePixelFonts ? SlopOSFonts.body : 'Inter';
+    final bodyFallback = usePixelFonts ? SlopOSFonts.bodyFallback : null;
     final baseText =
         Typography.material2021(
           platform: TargetPlatform.android,
@@ -196,9 +201,13 @@ class SlopOSTheme {
         ).black.apply(
           bodyColor: scheme.onSurface,
           displayColor: scheme.onSurface,
-          fontFamily: SlopOSFonts.body,
-          fontFamilyFallback: SlopOSFonts.bodyFallback,
+          fontFamily: bodyFont,
+          fontFamilyFallback: bodyFallback,
         );
+
+    final textTheme = usePixelFonts
+        ? baseText
+        : GoogleFonts.interTextTheme(baseText);
 
     return ThemeData(
       useMaterial3: true,
@@ -206,9 +215,9 @@ class SlopOSTheme {
       colorScheme: scheme,
       scaffoldBackgroundColor: scheme.surface,
       canvasColor: scheme.surface,
-      fontFamily: SlopOSFonts.body,
-      fontFamilyFallback: SlopOSFonts.bodyFallback,
-      textTheme: baseText,
+      fontFamily: bodyFont,
+      fontFamilyFallback: bodyFallback,
+      textTheme: textTheme,
       dividerColor: scheme.outlineVariant,
       dividerTheme: DividerThemeData(
         color: scheme.outlineVariant,
@@ -223,8 +232,8 @@ class SlopOSTheme {
         scrolledUnderElevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
-          fontFamily: SlopOSFonts.pixel,
-          fontFamilyFallback: SlopOSFonts.pixelFallback,
+          fontFamily: headingFont,
+          fontFamilyFallback: headingFallback,
           fontSize: 14,
           fontWeight: FontWeight.w400,
           letterSpacing: 1.0,
@@ -265,8 +274,8 @@ class SlopOSTheme {
           side: BorderSide(color: scheme.primary, width: 2),
         ),
         extendedTextStyle: TextStyle(
-          fontFamily: SlopOSFonts.pixel,
-          fontFamilyFallback: SlopOSFonts.pixelFallback,
+          fontFamily: headingFont,
+          fontFamilyFallback: headingFallback,
           fontWeight: FontWeight.w400,
           fontSize: 12,
           letterSpacing: 0.5,
@@ -283,8 +292,8 @@ class SlopOSTheme {
             side: const BorderSide(color: SlopOSPalette.signalDim, width: 2),
           ),
           textStyle: TextStyle(
-            fontFamily: SlopOSFonts.pixel,
-            fontFamilyFallback: SlopOSFonts.pixelFallback,
+            fontFamily: headingFont,
+            fontFamilyFallback: headingFallback,
             fontWeight: FontWeight.w400,
             fontSize: 11,
             letterSpacing: 0.5,
@@ -309,8 +318,8 @@ class SlopOSTheme {
             borderRadius: BorderRadius.circular(SlopOSRadii.pixel),
           ),
           textStyle: TextStyle(
-            fontFamily: SlopOSFonts.pixel,
-            fontFamilyFallback: SlopOSFonts.pixelFallback,
+            fontFamily: headingFont,
+            fontFamilyFallback: headingFallback,
             fontSize: 11,
             letterSpacing: 0.5,
           ),
@@ -321,7 +330,7 @@ class SlopOSTheme {
         fillColor: scheme.surfaceContainerHigh,
         hintStyle: TextStyle(
           color: scheme.onSurfaceVariant,
-          fontFamily: SlopOSFonts.body,
+          fontFamily: bodyFont,
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 12,
@@ -344,8 +353,8 @@ class SlopOSTheme {
         backgroundColor: scheme.surfaceContainerLow,
         side: BorderSide(color: scheme.outlineVariant, width: 2),
         labelStyle: TextStyle(
-          fontFamily: SlopOSFonts.pixel,
-          fontFamilyFallback: SlopOSFonts.pixelFallback,
+          fontFamily: headingFont,
+          fontFamilyFallback: headingFallback,
           fontSize: 9,
           fontWeight: FontWeight.w400,
           color: scheme.onSurfaceVariant,
@@ -366,8 +375,8 @@ class SlopOSTheme {
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final selected = states.contains(WidgetState.selected);
           return TextStyle(
-            fontFamily: SlopOSFonts.pixel,
-            fontFamilyFallback: SlopOSFonts.pixelFallback,
+            fontFamily: headingFont,
+            fontFamilyFallback: headingFallback,
             fontSize: 8,
             fontWeight: FontWeight.w400,
             letterSpacing: 0.2,
@@ -404,7 +413,7 @@ class SlopOSTheme {
         backgroundColor: scheme.surfaceContainerHigh,
         contentTextStyle: TextStyle(
           color: scheme.onSurface,
-          fontFamily: SlopOSFonts.body,
+          fontFamily: bodyFont,
         ),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(

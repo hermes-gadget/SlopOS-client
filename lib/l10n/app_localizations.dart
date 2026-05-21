@@ -1336,6 +1336,18 @@ abstract class AppLocalizations {
   /// **'Show detailed routing and timing metadata for messages'**
   String get appSettings_enableMessageTracingSubtitle;
 
+  /// No description provided for @appSettings_pixelFonts.
+  ///
+  /// In en, this message translates to:
+  /// **'Pixel Fonts'**
+  String get appSettings_pixelFonts;
+
+  /// No description provided for @appSettings_pixelFontsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use retro pixel fonts for headings and UI'**
+  String get appSettings_pixelFontsSubtitle;
+
   /// No description provided for @appSettings_notifications.
   ///
   /// In en, this message translates to:
