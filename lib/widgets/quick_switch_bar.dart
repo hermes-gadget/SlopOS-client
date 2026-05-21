@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
-import '../theme/slopos_theme.dart';
 
 class QuickSwitchBar extends StatelessWidget {
   final int selectedIndex;
@@ -26,19 +23,15 @@ class QuickSwitchBar extends StatelessWidget {
 
     return SizedBox(
       width: double.infinity,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(SlopOSRadii.pixel),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                color: colorScheme.outlineVariant.withValues(alpha: 0.4),
-                width: 2,
-              ),
-            ),
-            child: NavigationBarTheme(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerLow,
+          border: Border.all(
+            color: colorScheme.outlineVariant,
+            width: 2,
+          ),
+        ),
+        child: NavigationBarTheme(
               data: NavigationBarThemeData(
                 backgroundColor: Colors.transparent,
                 surfaceTintColor: Colors.transparent,
@@ -98,9 +91,7 @@ class QuickSwitchBar extends StatelessWidget {
                 ],
               ),
             ),
-          ),
         ),
-      ),
     );
   }
 

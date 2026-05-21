@@ -32,6 +32,7 @@ import '../services/translation_service.dart';
 import '../widgets/chat_zoom_wrapper.dart';
 import '../widgets/elements_ui.dart';
 import '../widgets/byte_count_input.dart';
+import '../widgets/canned_responses_bar.dart';
 import 'channel_message_path_screen.dart';
 import 'map_screen.dart';
 import '../utils/emoji_utils.dart';
@@ -565,108 +566,117 @@ class _ChatScreenState extends State<ChatScreen> {
         border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
       ),
       child: SafeArea(
-        child: Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              icon: const Icon(Icons.gif_box),
-              onPressed: () => _showGifPicker(context),
-              tooltip: context.l10n.chat_sendGif,
+            CannedResponsesBar(
+              controller: _textController,
+              focusNode: _textFieldFocusNode,
             ),
-            if (settings.translationEnabled)
-              MessageTranslationButton(
-                enabled: settings.composerTranslationEnabled,
-                languageCode: settings.translationTargetLanguageCode,
-                onPressed: _showTranslationOptions,
-              ),
-            Expanded(
-              child: ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _textController,
-                builder: (context, value, child) {
-                  final gifId = GifHelper.parseGif(value.text);
-                  if (gifId != null) {
-                    return Focus(
-                      autofocus: true,
-                      onKeyEvent: (node, event) {
-                        if (event is KeyDownEvent &&
-                            (event.logicalKey == LogicalKeyboardKey.enter ||
-                                event.logicalKey ==
-                                    LogicalKeyboardKey.numpadEnter)) {
-                          _sendMessage(connector);
-                          return KeyEventResult.handled;
-                        }
-                        return KeyEventResult.ignored;
-                      },
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: GifMessage(
-                                url:
-                                    'https://media.giphy.com/media/$gifId/giphy.gif',
-                                backgroundColor:
-                                    colorScheme.surfaceContainerHighest,
-                                fallbackTextColor: colorScheme.onSurface
-                                    .withValues(alpha: 0.6),
-                                maxSize: 160,
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.gif_box),
+                  onPressed: () => _showGifPicker(context),
+                  tooltip: context.l10n.chat_sendGif,
+                ),
+                if (settings.translationEnabled)
+                  MessageTranslationButton(
+                    enabled: settings.composerTranslationEnabled,
+                    languageCode: settings.translationTargetLanguageCode,
+                    onPressed: _showTranslationOptions,
+                  ),
+                Expanded(
+                  child: ValueListenableBuilder<TextEditingValue>(
+                    valueListenable: _textController,
+                    builder: (context, value, child) {
+                      final gifId = GifHelper.parseGif(value.text);
+                      if (gifId != null) {
+                        return Focus(
+                          autofocus: true,
+                          onKeyEvent: (node, event) {
+                            if (event is KeyDownEvent &&
+                                (event.logicalKey == LogicalKeyboardKey.enter ||
+                                    event.logicalKey ==
+                                        LogicalKeyboardKey.numpadEnter)) {
+                              _sendMessage(connector);
+                              return KeyEventResult.handled;
+                            }
+                            return KeyEventResult.ignored;
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: GifMessage(
+                                    url:
+                                        'https://media.giphy.com/media/$gifId/giphy.gif',
+                                    backgroundColor:
+                                        colorScheme.surfaceContainerHighest,
+                                    fallbackTextColor: colorScheme.onSurface
+                                        .withValues(alpha: 0.6),
+                                    maxSize: 160,
+                                  ),
+                                ),
                               ),
-                            ),
+                              const SizedBox(width: 8),
+                              IconButton(
+                                icon: const Icon(Icons.close),
+                                onPressed: () {
+                                  _textController.clear();
+                                  _textFieldFocusNode.requestFocus();
+                                },
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 8),
-                          IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              _textController.clear();
-                              _textFieldFocusNode.requestFocus();
-                            },
+                        );
+                      }
+                      return ByteCountedTextField(
+                        maxBytes: maxBytes,
+                        controller: _textController,
+                        focusNode: _textFieldFocusNode,
+                        hintText: context.l10n.chat_typeMessage,
+                        onSubmitted: (_) => _sendMessage(connector),
+                        encoder:
+                            (connector.isContactSmazEnabled(
+                                  widget.contact.publicKeyHex,
+                                ) ||
+                                connector.isContactCyr2LatEnabled(
+                                  widget.contact.publicKeyHex,
+                                ))
+                            ? (text) => connector.prepareContactOutboundText(
+                                widget.contact,
+                                text,
+                              )
+                            : null,
+                        decoration: InputDecoration(
+                          hintText: context.l10n.chat_typeMessage,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24),
                           ),
-                        ],
-                      ),
-                    );
-                  }
-                  return ByteCountedTextField(
-                    maxBytes: maxBytes,
-                    controller: _textController,
-                    focusNode: _textFieldFocusNode,
-                    hintText: context.l10n.chat_typeMessage,
-                    onSubmitted: (_) => _sendMessage(connector),
-                    encoder:
-                        (connector.isContactSmazEnabled(
-                              widget.contact.publicKeyHex,
-                            ) ||
-                            connector.isContactCyr2LatEnabled(
-                              widget.contact.publicKeyHex,
-                            ))
-                        ? (text) => connector.prepareContactOutboundText(
-                            widget.contact,
-                            text,
-                          )
-                        : null,
-                    decoration: InputDecoration(
-                      hintText: context.l10n.chat_typeMessage,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      filled: true,
-                      fillColor: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerLow,
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 14,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(width: 8),
-            IconButton.filled(
-              icon: const Icon(Icons.send),
-              tooltip: context.l10n.chat_sendMessageTo(
-                _resolveContact(connector).name,
-              ),
-              onPressed: () => _sendMessage(connector),
+                          filled: true,
+                          fillColor: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerLow,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 14,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                IconButton.filled(
+                  icon: const Icon(Icons.send),
+                  tooltip: context.l10n.chat_sendMessageTo(
+                    _resolveContact(connector).name,
+                  ),
+                  onPressed: () => _sendMessage(connector),
+                ),
+              ],
             ),
           ],
         ),
@@ -1617,11 +1627,27 @@ class _ChatScreenState extends State<ChatScreen> {
                 },
               ),
             ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: Text(context.l10n.chat_messageInfo),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                _showMessageInfo(message);
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.copy),
               title: Text(context.l10n.common_copy),
               onTap: () {
                 Navigator.pop(sheetContext);
                 _copyMessageText(message.text);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.forward),
+              title: Text(context.l10n.chat_forward),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                _showForwardSheet(message);
               },
             ),
             if (!message.isOutgoing)
@@ -1668,6 +1694,246 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void _showMessageInfo(Message message) {
+    final l10n = context.l10n;
+
+    String statusText;
+    switch (message.status) {
+      case MessageStatus.pending:
+        statusText = l10n.chat_statusPending;
+        break;
+      case MessageStatus.sent:
+        statusText = l10n.chat_statusSent;
+        break;
+      case MessageStatus.delivered:
+        statusText = l10n.chat_statusDelivered;
+        break;
+      case MessageStatus.failed:
+        statusText = l10n.chat_statusFailed;
+        break;
+    }
+
+    String formatDt(DateTime? dt) {
+      if (dt == null) return l10n.chat_notAvailable;
+      final local = dt.toLocal();
+      final date =
+          '${local.year}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+      final time =
+          '${local.hour.toString().padLeft(2, '0')}:${local.minute.toString().padLeft(2, '0')}:${local.second.toString().padLeft(2, '0')}';
+      return '$date $time';
+    }
+
+    final messageIdShort = message.messageId.length > 32
+        ? '${message.messageId.substring(0, 32)}…'
+        : message.messageId;
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.chat_messageInfo),
+        content: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${l10n.chat_status}: $statusText',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${l10n.chat_sentAt}: ${formatDt(message.sentAt)}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${l10n.chat_deliveredAt}: ${formatDt(message.deliveredAt)}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  message.deliveredAt != null
+                      ? '${l10n.chat_tripTime}: ${(message.tripTimeMs! / 1000).toStringAsFixed(1)}s'
+                      : '${l10n.chat_tripTime}: ${l10n.chat_notAvailable}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  message.pathLength != null
+                      ? '${l10n.chat_pathHops}: ${message.pathLength}'
+                      : '${l10n.chat_pathHops}: ${l10n.chat_notAvailable}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${l10n.chat_retriesCount}: ${message.retryCount}',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 4),
+                child: Text(
+                  '${l10n.chat_messageId}: $messageIdShort',
+                  style: const TextStyle(fontSize: 14),
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(l10n.common_close),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showForwardSheet(Message message) {
+    final connector = context.read<MeshCoreConnector>();
+    final contacts = connector.contacts
+        .where((c) => c.publicKeyHex != widget.contact.publicKeyHex)
+        .toList();
+    final channels = connector.channels.where((ch) => !ch.isEmpty).toList();
+
+    if (contacts.isEmpty && channels.isEmpty) {
+      showDismissibleSnackBar(
+        context,
+        content: Text(context.l10n.chat_forwardSelectTarget),
+      );
+      return;
+    }
+
+    showModalBottomSheet(
+      context: context,
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  context.l10n.chat_forwardTo,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Flexible(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (contacts.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 4,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              context.l10n.nav_contacts,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ...contacts.map(
+                          (contact) => ListTile(
+                            leading: const Icon(Icons.person),
+                            title: Text(contact.name),
+                            subtitle: Text(contact.publicKeyHex.length > 8
+                                ? contact.publicKeyHex.substring(0, 8)
+                                : contact.publicKeyHex),
+                            onTap: () {
+                              Navigator.pop(sheetContext);
+                              connector.sendMessage(contact, message.text);
+                              showDismissibleSnackBar(
+                                context,
+                                content: Text(
+                                  context.l10n.chat_forwardSent,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                      if (channels.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 4,
+                          ),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              context.l10n.nav_channels,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey[600],
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        ...channels.map(
+                          (channel) => ListTile(
+                            leading: const Icon(Icons.tag),
+                            title: Text(channel.name),
+                            subtitle: Text(
+                              context.l10n.channels_channelIndex(channel.index),
+                            ),
+                            onTap: () {
+                              Navigator.pop(sheetContext);
+                              connector.sendChannelMessage(
+                                channel,
+                                message.text,
+                              );
+                              showDismissibleSnackBar(
+                                context,
+                                content: Text(
+                                  context.l10n.chat_forwardSent,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.close),
+                title: Text(context.l10n.common_cancel),
+                onTap: () => Navigator.pop(sheetContext),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

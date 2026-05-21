@@ -1846,6 +1846,18 @@ abstract class AppLocalizations {
   /// **'Open Chat'**
   String get contacts_openChat;
 
+  /// No description provided for @contacts_pinToTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Pin to top'**
+  String get contacts_pinToTop;
+
+  /// No description provided for @contacts_unpin.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpin from top'**
+  String get contacts_unpin;
+
   /// No description provided for @contacts_editGroup.
   ///
   /// In en, this message translates to:
@@ -2973,6 +2985,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid link format'**
   String get chat_invalidLink;
+
+  /// No description provided for @chat_messageInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Message Info'**
+  String get chat_messageInfo;
+
+  /// No description provided for @chat_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get chat_status;
+
+  /// No description provided for @chat_statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get chat_statusPending;
+
+  /// No description provided for @chat_statusSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get chat_statusSent;
+
+  /// No description provided for @chat_statusDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get chat_statusDelivered;
+
+  /// No description provided for @chat_statusFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed'**
+  String get chat_statusFailed;
+
+  /// No description provided for @chat_messageId.
+  ///
+  /// In en, this message translates to:
+  /// **'Message ID'**
+  String get chat_messageId;
+
+  /// No description provided for @chat_sentAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get chat_sentAt;
+
+  /// No description provided for @chat_deliveredAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get chat_deliveredAt;
+
+  /// No description provided for @chat_tripTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip time'**
+  String get chat_tripTime;
+
+  /// No description provided for @chat_pathHops.
+  ///
+  /// In en, this message translates to:
+  /// **'Path hops'**
+  String get chat_pathHops;
+
+  /// No description provided for @chat_retriesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Retries'**
+  String get chat_retriesCount;
+
+  /// No description provided for @chat_notAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get chat_notAvailable;
+
+  /// No description provided for @chat_forward.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward'**
+  String get chat_forward;
+
+  /// No description provided for @chat_forwardTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Forward to...'**
+  String get chat_forwardTo;
+
+  /// No description provided for @chat_forwardSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Message forwarded'**
+  String get chat_forwardSent;
+
+  /// No description provided for @chat_forwardSelectTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a contact or channel'**
+  String get chat_forwardSelectTarget;
+
+  /// No description provided for @chat_quickResponses.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick'**
+  String get chat_quickResponses;
 
   /// No description provided for @map_title.
   ///

@@ -16,6 +16,7 @@ class UiViewStateService extends ChangeNotifier {
   static const _keyContactsTypeFilter = 'ui_contacts_type_filter';
   static const _keyChannelsSortOption = 'ui_channels_sort_option';
   static const _keyChannelsSortIndexLegacy = 'ui_channels_sort_index';
+  static const _keyPinnedContactKeys = 'ui_pinned_contact_keys';
 
   String _contactsSelectedGroupName = contactsAllGroupsValue;
   String _contactsSearchText = '';
@@ -23,6 +24,7 @@ class UiViewStateService extends ChangeNotifier {
   ContactSortOption _contactsSortOption = ContactSortOption.lastSeen;
   bool _contactsShowUnreadOnly = false;
   ContactTypeFilter _contactsTypeFilter = ContactTypeFilter.all;
+  Set<String> _pinnedContactKeys = {};
 
   String _channelsSearchText = '';
   ChannelSortOption _channelsSortOption = ChannelSortOption.manual;
@@ -33,6 +35,7 @@ class UiViewStateService extends ChangeNotifier {
   ContactSortOption get contactsSortOption => _contactsSortOption;
   bool get contactsShowUnreadOnly => _contactsShowUnreadOnly;
   ContactTypeFilter get contactsTypeFilter => _contactsTypeFilter;
+  Set<String> get pinnedContactKeys => Set.unmodifiable(_pinnedContactKeys);
   String get channelsSearchText => _channelsSearchText;
   ChannelSortOption get channelsSortOption => _channelsSortOption;
 
@@ -61,6 +64,11 @@ class UiViewStateService extends ChangeNotifier {
         (e) => e.name == typeStr,
         orElse: () => ContactTypeFilter.all,
       );
+    }
+
+    final pinnedKeys = prefs.getStringList(_keyPinnedContactKeys);
+    if (pinnedKeys != null) {
+      _pinnedContactKeys = pinnedKeys.toSet();
     }
 
     final channelSortStr = prefs.getString(_keyChannelsSortOption);
@@ -149,6 +157,23 @@ class UiViewStateService extends ChangeNotifier {
     notifyListeners();
     unawaited(
       PrefsManager.instance.setString(_keyChannelsSortOption, value.name),
+    );
+  }
+
+  bool isPinned(String publicKeyHex) => _pinnedContactKeys.contains(publicKeyHex);
+
+  void togglePinned(String publicKeyHex) {
+    if (_pinnedContactKeys.contains(publicKeyHex)) {
+      _pinnedContactKeys.remove(publicKeyHex);
+    } else {
+      _pinnedContactKeys.add(publicKeyHex);
+    }
+    notifyListeners();
+    unawaited(
+      PrefsManager.instance.setStringList(
+        _keyPinnedContactKeys,
+        _pinnedContactKeys.toList(),
+      ),
     );
   }
 }

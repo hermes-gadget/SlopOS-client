@@ -78,6 +78,7 @@ class ContactStore {
       'lastModified': contact.lastModified?.millisecondsSinceEpoch,
       'lastMessageAt': contact.lastMessageAt.millisecondsSinceEpoch,
       'isActive': contact.isActive,
+      'pinned': contact.pinned,
       'rawPacket': contact.rawPacket != null
           ? base64Encode(contact.rawPacket!)
           : null,
@@ -113,6 +114,7 @@ class ContactStore {
         lastMessageMs ?? lastSeenMs,
       ),
       isActive: json['isActive'] as bool? ?? true,
+      pinned: json['pinned'] as bool? ?? false,
       rawPacket: json['rawPacket'] != null
           ? Uint8List.fromList(base64Decode(json['rawPacket'] as String))
           : null,

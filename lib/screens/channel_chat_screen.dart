@@ -26,6 +26,7 @@ import '../services/chat_text_scale_service.dart';
 import '../services/translation_service.dart';
 import '../utils/emoji_utils.dart';
 import '../widgets/byte_count_input.dart';
+import '../widgets/canned_responses_bar.dart';
 import '../widgets/chat_zoom_wrapper.dart';
 import '../widgets/emoji_picker.dart';
 import '../widgets/gif_message.dart';
@@ -1137,6 +1138,10 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
               return _buildReplyBanner(textScale);
             },
           ),
+        CannedResponsesBar(
+          controller: _textController,
+          focusNode: _textFieldFocusNode,
+        ),
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
@@ -1400,6 +1405,14 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                 _setReplyingTo(message);
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: Text(context.l10n.chat_messageInfo),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                _showMessageInfo(message);
+              },
+            ),
             if (PlatformInfo.isDesktop)
               ListTile(
                 leading: const Icon(Icons.route),
@@ -1425,6 +1438,14 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
               onTap: () {
                 Navigator.pop(sheetContext);
                 _copyMessageText(message.text);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.forward),
+              title: Text(context.l10n.chat_forward),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                _showForwardDialog(message);
               },
             ),
             if (!message.isOutgoing)
@@ -1502,6 +1523,150 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
     return pathBytes
         .map((b) => b.toRadixString(16).padLeft(2, '0').toUpperCase())
         .join(',');
+  }
+
+  void _showMessageInfo(ChannelMessage message) {
+    final l10n = context.l10n;
+    String statusText;
+    switch (message.status) {
+      case ChannelMessageStatus.pending:
+        statusText = l10n.chat_statusPending;
+        break;
+      case ChannelMessageStatus.sent:
+        statusText = l10n.chat_statusSent;
+        break;
+      case ChannelMessageStatus.failed:
+        statusText = l10n.chat_statusFailed;
+        break;
+    }
+
+    final timestampFormatted =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(message.timestamp);
+    final pathHops =
+        message.pathLength?.toString() ?? l10n.chat_notAvailable;
+    final retries = message.repeatCount.toString();
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.chat_messageInfo),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text('${l10n.chat_status}: $statusText'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text('${l10n.chat_sentAt}: $timestampFormatted'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text('${l10n.chat_pathHops}: $pathHops'),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text('${l10n.chat_retriesCount}: $retries'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(l10n.common_close),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showForwardDialog(ChannelMessage message) {
+    final connector = context.read<MeshCoreConnector>();
+    final contacts = connector.contacts;
+    final channels = connector.channels;
+    final l10n = context.l10n;
+
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.chat_forwardTo),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              if (contacts.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 4.0),
+                  child: Text(
+                    l10n.nav_contacts,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                ...contacts.map(
+                  (contact) => ListTile(
+                    title: Text(contact.name),
+                    leading: const Icon(Icons.person),
+                    dense: true,
+                    onTap: () {
+                      Navigator.pop(dialogContext);
+                      connector.sendMessage(contact, message.text);
+                      showDismissibleSnackBar(
+                        context,
+                        content: Text(l10n.chat_forwardSent),
+                      );
+                    },
+                  ),
+                ),
+              ],
+              if (channels.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 4.0),
+                  child: Text(
+                    l10n.nav_channels,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                ...channels
+                    .where((c) => !c.isEmpty)
+                    .map(
+                      (channel) => ListTile(
+                        title: Text(channel.name),
+                        leading: const Icon(Icons.tag),
+                        dense: true,
+                        onTap: () {
+                          Navigator.pop(dialogContext);
+                          connector.sendChannelMessage(
+                            channel,
+                            message.text,
+                          );
+                          showDismissibleSnackBar(
+                            context,
+                            content: Text(l10n.chat_forwardSent),
+                          );
+                        },
+                      ),
+                    ),
+              ],
+              if (contacts.isEmpty &&
+                  channels.where((c) => !c.isEmpty).isEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(l10n.chat_forwardSelectTarget),
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(l10n.common_cancel),
+          ),
+        ],
+      ),
+    );
   }
 }
 

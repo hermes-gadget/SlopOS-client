@@ -21,6 +21,7 @@ class Contact {
   final bool isActive;
   final bool wasPulled;
   final Uint8List? rawPacket;
+  final bool pinned;
 
   Contact({
     required this.publicKey,
@@ -39,6 +40,7 @@ class Contact {
     this.isActive = true,
     this.wasPulled = false,
     this.rawPacket,
+    this.pinned = false,
   }) : lastMessageAt = lastMessageAt ?? lastSeen;
 
   String get publicKeyHex => pubKeyToHex(publicKey);
@@ -91,6 +93,7 @@ class Contact {
     DateTime? lastModified,
     bool? isActive,
     Uint8List? rawPacket,
+    bool? pinned,
   }) {
     return Contact(
       publicKey: publicKey ?? this.publicKey,
@@ -112,6 +115,7 @@ class Contact {
       lastModified: lastModified ?? this.lastModified,
       isActive: isActive ?? this.isActive,
       rawPacket: rawPacket ?? this.rawPacket,
+      pinned: pinned ?? this.pinned,
     );
   }
 

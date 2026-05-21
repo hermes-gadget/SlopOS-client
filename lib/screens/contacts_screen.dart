@@ -835,6 +835,8 @@ class _ContactsScreenState extends State<ContactsScreen>
                         lastSeen: _resolveLastSeen(contact),
                         unreadCount: unreadCount,
                         isFavorite: contact.isFavorite,
+                        isPinned:
+                            viewState.isPinned(contact.publicKeyHex),
                         onTap: () => _openChat(context, contact),
                         onLongPress: () =>
                             _showContactOptions(context, connector, contact),
@@ -915,6 +917,17 @@ class _ContactsScreenState extends State<ContactsScreen>
         );
         break;
     }
+
+    // Move pinned contacts to the top while preserving existing sort order
+    // within each group
+    final pinnedKeys = viewState.pinnedContactKeys;
+    filtered.sort((a, b) {
+      final aPinned = pinnedKeys.contains(a.publicKeyHex);
+      final bPinned = pinnedKeys.contains(b.publicKeyHex);
+      if (aPinned && !bPinned) return -1;
+      if (!aPinned && bPinned) return 1;
+      return 0;
+    });
 
     return filtered;
   }
@@ -1263,6 +1276,8 @@ class _ContactsScreenState extends State<ContactsScreen>
     final isRepeater = contact.type == advTypeRepeater;
     final isRoom = contact.type == advTypeRoom;
     final isFavorite = contact.isFavorite;
+    final isPinned =
+        context.read<UiViewStateService>().isPinned(contact.publicKeyHex);
 
     showModalBottomSheet(
       context: context,
@@ -1401,6 +1416,23 @@ class _ContactsScreenState extends State<ContactsScreen>
               },
             ),
             ListTile(
+              leading: Icon(
+                isPinned ? Icons.push_pin : Icons.push_pin_outlined,
+                color: isPinned ? Colors.red : null,
+              ),
+              title: Text(
+                isPinned
+                    ? context.l10n.contacts_unpin
+                    : context.l10n.contacts_pinToTop,
+              ),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                context
+                    .read<UiViewStateService>()
+                    .togglePinned(contact.publicKeyHex);
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.copy),
               title: Text(context.l10n.contacts_ShareContact),
               onTap: () {
@@ -1469,6 +1501,7 @@ class _ContactTile extends StatelessWidget {
   final DateTime lastSeen;
   final int unreadCount;
   final bool isFavorite;
+  final bool isPinned;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
@@ -1477,6 +1510,7 @@ class _ContactTile extends StatelessWidget {
     required this.lastSeen,
     required this.unreadCount,
     required this.isFavorite,
+    required this.isPinned,
     required this.onTap,
     required this.onLongPress,
   });
@@ -1535,6 +1569,11 @@ class _ContactTile extends StatelessWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    if (isPinned)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 2),
+                        child: Icon(Icons.push_pin, size: 14, color: Colors.red[400]),
+                      ),
                     if (isFavorite)
                       Icon(Icons.star, size: 14, color: Colors.amber[700]),
                     if (isFavorite && contact.hasLocation)

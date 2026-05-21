@@ -931,6 +931,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get contacts_openChat => '自由な会話';
 
   @override
+  String get contacts_pinToTop => 'Pin to top';
+
+  @override
+  String get contacts_unpin => 'Unpin from top';
+
+  @override
   String get contacts_editGroup => '編集グループ';
 
   @override
@@ -1571,6 +1577,60 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get chat_invalidLink => '無効なリンク形式';
+
+  @override
+  String get chat_messageInfo => 'Message Info';
+
+  @override
+  String get chat_status => 'Status';
+
+  @override
+  String get chat_statusPending => 'Pending';
+
+  @override
+  String get chat_statusSent => 'Sent';
+
+  @override
+  String get chat_statusDelivered => 'Delivered';
+
+  @override
+  String get chat_statusFailed => 'Failed';
+
+  @override
+  String get chat_messageId => 'Message ID';
+
+  @override
+  String get chat_sentAt => 'Sent';
+
+  @override
+  String get chat_deliveredAt => 'Delivered';
+
+  @override
+  String get chat_tripTime => 'Trip time';
+
+  @override
+  String get chat_pathHops => 'Path hops';
+
+  @override
+  String get chat_retriesCount => 'Retries';
+
+  @override
+  String get chat_notAvailable => 'N/A';
+
+  @override
+  String get chat_forward => 'Forward';
+
+  @override
+  String get chat_forwardTo => 'Forward to...';
+
+  @override
+  String get chat_forwardSent => 'Message forwarded';
+
+  @override
+  String get chat_forwardSelectTarget => 'Select a contact or channel';
+
+  @override
+  String get chat_quickResponses => 'Quick';
 
   @override
   String get map_title => 'ノードマップ';
