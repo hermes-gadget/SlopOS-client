@@ -44,9 +44,9 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > android/slopos-release.keystore
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/slopos-release.keystore
           cat > android/key.properties << EOF
-          storeFile=slopos-release.keystore
+          storeFile=app/slopos-release.keystore
           storePassword=$KEYSTORE_PASSWORD
           keyAlias=$KEY_ALIAS
           keyPassword=$KEY_PASSWORD
