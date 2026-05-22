@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > android/app/slopos-release.keystore
           cat > android/key.properties << EOF
-          storeFile=app/slopos-release.keystore
+          storeFile=slopos-release.keystore
           storePassword=$KEYSTORE_PASSWORD
           keyAlias=$KEY_ALIAS
           keyPassword=$KEY_PASSWORD
