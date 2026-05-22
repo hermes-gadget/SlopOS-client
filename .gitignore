@@ -91,3 +91,5 @@ keystore.properties
 
 # Cloudflare Wrangler
 .wrangler
+android/slopos-release.keystore
+android/key.properties
