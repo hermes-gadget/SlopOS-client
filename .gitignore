@@ -89,7 +89,5 @@ keystore.properties
 .vscode/settings.json
 .contextstream/
 
-# Cloudflare Wrangler
-.wrangler
 android/app/slopos-release.keystore
 android/key.properties
