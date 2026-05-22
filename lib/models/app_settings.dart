@@ -131,7 +131,7 @@ class AppSettings {
   }
 
   AppSettings({
-    this.usePixelFonts = true,
+    this.usePixelFonts = false,
     this.clearPathOnMaxRetry = false,
     this.mapShowRepeaters = true,
     this.mapShowChatNodes = true,
@@ -252,7 +252,7 @@ class AppSettings {
     }
 
     return AppSettings(
-      usePixelFonts: json['use_pixel_fonts'] as bool? ?? true,
+      usePixelFonts: json['use_pixel_fonts'] as bool? ?? false,
       clearPathOnMaxRetry: json['clear_path_on_max_retry'] as bool? ?? false,
       mapShowRepeaters: json['map_show_repeaters'] as bool? ?? true,
       mapShowChatNodes: json['map_show_chat_nodes'] as bool? ?? true,

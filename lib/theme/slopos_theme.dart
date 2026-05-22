@@ -130,7 +130,7 @@ class SlopOSRadii {
 class SlopOSTheme {
   SlopOSTheme._();
 
-  static ThemeData dark({bool usePixelFonts = true}) {
+  static ThemeData dark({bool usePixelFonts = false}) {
     const scheme = ColorScheme.dark(
       primary: SlopOSPalette.signal,
       onPrimary: Color(0xFF0A1810),
@@ -163,7 +163,7 @@ class SlopOSTheme {
     return _build(scheme, Brightness.dark, usePixelFonts: usePixelFonts);
   }
 
-  static ThemeData light({bool usePixelFonts = true}) {
+  static ThemeData light({bool usePixelFonts = false}) {
     const scheme = ColorScheme.light(
       primary: SlopOSPalette.lightSignal,
       onPrimary: Colors.white,
@@ -189,7 +189,7 @@ class SlopOSTheme {
     return _build(scheme, Brightness.light, usePixelFonts: usePixelFonts);
   }
 
-  static ThemeData _build(ColorScheme scheme, Brightness brightness, {bool usePixelFonts = true}) {
+  static ThemeData _build(ColorScheme scheme, Brightness brightness, {bool usePixelFonts = false}) {
     final headingFont = usePixelFonts ? SlopOSFonts.pixel : 'Inter';
     final headingFallback = usePixelFonts ? SlopOSFonts.pixelFallback : null;
     final bodyFont = usePixelFonts ? SlopOSFonts.body : 'Inter';

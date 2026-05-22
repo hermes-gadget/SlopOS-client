@@ -20,9 +20,11 @@ import '../services/app_settings_service.dart';
 import '../services/path_history_service.dart';
 import '../services/map_marker_service.dart';
 import '../services/map_tile_cache_service.dart';
+import '../theme/slopos_theme.dart';
 import '../utils/contact_search.dart';
 import '../utils/route_transitions.dart';
 import '../widgets/quick_switch_bar.dart';
+import '../widgets/map_marker.dart';
 import '../icons/los_icon.dart';
 import 'channels_screen.dart';
 import 'chat_screen.dart';
@@ -593,6 +595,7 @@ class _MapScreenState extends State<MapScreen> {
                           ..._buildGuessedMarker(
                             guessedLocations,
                             showLabels: _showNodeLabels,
+                            usePixelShapes: settings.usePixelFonts,
                           ),
                         ..._buildMarkers(
                           contactsWithLocation,
@@ -611,31 +614,10 @@ class _MapScreenState extends State<MapScreen> {
                             height: 40,
                             child: IgnorePointer(
                               ignoring: true,
-                              child: Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  color: Colors.teal,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 2,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(
-                                        alpha: 0.3,
-                                      ),
-                                      blurRadius: 4,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                alignment: Alignment.center,
-                                child: const Icon(
-                                  Icons.person_pin_circle,
-                                  color: Colors.white,
-                                  size: 20,
-                                ),
+                              child: NodeMarkerWidget(
+                                isSelf: true,
+                                usePixelShapes:
+                                    settings.usePixelFonts,
                               ),
                             ),
                           ),
@@ -648,6 +630,7 @@ class _MapScreenState extends State<MapScreen> {
                               connector.selfLongitude!,
                             ),
                             label: context.l10n.pathTrace_you,
+                            usePixelShapes: settings.usePixelFonts,
                           ),
                       ],
                     ),
@@ -894,6 +877,7 @@ class _MapScreenState extends State<MapScreen> {
   List<Marker> _buildGuessedMarker(
     List<_GuessedLocation> guessed, {
     required bool showLabels,
+    required bool usePixelShapes,
   }) {
     final markers = <Marker>[];
 
@@ -902,7 +886,6 @@ class _MapScreenState extends State<MapScreen> {
         continue;
       }
 
-      final color = _getNodeColor(guess.contact.type);
       final marker = Marker(
         point: guess.position,
         width: 35,
@@ -918,27 +901,10 @@ class _MapScreenState extends State<MapScreen> {
                   guess.contact,
                   guessedPosition: guess.position,
                 ),
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-              color: color.withValues(
-                alpha: guess.highConfidence ? 0.55 : 0.30,
-              ),
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 2),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: const Icon(
-              Icons.not_listed_location,
-              color: Colors.white,
-              size: 20,
-            ),
+          child: NodeMarkerWidget(
+            type: guess.contact.type,
+            opacity: guess.highConfidence ? 0.55 : 0.30,
+            usePixelShapes: usePixelShapes,
           ),
         ),
       );
@@ -950,6 +916,7 @@ class _MapScreenState extends State<MapScreen> {
           _buildNodeLabelMarker(
             point: guess.position,
             label: guess.contact.name,
+            usePixelShapes: usePixelShapes,
           ),
         );
       }
@@ -1040,34 +1007,13 @@ class _MapScreenState extends State<MapScreen> {
             onTap: () => _isBuildingPathTrace
                 ? _addToPath(context, contact)
                 : _showNodeInfo(context, contact),
-            child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: settings.mapShowOverlaps && !_isBuildingPathTrace
-                      ? Colors.red
-                      : _getNodeColor(contact.type),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.3),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  _getNodeIcon(contact.type),
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-            ],
+            child: NodeMarkerWidget(
+              type: contact.type,
+              usePixelShapes: settings.usePixelFonts,
+              highlighted: settings.mapShowOverlaps && !_isBuildingPathTrace,
+            ),
           ),
         ),
-      ),
       );
 
       markers.add(marker);
@@ -1078,6 +1024,7 @@ class _MapScreenState extends State<MapScreen> {
             label: settings.mapShowOverlaps && !_isBuildingPathTrace
                 ? "${contact.publicKeyHex.substring(0, 2)}:${contact.name}"
                 : contact.name,
+            usePixelShapes: settings.usePixelFonts,
           ),
         );
       }
@@ -1086,7 +1033,11 @@ class _MapScreenState extends State<MapScreen> {
     return markers;
   }
 
-  Marker _buildNodeLabelMarker({required LatLng point, required String label}) {
+  Marker _buildNodeLabelMarker({
+    required LatLng point,
+    required String label,
+    bool usePixelShapes = false,
+  }) {
     return Marker(
       point: point,
       width: 120,
@@ -1098,20 +1049,33 @@ class _MapScreenState extends State<MapScreen> {
           child: FittedBox(
             fit: BoxFit.contain,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              padding: usePixelShapes
+                  ? const EdgeInsets.symmetric(horizontal: 6, vertical: 3)
+                  : const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.circular(8),
+                color: usePixelShapes
+                    ? const Color(0xFF050505)
+                    : Colors.black54,
+                borderRadius: BorderRadius.circular(
+                  usePixelShapes ? SlopOSRadii.none : 8,
+                ),
+                border: usePixelShapes
+                    ? Border.all(
+                        color: SlopOSPalette.signal,
+                        width: 2,
+                      )
+                    : null,
               ),
               alignment: Alignment.center,
               child: Text(
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 11,
+                  fontSize: usePixelShapes ? 10 : 11,
                   fontWeight: FontWeight.w500,
+                  fontFamily: usePixelShapes ? SlopOSFonts.body : null,
                 ),
               ),
             ),
@@ -1122,18 +1086,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Color _getNodeColor(int type) {
-    switch (type) {
-      case advTypeChat:
-        return Colors.blue;
-      case advTypeRepeater:
-        return Colors.green;
-      case advTypeRoom:
-        return Colors.purple;
-      case advTypeSensor:
-        return Colors.orange;
-      default:
-        return Colors.grey;
-    }
+    return nodeColorForType(type);
   }
 
   IconData _getNodeIcon(int type) {
@@ -1284,22 +1237,30 @@ class _MapScreenState extends State<MapScreen> {
                     _buildLegendItem(
                       Icons.person,
                       context.l10n.map_chat,
-                      Colors.blue,
+                      nodeColorForType(advTypeChat),
+                      shape: nodeShapeForType(advTypeChat),
+                      usePixelShapes: settings.usePixelFonts,
                     ),
                     _buildLegendItem(
                       Icons.router,
                       context.l10n.map_repeater,
-                      Colors.green,
+                      nodeColorForType(advTypeRepeater),
+                      shape: nodeShapeForType(advTypeRepeater),
+                      usePixelShapes: settings.usePixelFonts,
                     ),
                     _buildLegendItem(
                       Icons.meeting_room,
                       context.l10n.map_room,
-                      Colors.purple,
+                      nodeColorForType(advTypeRoom),
+                      shape: nodeShapeForType(advTypeRoom),
+                      usePixelShapes: settings.usePixelFonts,
                     ),
                     _buildLegendItem(
                       Icons.sensors,
                       context.l10n.map_sensor,
-                      Colors.orange,
+                      nodeColorForType(advTypeSensor),
+                      shape: nodeShapeForType(advTypeSensor),
+                      usePixelShapes: settings.usePixelFonts,
                     ),
                     _buildLegendItem(
                       Icons.flag,
@@ -1321,6 +1282,7 @@ class _MapScreenState extends State<MapScreen> {
                         Icons.not_listed_location,
                         context.l10n.map_guessedLocation,
                         Colors.grey,
+                        usePixelShapes: settings.usePixelFonts,
                       ),
                   ],
                 ),
@@ -1336,13 +1298,30 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget _buildLegendItem(IconData icon, String label, Color color) {
+  Widget _buildLegendItem(
+    IconData icon,
+    String label,
+    Color color, {
+    NodeMarkerShape? shape,
+    bool usePixelShapes = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 1.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: color),
+          if (usePixelShapes && shape != null)
+            CustomPaint(
+              size: const Size(15, 15),
+              painter: NodeShapePainter(
+                shape: shape,
+                fillColor: color,
+                borderColor: const Color(0xFF050505),
+                borderWidth: 2.0,
+              ),
+            )
+          else
+            Icon(icon, size: 16, color: color),
           const SizedBox(width: 8),
           Text(label, style: const TextStyle(fontSize: 12)),
         ],
@@ -1451,8 +1430,8 @@ class _MapScreenState extends State<MapScreen> {
         : Colors.blue;
     return Marker(
       point: marker.position,
-      width: 60,
-      height: 60,
+      width: 40,
+      height: 40,
       child: GestureDetector(
         onTap: () async {
           if (_removedMarkerIds.contains(marker.id)) {
@@ -1463,25 +1442,16 @@ class _MapScreenState extends State<MapScreen> {
           }
           _showMarkerInfo(marker);
         },
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: markerColor,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.3),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: const Icon(Icons.flag, color: Colors.white, size: 20),
-            ),
-          ],
+        child: Container(
+          width: 18,
+          height: 18,
+          decoration: BoxDecoration(
+            color: markerColor,
+            shape: BoxShape.rectangle,
+            borderRadius: BorderRadius.circular(0),
+            border: Border.all(color: const Color(0xFF050505), width: 2),
+          ),
+          child: const Icon(Icons.flag, color: Colors.white, size: 10),
         ),
       ),
     );
