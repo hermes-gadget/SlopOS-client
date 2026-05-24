@@ -10,8 +10,8 @@
 
 | File | When to read it | Purpose |
 |------|----------------|---------|
-| **`AGENTS.md`** ← you are here | Every session | Agent instructions, review checklist, rejection triggers |
-| **`CLAUDE.md`** | First time or when you need deep protocol/architecture context | Full codebase reference — BLE protocol, screens, transports, state management |
+| **`AGENTS.md`** ← you are here | Every session | Agent instructions, workflow, review checklist, rejection triggers, gotchas |
+| **`CLAUDE.md`** | Mirror of AGENTS.md | Same content — read whichever your tool prefers |
 | **`CONTRIBUTING.md`** | Before ANY PR | Contribution workflow, issue-first requirement |
 | **`README.md`** | First time in the repo | Project overview, build commands, license |
 
@@ -57,7 +57,7 @@ When working on this codebase, follow this sequence:
 
 1. **Open an issue first** — check if an open issue on `hermes-gadget/SlopOS-client` covers your plan. No issue = no PR accepted.
 2. **Read `CONTRIBUTING.md`** — follow every step.
-3. **Load context** — read `AGENTS.md` (this file), `CLAUDE.md`, `KNOWN_ISSUES.md` (if it exists), and relevant source files.
+3. **Load context** — read `AGENTS.md` (or `CLAUDE.md`, they are identical), `KNOWN_ISSUES.md` (if it exists), and relevant source files.
 4. **Check the branch** — work is always on `dev`. PRs target `dev`, not `main`.
 5. **Run `flutter analyze` and `flutter test`** before any changes to confirm baseline.
 6. **Make changes** — keep commits atomic and descriptive.

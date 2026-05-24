@@ -1,339 +1,186 @@
-# MeshCore Open - Flutter Client
+# SlopOS Client — Agent Onboarding
 
-**See `AGENTS.md` for agent workflow, code review checklist, rejection triggers, and gotchas.**
-**`CLAUDE.md` is the architecture and protocol reference — read both before starting work.**
+**You are an AI agent working on the SlopOS Client Flutter app.** This file is your instruction manual. Read it before modifying code.
 
-Open-source Flutter client for MeshCore LoRa mesh networking devices. Connects to MeshCore-compatible radios over **BLE, TCP, or USB serial** and provides direct/channel chat, contact and channel management, on-map node tracking, repeater administration, and on-device message translation.
+**This file is a mirror of `AGENTS.md`.** Both files contain identical content. Claude Code reads `CLAUDE.md` by default; other agents should read `AGENTS.md`.
 
-## Build Commands
+---
+
+## Reference Documents
+
+| File | When to read it | Purpose |
+|------|----------------|---------|
+| **`AGENTS.md`** | Every session | Agent instructions, workflow, review checklist, rejection triggers, gotchas |
+| **`CLAUDE.md`** ← you are here | Every session | Same content — mirror of AGENTS.md |
+| **`CONTRIBUTING.md`** | Before ANY PR | Contribution workflow, issue-first requirement |
+| **`README.md`** | First time in the repo | Project overview, build commands, license |
+
+---
+
+## What Is This
+
+Flutter mobile app (Android/iOS/Linux/Web) that connects to MeshCore-compatible radios over **BLE, TCP, or USB serial**. Provides direct/channel chat, contact and channel management, on-map node tracking, repeater administration, and on-device message translation.
+
+Three repos form the SlopOS ecosystem:
+
+| Repo | What | Stack |
+|------|------|-------|
+| `hermes-gadget/SlopOS` | MeshCore fork (core library) | C++/PlatformIO, ESP32 |
+| `hermes-gadget/SlopOS-tdeck` | T-Deck LVGL firmware | C++/PlatformIO, LVGL v9 |
+| **`hermes-gadget/SlopOS-client`** ← **you are here** | Flutter mobile app | Dart/Flutter, BLE/USB/TCP |
+
+---
+
+## Quick Start
 
 ```bash
+cd ~/SlopOS-client
+
 # Install dependencies
 ~/flutter/bin/flutter pub get
-
-# Run in debug mode
-~/flutter/bin/flutter run
-
-# Build Android APK
-~/flutter/bin/flutter build apk
-
-# Build iOS
-~/flutter/bin/flutter build ios
-
-# Build versioned web release (uses build_pipe)
-~/flutter/bin/dart run build_pipe
 
 # Run static analysis
 ~/flutter/bin/flutter analyze
 
 # Run tests
 ~/flutter/bin/flutter test
+
+# Build APK
+~/flutter/bin/flutter build apk
 ```
 
-## Project Structure
+---
+
+## AI Agent Workflow
+
+When working on this codebase, follow this sequence:
+
+1. **Open an issue first** — check if an open issue on `hermes-gadget/SlopOS-client` covers your plan. No issue = no PR accepted.
+2. **Read `CONTRIBUTING.md`** — follow every step.
+3. **Load context** — read `AGENTS.md` (or `CLAUDE.md`, they are identical), `KNOWN_ISSUES.md` (if it exists), and relevant source files.
+4. **Check the branch** — work is always on `dev`. PRs target `dev`, not `main`.
+5. **Run `flutter analyze` and `flutter test`** before any changes to confirm baseline.
+6. **Make changes** — keep commits atomic and descriptive.
+7. **Run `flutter analyze` and `flutter test` again** — both must pass.
+8. **Build the APK** — `flutter build apk` must succeed.
+9. **Commit and push** — conventional commit messages (`feat:`, `fix:`, `docs:`, etc.).
+
+### Bug Spotting
+
+If you find a bug while working that is not directly related to your PR, do not ignore it. Add it to `KNOWN_ISSUES.md` using the standard format below. This lets the project catch bugs faster — you found it, you document it, and a maintainer validates it during PR review.
+
+**Standard entry format — insert a new section in `KNOWN_ISSUES.md`:**
 
 ```
-lib/
-├── main.dart        # Entry point: MultiProvider wiring, locale + theme, initial route
-├── connector/       # Unified BLE/TCP/USB transport layer
-│   ├── meshcore_connector.dart       # Central state holder + ChangeNotifier (all transports)
-│   ├── meshcore_connector_tcp.dart   # TCP transport helper
-│   ├── meshcore_connector_usb.dart   # USB serial transport helper
-│   ├── meshcore_protocol.dart        # Frame size + version constants
-│   └── meshcore_uuids.dart           # Nordic UART UUIDs + scan name prefixes
-├── models/          # Plain data classes (Contact, Channel, Message, Community, …)
-├── services/        # ChangeNotifier services + IO services (retry, translation, ML, …)
-├── storage/         # SharedPreferences-backed stores, scoped per device key
-├── helpers/         # Pure utilities (Smaz compression, GIF parsing, scroll helpers)
-├── utils/           # Platform / IO / UX utilities (logger, GPX export, dialogs)
-├── theme/           # MeshPalette (defined, not yet wired in main.dart)
-├── l10n/            # ARB localization for 18 locales
-├── icons/           # Custom icon widgets
-├── widgets/         # Reusable widgets (AppBar, BatteryUi, QR, jump-to-bottom, …)
-└── screens/         # ~26 screens — see Screens section below
+## Category Area (e.g. Chat, BLE, Settings)
+
+### Short specific title — one line describing the issue
+One or two paragraphs explaining what happens, under what conditions, and why. Include the source file and relevant line numbers if known.
+
+**What's needed:** Concrete description of what a fix would look like — approach, trade-offs, and any pitfalls to avoid.
 ```
 
-## Screens
+Entries are separated by `---`. Place new entries under the right category heading or create a new category heading if none fits.
 
-All screens are fully implemented (no remaining placeholders).
+**Example — the firmware repo uses this exact format:**
 
-### Connection / Scanning
-| Screen | Purpose |
-|---|---|
-| `scanner_screen.dart` | BLE device scan and connect — main entry point |
-| `tcp_screen.dart` | Connect to a MeshCore device over TCP/IP |
-| `usb_screen.dart` | Connect to a MeshCore device over USB serial |
-| `discovery_screen.dart` | Browse all discovered (non-contact) mesh nodes |
-| `chrome_required_screen.dart` | Web gate for non-Chrome browsers (BLE unavailable) |
+```
+## Terminal
 
-### Chat / Messaging
-| Screen | Purpose |
-|---|---|
-| `chat_screen.dart` | Direct (private) messaging with a contact |
-| `channel_chat_screen.dart` | Group messaging inside a named channel |
-| `channels_screen.dart` | List and manage channels (add/edit/delete) |
-| `channel_message_path_screen.dart` | Hop-by-hop route a channel message took, with map overlay |
+### Undocumented commands
+The built-in serial/diagnostics terminal exposes several internal commands but there is no documentation on what is available or what each command does. Users have to read the source code to discover features.
 
-### Contacts / Neighbors
-| Screen | Purpose |
-|---|---|
-| `contacts_screen.dart` | Full contacts list with previews and management |
-| `neighbors_screen.dart` | Nodes directly heard by the connected radio (one-hop) |
-
-### Repeater Management
-| Screen | Purpose |
-|---|---|
-| `repeater_hub_screen.dart` | Top-level repeater hub; navigates to sub-screens |
-| `repeater_status_screen.dart` | Live status of a managed repeater node |
-| `repeater_cli_screen.dart` | Raw command-line interface to a repeater |
-| `repeater_settings_screen.dart` | Full radio/node settings editor for a repeater |
-
-### Map / Location
-| Screen | Purpose |
-|---|---|
-| `map_screen.dart` | Main map view of contacts/nodes with live GPS positions |
-| `line_of_sight_map_screen.dart` | Terrain LOS analysis between configurable endpoints |
-| `path_trace_map.dart` | Animates the hop path a direct message traveled |
-| `map_cache_screen.dart` | Download/clear offline map tile cache |
-| `community_qr_scanner_screen.dart` | Scan QR to join a mesh community/channel |
-
-### Settings / Debug / Diagnostics
-| Screen | Purpose |
-|---|---|
-| `settings_screen.dart` | Connected device settings: radio params, identity, GPS |
-| `app_settings_screen.dart` | App preferences: theme, units, map source, notifications |
-| `app_debug_log_screen.dart` | In-app log viewer (app-layer messages) |
-| `ble_debug_log_screen.dart` | In-app log viewer (raw BLE frame traffic) |
-| `companion_radio_stats_screen.dart` | RF stats (RSSI, SNR, packet counts) for paired radio |
-| `telemetry_screen.dart` | Battery / sensor / environmental telemetry for a contact |
-
-## Architecture
-
-### State Management
-
-`Provider` with `ChangeNotifier`. `main.dart` wires a `MultiProvider` with the following:
-
-| Provider | Role |
-|---|---|
-| `MeshCoreConnector` | Active transport (BLE/TCP/USB), connection state, frame I/O |
-| `MessageRetryService` | ACK tracking and retry scheduling with backoff |
-| `PathHistoryService` | Per-contact routing history (LRU cache, 50 contacts) |
-| `AppSettingsService` | App preferences (theme, units, locale, notifications) |
-| `BleDebugLogService` | Raw BLE frame log buffer |
-| `AppDebugLogService` | Structured app log buffer |
-| `ChatTextScaleService` | Pinch-to-zoom text scale for chat screens |
-| `TranslationService` | On-device LLM translation (llamadart) |
-| `UiViewStateService` | Contacts/channels sort/filter/search state |
-| `TimeoutPredictionService` | ML linear regression for ACK timeout prediction |
-| `StorageService` | Path history + delivery observation persistence |
-| `MapTileCacheService` | OSM tile pre-cache |
-
-Screens consume these via `Consumer<T>` (or `context.watch<T>()` / `context.read<T>()`) for reactive UI.
-
-### Storage / Persistence
-
-All stores in `lib/storage/` use `PrefsManager` (a `SharedPreferences` singleton initialized in `main()`). Most stores **scope keys by the first 10 hex chars of the connected device's public key**, so per-radio data is isolated.
-
-| Store | Persists |
-|---|---|
-| `message_store`, `channel_message_store` | Direct + channel messages |
-| `contact_store`, `contact_discovery_store` | Known + discovered contacts |
-| `channel_store`, `channel_order_store`, `channel_settings_store` | Channels, display order, per-channel Smaz toggle |
-| `community_store` | Communities (32-byte shared secrets) |
-| `contact_group_store`, `contact_settings_store` | Groups, per-contact Smaz toggle |
-| `unread_store` | Per-contact unread counts (debounced writes) |
-
-GGUF translation models are stored as files (not SharedPreferences) via `translation_file_store`.
-
-### Theming
-- Material 3 design (`useMaterial3: true`)
-- System-based dark/light mode (`ThemeMode.system`)
-- Blue color scheme seed
-- `lib/theme/mesh_theme.dart` defines a warm-dark `MeshPalette` (phosphor-green accents) but is **not currently wired** in `main.dart` — available for a future redesign
-
-### Localization
-
-18 locales supported via Flutter's standard ARB pipeline (`lib/l10n/`): en, de, es, fr, it, pt, ru, uk, bg, hu, ja, ko, nl, pl, sk, sl, sv, zh. Language override comes from `AppSettingsService.settings.languageOverride`. Use the `context.l10n` extension (`lib/l10n/l10n.dart`) for translated strings; contact-type names live in `contact_localization.dart`.
-
-## Transports
-
-`MeshCoreConnector` unifies all three transports under one `ChangeNotifier`. There is **no shared base class** — selection is via the `MeshCoreTransportType { bluetooth, usb, tcp }` enum, and BLE/TCP/USB share the same connection-state enum, send/receive API, and frame protocol.
-
-### Connection State
-```dart
-enum MeshCoreConnectionState {
-  disconnected,
-  scanning,
-  connecting,
-  connected,
-  disconnecting,
-}
+**What's needed:** A `help` command that lists all available commands with a one-line description.
 ```
 
-### Frame I/O (all transports)
-- **Send**: `MeshCoreConnector.sendFrame(Uint8List data, {String? channelSendQueueId, bool expectsGenericAck})`
-- **Receive**: `Stream<Uint8List> get receivedFrames`
-- **Protocol constants** (`meshcore_protocol.dart`): `maxFrameSize = 172`, `maxTextPayloadBytes = 160`, `appProtocolVersion = 4`
+**Important:** Only add issues you have actually observed or can clearly demonstrate from reading the code. Do not add speculative bugs. The maintainer will verify your entry during PR review — if it does not hold up, the entry will be removed before merging.
 
-### BLE — Nordic UART Service (NUS)
-- **Service UUID**: `6e400001-b5a3-f393-e0a9-e50e24dcca9e`
-- **RX Characteristic** (write to device): `6e400002-b5a3-f393-e0a9-e50e24dcca9e`
-- **TX Characteristic** (notify from device): `6e400003-b5a3-f393-e0a9-e50e24dcca9e`
-- **Discovery**: scans for devices whose name starts with `MeshCore-`, `Whisper-`, `WisCore-`, `Seeed`, `Lilygo`, `HT-`, or `LowMesh_MC_` (filters on both `platformName` and `advertisementData.advName`)
-- **Linux**: `linux_ble_pairing_service.dart` falls back to `bluetoothctl` when BlueZ agent prompts fail
+### PR & Review Workflow
 
-### TCP
-- Manual host/port entry, persisted via `AppSettingsService` (`tcpServerAddress`, `tcpServerPort`)
-- UI hint: `192.168.40.10` / port `5000`
-- Disabled on web (`PlatformInfo.isWeb`)
-- API: `MeshCoreConnector.connectTcp(host: ..., port: ...)`
+**For reviewers (maintainer only beyond step 5):**
+1. List PRs: `gh pr list --repo hermes-gadget/SlopOS-client --state open`
+2. Check diff: `gh pr diff N`
+3. Analyze: `~/flutter/bin/flutter analyze` (zero warnings)
+4. Test: `~/flutter/bin/flutter test` (all pass)
+5. Run the [Code Audit Checklist](#code-audit-checklist) — check every applicable item
+6. Merge: `gh pr merge N --squash --delete-branch --repo hermes-gadget/SlopOS-client`
+7. If merge fails (conflicts): cherry-pick new commits only, or squash-merge locally
+8. If PR branch has stale commits: cherry-pick new commits onto dev, close PR
 
-### USB Serial (flserial)
-- Default baud rate: `115200`
-- Port enumeration: `MeshCoreConnector.listUsbPorts()`
-- COBS-framed packets via `usb_serial_frame_codec.dart`
-- macOS device-name resolution via `ioreg` (`utils/macos_usb_device_names.dart`)
-- API: `MeshCoreConnector.connectUsb(portName: ..., baudRate: 115200)`
+---
 
-## Dependencies
+## Code Audit Checklist
 
-App version: `8.0.0+11` — Dart SDK constraint: `^3.9.2`
+Before submitting a PR (or before merging someone else's), use this checklist to catch common failure modes in Flutter/Dart code. If you are an AI agent contributing code, run through this before pushing.
 
-**Connectivity**
+#### State Management & Provider
+- [ ] Providers are wired in `main.dart` `MultiProvider` — not created ad-hoc in widgets
+- [ ] `Consumer<T>` or `context.watch<T>()` used for reactive UI — not manual `addListener`
+- [ ] No `BuildContext` captured across async gaps — use `context.mounted` guard
+- [ ] `ChangeNotifier` dispose logic handles all subscriptions
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| flutter_blue_plus | ^2.1.0 | BLE scanning, connecting, and UART data transfer |
-| flutter_blue_plus_platform_interface | ^8.2.1 | Platform-interface layer required by flutter_blue_plus |
-| flserial | git (MeshEnvy fork) | USB serial transport for wired device connections (TODO: upstream pending) |
+#### BLE / Transport Protocol
+- [ ] Frame size respected — `maxFrameSize = 172` bytes from `meshcore_protocol.dart`
+- [ ] Byte 0 is the command/response/push code — correct code mapping used
+- [ ] Disconnection handled gracefully — auto-navigate back to scanner
+- [ ] Connection state transitions are valid (disconnected → scanning → connecting → connected)
+- [ ] No memory leak in frame streams — subscriptions disposed properly
 
-**State / Storage**
+#### UI / Widgets
+- [ ] `const` constructors used where possible (performance)
+- [ ] Material 3 widgets only — no Cupertino or custom widget frameworks
+- [ ] No hardcoded strings that should be in `l10n/` ARB files
+- [ ] `centerTitle: true` on AppBars
+- [ ] Handles disconnection without crash (auto-navigate to scanner)
+- [ ] `StatelessWidget + Consumer` pattern preferred over `StatefulWidget`
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| provider | ^6.1.5+1 | ChangeNotifier-based state management across screens |
-| shared_preferences | ^2.2.2 | Persistent key-value storage for user settings |
-| path_provider | ^2.1.5 | Locates platform-appropriate directories for file I/O |
+#### Storage & Persistence
+- [ ] Keys scoped by device public key prefix (10 hex chars) where per-radio data
+- [ ] `SharedPreferences` writes debounced for high-frequency operations (unread counts)
+- [ ] No blocking I/O on the UI thread
 
-**Crypto**
+#### Testing
+- [ ] Tests added or updated for every change
+- [ ] `flutter analyze` passes with zero warnings
+- [ ] `flutter test` passes (all tests)
+- [ ] New screens have basic widget tests
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| crypto | ^3.0.3 | SHA/HMAC hashing used in message authentication |
-| pointycastle | ^4.0.0 | AES encryption/decryption for channel and direct messages |
-| uuid | ^4.3.3 | Generates UUIDs for message and contact identity |
+#### Known Issue Detection
+- [ ] Does the diff reference any unfixed issue in `KNOWN_ISSUES.md`?
+- [ ] Does the PR add new entries to `KNOWN_ISSUES.md`? Verify each one is real by checking the source code. Remove any that are speculative.
+- [ ] Did testing reveal new edge cases worth documenting?
 
-**Maps & Location**
+---
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| flutter_map | ^8.2.2 | Interactive tile map for node positions and path traces |
-| latlong2 | ^0.9.1 | LatLng coordinate type used throughout map and GPS code |
-| gpx | ^2.3.0 | Export node paths as GPX track files |
+## Rejection Triggers
 
-**UI**
+| Trigger | Why |
+|---------|-----|
+| `flutter analyze` produces any warnings or errors | Analysis must be clean — zero warnings |
+| `flutter test` has any failures | Test suite must pass completely |
+| Premature abstractions (helpers created for single use) | Adds unnecessary complexity — wait until needed in 3+ places |
+| Hardcoded strings that belong in ARB localization files | Breaks i18n — all user-facing strings go in `lib/l10n/` |
+| Missing `const` on widgets that don't change | Missed performance optimisation |
+| `StatefulWidget` where `Consumer<T>` would work | Prefer `StatelessWidget + Provider` pattern |
+| `BuildContext` used across async gaps without `mounted` check | Crashes on disposed widget — use `context.mounted` guard |
+| Frame protocol violations (wrong byte 0, exceeding 172 bytes) | Breaks communication with connected device |
+| Feature flags or backward-compatibility shims for old protocol versions | Dead code path — protocol versions are not additive |
+| Commented-out code, dead code paths, or `// TODO:` without issue reference | Unmaintainable — each TODO needs a tracking issue |
+| Broad changes touching 100+ files without clear scope | Impossible to review — split into focused PRs |
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| material_symbols_icons | ^4.2906.0 | Extended Material Symbols icon set (line-of-sight, etc.) |
-| flutter_svg | ^2.0.10+1 | Renders SVG assets (custom icons such as LoS indicator) |
-| cached_network_image | ^3.4.1 | Caches map tile images downloaded over the network |
-| flutter_cache_manager | ^3.4.1 | Underlying cache manager used by cached_network_image |
-| flutter_linkify | ^6.0.0 | Auto-detects and makes URLs tappable in chat messages |
-| mobile_scanner | ^7.1.4 | QR/barcode scanning for contact and channel import |
-| qr_flutter | ^4.1.0 | Generates QR codes for sharing contacts and channels |
-| cupertino_icons | ^1.0.8 | iOS-style icon font (bundled for completeness) |
-| characters | ^1.4.0 | Unicode-aware string operations for message text handling |
+---
 
-**Notifications / Background**
+## Gotchas & Pitfalls
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| flutter_local_notifications | ^20.1.0 | Shows local push notifications for incoming messages |
-| flutter_foreground_task | ^9.2.0 | Keeps the app alive in background to maintain BLE/USB connection |
-
-**ML / AI**
-
-| Package | Version | Purpose |
-|---------|---------|---------|
-| ml_algo | ^16.0.0 | OLS regression used in `timeout_prediction_service.dart` to predict message ACK timeouts |
-| ml_dataframe | ^1.0.0 | DataFrame input format required by ml_algo |
-| llamadart | >=0.6.8 <0.7.0 | On-device LLM inference used in `translation_service.dart` for message translation |
-
-**Misc**
-
-| Package | Version | Purpose |
-|---------|---------|---------|
-| http | ^1.2.0 | Fetches tile URLs and any remote API calls |
-| url_launcher | ^6.3.0 | Opens URLs in the system browser from linkified chat text |
-| share_plus | ^12.0.1 | Shares files (e.g. exported GPX tracks) via the system share sheet |
-| package_info_plus | ^9.0.0 | Reads app version/build number displayed in settings |
-| web | ^1.1.1 | Web-platform APIs for USB serial and browser detection on Flutter Web |
-| intl | any | Internationalization and locale formatting (required by flutter_localizations) |
-| build_pipe | ^0.3.1 | CI/CD build pipeline configuration (web release builds with versioned assets) |
-
-## Platform Configuration
-
-### Android (`android/app/src/main/AndroidManifest.xml`)
-- `INTERNET` (map tiles, translation model downloads)
-- `BLUETOOTH`, `BLUETOOTH_ADMIN` (API ≤ 30)
-- `BLUETOOTH_SCAN` (with `neverForLocation`), `BLUETOOTH_CONNECT`, `BLUETOOTH_ADVERTISE` (API 31+)
-- `ACCESS_FINE_LOCATION`, `ACCESS_COARSE_LOCATION` (BLE scanning on API ≤ 30)
-- `POST_NOTIFICATIONS` (API 33+)
-- `FOREGROUND_SERVICE`, `FOREGROUND_SERVICE_CONNECTED_DEVICE` (background BLE/USB connection)
-- `WAKE_LOCK`
-- `CAMERA` (QR scanning, declared as optional feature)
-- USB host hardware feature (optional)
-
-`flutter_foreground_task` registers a `ForegroundService` with `foregroundServiceType="connectedDevice"` and `stopWithTask="false"`.
-
-**Build config (`android/app/build.gradle.kts`)**: `applicationId = com.meshcore.meshcore_open`, NDK `29.0.14206865`, Java 8 core-library desugaring (`desugar_jdk_libs:2.1.4`), release signing via `key.properties` (debug fallback).
-
-### iOS (`ios/Runner/Info.plist`)
-- `NSBluetoothAlwaysUsageDescription`, `NSBluetoothPeripheralUsageDescription`
-- `NSCameraUsageDescription` (QR scanning to join communities)
-- Background modes: `bluetooth-central`
-- `LSApplicationQueriesSchemes`: `http`, `https`
-
-### Web (`web/`)
-PWA scaffold present but boilerplate (`manifest.json` and `index.html` are unmodified Flutter defaults). BLE is unsupported in browsers; TCP and Web Serial USB may work in Chrome only. `ChromeRequiredScreen` gates non-Chrome web users. Versioned releases are produced via `build_pipe` (`?v=<pubspec version>` cache busting, no service worker).
-
-### Desktop
-`linux/`, `windows/`, and `macos/` directories are present as Flutter scaffolds. No app-specific native config has been added; BLE on desktop has not been validated.
-
-## Coding Conventions
-
-### Code Philosophy
-- **Minimal**: Only write code that is necessary. Avoid over-engineering.
-- **Organized**: Keep related code together. One responsibility per file.
-- **Maintainable**: Favor readability over cleverness. Simple is better.
-
-### Style
-- Use `StatelessWidget` with `Consumer` for state-dependent UI
-- Use `const` constructors where possible
-- Prefix private methods/fields with `_`
-- Center app bar titles (`centerTitle: true`)
-- **Material widgets only** - no Cupertino or custom widgets
-- Handle disconnection gracefully (auto-navigate back to scanner)
-
-### Avoid
-- Premature abstractions - don't create helpers until needed in 3+ places
-- Unnecessary comments - code should be self-explanatory
-- Feature flags or backwards-compatibility shims
-- Over-engineered error handling for impossible scenarios
-
-## Key Files
-
-| File | Purpose |
-|------|---------|
-| `lib/main.dart` | App configuration, MultiProvider setup, theme, locale, initial route |
-| `lib/connector/meshcore_connector.dart` | Unified BLE/TCP/USB transport state holder |
-| `lib/connector/meshcore_protocol.dart` | Frame size limits and protocol version |
-| `lib/connector/meshcore_uuids.dart` | NUS UUIDs and BLE scan name prefixes |
-| `lib/services/app_settings_service.dart` | App-wide settings (`AppSettings` JSON in SharedPreferences) |
-| `lib/services/storage_service.dart` | Path history + delivery observation persistence |
-| `lib/services/message_retry_service.dart` | ACK tracking + retry scheduling |
-| `lib/services/translation_service.dart` | On-device LLM translation (llamadart) |
-| `lib/storage/prefs_manager.dart` | SharedPreferences singleton initialized in `main()` |
-| `lib/screens/scanner_screen.dart` | Home screen — BLE scan and connect |
-| `pubspec.yaml` | Dependencies and project metadata (current version `8.0.0+11`) |
+| Gotcha | Details |
+|--------|---------|
+| Frame size | `maxFrameSize = 172` bytes — byte 0 is the command code, so 171 bytes max payload |
+| Device key scoping | Storage keys use first 10 hex chars of device pubkey — missing prefix = cross-device data leak |
+| BLE on web | Unsupported in non-Chrome browsers — use `ChromeRequiredScreen` |
+| USB on macOS | Device name resolution via `ioreg` in `macos_usb_device_names.dart` |
+| Reboot command | UI sends `sendCliCommand('reboot')` — the `cmdReboot` code exists but no frame builder is wired |
+| Companion radio format | `cmdSendTxtMsg` expects `[cmd][txt_type][attempt][timestamp x4][pub_key_prefix x6][text...]` — wrong format breaks compat |
+| Group text packets | Payload is `[channel_hash (1)][MAC (2)][encrypted data...]` — sender not in payload; derive from path bytes |
+| Identity hash | `PATH_HASH_SIZE` is 1 byte (pubkey prefix) — flooded packets append this as they traverse hops |
+| Foreground service | `flutter_foreground_task` keeps BLE alive in background — android manifest must match |
+| `intl` import | Required by `flutter_localizations` — don't remove from pubspec even if not directly imported |
