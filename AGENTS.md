@@ -65,6 +65,36 @@ When working on this codebase, follow this sequence:
 8. **Build the APK** — `flutter build apk` must succeed.
 9. **Commit and push** — conventional commit messages (`feat:`, `fix:`, `docs:`, etc.).
 
+### Bug Spotting
+
+If you find a bug while working that is not directly related to your PR, do not ignore it. Add it to `KNOWN_ISSUES.md` using the standard format below. This lets the project catch bugs faster — you found it, you document it, and a maintainer validates it during PR review.
+
+**Standard entry format — insert a new section in `KNOWN_ISSUES.md`:**
+
+```
+## Category Area (e.g. Chat, BLE, Settings)
+
+### Short specific title — one line describing the issue
+One or two paragraphs explaining what happens, under what conditions, and why. Include the source file and relevant line numbers if known.
+
+**What's needed:** Concrete description of what a fix would look like — approach, trade-offs, and any pitfalls to avoid.
+```
+
+Entries are separated by `---`. Place new entries under the right category heading or create a new category heading if none fits.
+
+**Example — the firmware repo uses this exact format:**
+
+```
+## Terminal
+
+### Undocumented commands
+The built-in serial/diagnostics terminal exposes several internal commands but there is no documentation on what is available or what each command does. Users have to read the source code to discover features.
+
+**What's needed:** A `help` command that lists all available commands with a one-line description.
+```
+
+**Important:** Only add issues you have actually observed or can clearly demonstrate from reading the code. Do not add speculative bugs. The maintainer will verify your entry during PR review — if it does not hold up, the entry will be removed before merging.
+
 ### PR & Review Workflow
 
 **For reviewers (maintainer only beyond step 5):**
@@ -117,6 +147,7 @@ Before submitting a PR (or before merging someone else's), use this checklist to
 
 #### Known Issue Detection
 - [ ] Does the diff reference any unfixed issue in `KNOWN_ISSUES.md`?
+- [ ] Does the PR add new entries to `KNOWN_ISSUES.md`? Verify each one is real by checking the source code. Remove any that are speculative.
 - [ ] Did testing reveal new edge cases worth documenting?
 
 ---
