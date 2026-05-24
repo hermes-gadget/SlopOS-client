@@ -57,6 +57,17 @@ information on good commit messages.
 `dart format .` and `flutter analyze`. The continuous development checks will
 fail if issues here are not addressed before hand.
 
+### Protected Files
+
+The following files require separate PRs and cannot be bundled with feature or bug fix PRs. Any PR touching these files will require CODEOWNER review and approval:
+
+- `AGENTS.md`, `CLAUDE.md` — AI agent context
+- `CONTRIBUTING.md` — contribution guidelines
+- `KNOWN_ISSUES.md` — known issues tracker
+- `.github/workflows/*` — CI/CD pipeline
+
+If you need to change one of these, open a dedicated PR with only that change. Do not bury protected file changes inside a larger feature PR — they will be rejected.
+
 ## AI-use
 
 Everyone loves some help, AI agents are a tool in many of our belts. The project
