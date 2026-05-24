@@ -123,17 +123,19 @@ Before submitting a PR (or before merging someone else's), use this checklist to
 
 ## Rejection Triggers
 
-- `flutter analyze` produces any warnings or errors
-- `flutter test` has any failures
-- Premature abstractions (helpers created for single use)
-- Hardcoded strings that belong in ARB localization files
-- Missing `const` on widgets that don't change
-- `StatefulWidget` where `Consumer<T>` would work
-- `BuildContext` used across async gaps without `mounted` check
-- Frame protocol violations (wrong byte 0, exceeding 172 bytes)
-- Feature flags or backward-compatibility shims for old protocol versions
-- Commented-out code, dead code paths, or `// TODO:` without issue reference
-- Broad changes touching 100+ files without clear scope
+| Trigger | Why |
+|---------|-----|
+| `flutter analyze` produces any warnings or errors | Analysis must be clean — zero warnings |
+| `flutter test` has any failures | Test suite must pass completely |
+| Premature abstractions (helpers created for single use) | Adds unnecessary complexity — wait until needed in 3+ places |
+| Hardcoded strings that belong in ARB localization files | Breaks i18n — all user-facing strings go in `lib/l10n/` |
+| Missing `const` on widgets that don't change | Missed performance optimisation |
+| `StatefulWidget` where `Consumer<T>` would work | Prefer `StatelessWidget + Provider` pattern |
+| `BuildContext` used across async gaps without `mounted` check | Crashes on disposed widget — use `context.mounted` guard |
+| Frame protocol violations (wrong byte 0, exceeding 172 bytes) | Breaks communication with connected device |
+| Feature flags or backward-compatibility shims for old protocol versions | Dead code path — protocol versions are not additive |
+| Commented-out code, dead code paths, or `// TODO:` without issue reference | Unmaintainable — each TODO needs a tracking issue |
+| Broad changes touching 100+ files without clear scope | Impossible to review — split into focused PRs |
 
 ---
 
