@@ -1,5 +1,8 @@
 # MeshCore Open - Flutter Client
 
+**See `AGENTS.md` for agent workflow, code review checklist, rejection triggers, and gotchas.**
+**`CLAUDE.md` is the architecture and protocol reference — read both before starting work.**
+
 Open-source Flutter client for MeshCore LoRa mesh networking devices. Connects to MeshCore-compatible radios over **BLE, TCP, or USB serial** and provides direct/channel chat, contact and channel management, on-map node tracking, repeater administration, and on-device message translation.
 
 ## Build Commands
