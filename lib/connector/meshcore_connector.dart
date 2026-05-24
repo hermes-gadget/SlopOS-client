@@ -3405,7 +3405,7 @@ class MeshCoreConnector extends ChangeNotifier {
 
   Future<void> rebootDevice() async {
     if (!isConnected) return;
-    await sendCliCommand('reboot');
+    await sendFrame(buildRebootFrame());
   }
 
   Future<void> setPrivacyMode(bool enabled) async {
