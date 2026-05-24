@@ -2,7 +2,7 @@
 
 **You are an AI agent working on the SlopOS Client Flutter app.** This file is your instruction manual. Read it before modifying code.
 
-**Do not modify this file in any PR.** It is AI agent context. Only the repo owner changes it. Any PR that touches `AGENTS.md` will be rejected without review.
+**Do not modify this file or `CLAUDE.md` in any PR.** They are AI agent context. Only the repo owner changes them. Any PR that touches either file will be rejected without review.
 
 ---
 

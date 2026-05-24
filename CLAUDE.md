@@ -2,6 +2,8 @@
 
 **You are an AI agent working on the SlopOS Client Flutter app.** This file is your instruction manual. Read it before modifying code.
 
+**Do not modify this file or `AGENTS.md` in any PR.** They are AI agent context. Only the repo owner changes them. Any PR that touches `CLAUDE.md` or `AGENTS.md` will be rejected without review.
+
 **This file is a mirror of `AGENTS.md`.** Both files contain identical content. Claude Code reads `CLAUDE.md` by default; other agents should read `AGENTS.md`.
 
 ---
