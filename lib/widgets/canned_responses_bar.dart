@@ -37,9 +37,7 @@ class CannedResponsesBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
       decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(
-            color: theme.dividerColor.withValues(alpha: 0.4),
-          ),
+          bottom: BorderSide(color: theme.dividerColor.withValues(alpha: 0.4)),
         ),
       ),
       child: Row(

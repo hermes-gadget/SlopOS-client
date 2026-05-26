@@ -1889,17 +1889,17 @@ class _ChatScreenState extends State<ChatScreen> {
                           (contact) => ListTile(
                             leading: const Icon(Icons.person),
                             title: Text(contact.name),
-                            subtitle: Text(contact.publicKeyHex.length > 8
-                                ? contact.publicKeyHex.substring(0, 8)
-                                : contact.publicKeyHex),
+                            subtitle: Text(
+                              contact.publicKeyHex.length > 8
+                                  ? contact.publicKeyHex.substring(0, 8)
+                                  : contact.publicKeyHex,
+                            ),
                             onTap: () {
                               Navigator.pop(sheetContext);
                               connector.sendMessage(contact, message.text);
                               showDismissibleSnackBar(
                                 context,
-                                content: Text(
-                                  context.l10n.chat_forwardSent,
-                                ),
+                                content: Text(context.l10n.chat_forwardSent),
                               );
                             },
                           ),
@@ -1938,9 +1938,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               );
                               showDismissibleSnackBar(
                                 context,
-                                content: Text(
-                                  context.l10n.chat_forwardSent,
-                                ),
+                                content: Text(context.l10n.chat_forwardSent),
                               );
                             },
                           ),

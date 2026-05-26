@@ -888,13 +888,17 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                 Navigator.pop(dialogContext);
                                 try {
                                   await connector.setChannel(
-                                      nextIndex, name, psk);
+                                    nextIndex,
+                                    name,
+                                    psk,
+                                  );
                                   if (context.mounted) {
                                     showDismissibleSnackBar(
                                       context,
                                       content: Text(
-                                        context.l10n
-                                            .channels_channelAdded(name),
+                                        context.l10n.channels_channelAdded(
+                                          name,
+                                        ),
                                       ),
                                     );
                                   }
@@ -902,8 +906,9 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                   if (context.mounted) {
                                     showDismissibleSnackBar(
                                       context,
-                                      content: Text(context
-                                          .l10n.settings_error('$e')),
+                                      content: Text(
+                                        context.l10n.settings_error('$e'),
+                                      ),
                                     );
                                   }
                                 }
@@ -934,7 +939,10 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                             Navigator.pop(dialogContext);
                             try {
                               await connector.setChannel(
-                                  nextIndex, 'Public', psk);
+                                nextIndex,
+                                'Public',
+                                psk,
+                              );
                               if (context.mounted) {
                                 showDismissibleSnackBar(
                                   context,
@@ -948,7 +956,8 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                 showDismissibleSnackBar(
                                   context,
                                   content: Text(
-                                      context.l10n.settings_error('$e')),
+                                    context.l10n.settings_error('$e'),
+                                  ),
                                 );
                               }
                             }
@@ -1144,8 +1153,9 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                   if (context.mounted) {
                                     showDismissibleSnackBar(
                                       context,
-                                      content: Text(context
-                                          .l10n.settings_error('$e')),
+                                      content: Text(
+                                        context.l10n.settings_error('$e'),
+                                      ),
                                     );
                                   }
                                 }
@@ -1273,8 +1283,7 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                       showDismissibleSnackBar(
                                         context,
                                         content: Text(
-                                          context.l10n
-                                              .community_created(
+                                          context.l10n.community_created(
                                             community.name,
                                           ),
                                         ),
@@ -1284,8 +1293,9 @@ class _ChannelsScreenState extends State<ChannelsScreen>
                                     if (context.mounted) {
                                       showDismissibleSnackBar(
                                         context,
-                                        content: Text(context
-                                            .l10n.settings_error('$e')),
+                                        content: Text(
+                                          context.l10n.settings_error('$e'),
+                                        ),
                                       );
                                     }
                                   }
@@ -1640,7 +1650,9 @@ class _ChannelsScreenState extends State<ChannelsScreen>
   }
 
   Future<void> _addPublicChannel(
-      BuildContext context, MeshCoreConnector connector) async {
+    BuildContext context,
+    MeshCoreConnector connector,
+  ) async {
     final psk = Channel.parsePskHex(Channel.publicChannelPsk);
     try {
       await connector.setChannel(0, 'Public', psk);

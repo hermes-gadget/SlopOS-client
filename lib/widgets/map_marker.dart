@@ -109,10 +109,7 @@ class NodeMarkerWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.transparent,
                 shape: BoxShape.rectangle,
-                border: Border.all(
-                  color: SlopOSPalette.alert,
-                  width: 2,
-                ),
+                border: Border.all(color: SlopOSPalette.alert, width: 2),
               ),
             ),
           // Main shape
@@ -206,8 +203,13 @@ class NodeShapePainter extends CustomPainter {
         canvas.drawCircle(center, radius, borderPaint);
 
       case NodeMarkerShape.square:
-        final r = RRect.fromLTRBR(inset, inset, w - inset, h - inset,
-            const Radius.circular(0));
+        final r = RRect.fromLTRBR(
+          inset,
+          inset,
+          w - inset,
+          h - inset,
+          const Radius.circular(0),
+        );
         canvas.drawRRect(r, paint);
         canvas.drawRRect(r, borderPaint);
 
@@ -226,7 +228,10 @@ class NodeShapePainter extends CustomPainter {
         final dx = (w - rw) / 2;
         final dy = (h - rh) / 2;
         final r = RRect.fromLTRBR(
-          dx + inset, dy + inset, dx + rw - inset, dy + rh - inset,
+          dx + inset,
+          dy + inset,
+          dx + rw - inset,
+          dy + rh - inset,
           const Radius.circular(0),
         );
         canvas.drawRRect(r, paint);
@@ -241,8 +246,13 @@ class NodeShapePainter extends CustomPainter {
         canvas.drawPath(path, borderPaint);
 
       case NodeMarkerShape.hollowSquare:
-        final r = RRect.fromLTRBR(inset, inset, w - inset, h - inset,
-            const Radius.circular(0));
+        final r = RRect.fromLTRBR(
+          inset,
+          inset,
+          w - inset,
+          h - inset,
+          const Radius.circular(0),
+        );
         canvas.drawRRect(r, borderPaint);
 
       case NodeMarkerShape.crosshair:
@@ -250,12 +260,18 @@ class NodeShapePainter extends CustomPainter {
         final barW = w * 0.25;
         final barH = h;
         final vBar = RRect.fromLTRBR(
-          (w - barW) / 2, 0, (w + barW) / 2, barH,
+          (w - barW) / 2,
+          0,
+          (w + barW) / 2,
+          barH,
           const Radius.circular(0),
         );
         // Horizontal bar
         final hBar = RRect.fromLTRBR(
-          0, (h - barW) / 2, w, (h + barW) / 2,
+          0,
+          (h - barW) / 2,
+          w,
+          (h + barW) / 2,
           const Radius.circular(0),
         );
         canvas.drawRRect(vBar, paint);

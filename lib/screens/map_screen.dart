@@ -78,6 +78,10 @@ class _MapScreenState extends State<MapScreen> {
   bool _showNodeLabels = true;
   List<_GuessedLocation> _cachedGuessedLocations = [];
   String _guessedLocationsCacheKey = '';
+  bool _isCachingTiles = false;
+  int _cacheCompleted = 0;
+  int _cacheTotal = 0;
+  int _cacheFailed = 0;
 
   @override
   void initState() {
@@ -198,6 +202,135 @@ class _MapScreenState extends State<MapScreen> {
               onPressed: () => _mapController.move(center, zoom),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _cacheVisibleArea(BuildContext context) async {
+    final camera = _mapController.camera;
+    final bounds = camera.visibleBounds;
+    final currentZoom = camera.zoom;
+    final minZoom = (currentZoom.floor() - 1).clamp(3, 18);
+    final maxZoom = (currentZoom.floor() + 1).clamp(3, 18);
+
+    final cacheService = context.read<MapTileCacheService>();
+    final estimated = cacheService.estimateTileCount(bounds, minZoom, maxZoom);
+
+    if (estimated == 0) {
+      showDismissibleSnackBar(
+        context,
+        content: Text(context.l10n.mapCache_noTilesToDownload),
+      );
+      return;
+    }
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(context.l10n.mapCache_downloadTilesTitle),
+        content: Text(context.l10n.mapCache_downloadTilesPrompt(estimated)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text(context.l10n.common_cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text(context.l10n.mapCache_downloadAction),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    final l10n = context.l10n;
+
+    setState(() {
+      _isCachingTiles = true;
+      _cacheTotal = estimated;
+      _cacheCompleted = 0;
+      _cacheFailed = 0;
+    });
+
+    final result = await cacheService.downloadRegion(
+      bounds: bounds,
+      minZoom: minZoom,
+      maxZoom: maxZoom,
+      onProgress: (progress) {
+        if (!mounted) return;
+        setState(() {
+          _cacheCompleted = progress.completed;
+          _cacheFailed = progress.failed;
+        });
+      },
+    );
+
+    if (!mounted) return;
+
+    setState(() {
+      _isCachingTiles = false;
+    });
+
+    if (!mounted) return;
+    final message = result.failed > 0
+        ? l10n.mapCache_cachedTilesWithFailed(result.downloaded, result.failed)
+        : l10n.mapCache_cachedTiles(result.downloaded);
+    showDismissibleSnackBar(context, content: Text(message));
+  }
+
+  Widget _buildCacheProgressOverlay() {
+    final progressValue = _cacheTotal == 0
+        ? 0.0
+        : (_cacheCompleted / _cacheTotal).clamp(0.0, 1.0);
+
+    return Positioned(
+      bottom: 16,
+      left: 16,
+      right: 16,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      context.l10n.mapCache_downloadTilesTitle,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Text(
+                    context.l10n.mapCache_downloadedTiles(
+                      _cacheCompleted,
+                      _cacheTotal,
+                    ),
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              LinearProgressIndicator(value: progressValue),
+              if (_cacheFailed > 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    context.l10n.mapCache_failedDownloads(_cacheFailed),
+                    style: TextStyle(color: Colors.orange[700], fontSize: 12),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -417,12 +550,15 @@ class _MapScreenState extends State<MapScreen> {
                 if (!_isBuildingPathTrace)
                   IconButton(
                     icon: const Icon(Icons.radar),
-                    onPressed: connector.selfLatitude != null &&
+                    onPressed:
+                        connector.selfLatitude != null &&
                             connector.selfLongitude != null
                         ? () => _startPath(
-                              LatLng(connector.selfLatitude!,
-                                  connector.selfLongitude!),
-                            )
+                            LatLng(
+                              connector.selfLatitude!,
+                              connector.selfLongitude!,
+                            ),
+                          )
                         : null,
                     tooltip: context.l10n.contacts_pathTrace,
                   ),
@@ -466,6 +602,12 @@ class _MapScreenState extends State<MapScreen> {
                       );
                     },
                     tooltip: context.l10n.map_lineOfSight,
+                  ),
+                if (!_isBuildingPathTrace && !_isCachingTiles)
+                  IconButton(
+                    icon: const Icon(Icons.download),
+                    onPressed: () => _cacheVisibleArea(context),
+                    tooltip: context.l10n.mapCache_cacheArea,
                   ),
                 PopupMenuButton(
                   itemBuilder: (context) => [
@@ -616,8 +758,7 @@ class _MapScreenState extends State<MapScreen> {
                               ignoring: true,
                               child: NodeMarkerWidget(
                                 isSelf: true,
-                                usePixelShapes:
-                                    settings.usePixelFonts,
+                                usePixelShapes: settings.usePixelFonts,
                               ),
                             ),
                           ),
@@ -652,6 +793,7 @@ class _MapScreenState extends State<MapScreen> {
                     hasPathSelector: _isBuildingPathTrace,
                   ),
                 if (_isBuildingPathTrace) _buildPathTraceOverlay(),
+                if (_isCachingTiles) _buildCacheProgressOverlay(),
               ],
             ),
             bottomNavigationBar: SafeArea(
@@ -1060,10 +1202,7 @@ class _MapScreenState extends State<MapScreen> {
                   usePixelShapes ? SlopOSRadii.none : 8,
                 ),
                 border: usePixelShapes
-                    ? Border.all(
-                        color: SlopOSPalette.signal,
-                        width: 2,
-                      )
+                    ? Border.all(color: SlopOSPalette.signal, width: 2)
                     : null,
               ),
               alignment: Alignment.center,

@@ -1565,10 +1565,10 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
         break;
     }
 
-    final timestampFormatted =
-        DateFormat('yyyy-MM-dd HH:mm:ss').format(message.timestamp);
-    final pathHops =
-        message.pathLength?.toString() ?? l10n.chat_notAvailable;
+    final timestampFormatted = DateFormat(
+      'yyyy-MM-dd HH:mm:ss',
+    ).format(message.timestamp);
+    final pathHops = message.pathLength?.toString() ?? l10n.chat_notAvailable;
     final retries = message.repeatCount.toString();
 
     showDialog(
@@ -1663,10 +1663,7 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                         dense: true,
                         onTap: () {
                           Navigator.pop(dialogContext);
-                          connector.sendChannelMessage(
-                            channel,
-                            message.text,
-                          );
+                          connector.sendChannelMessage(channel, message.text);
                           showDismissibleSnackBar(
                             context,
                             content: Text(l10n.chat_forwardSent),
@@ -1675,8 +1672,7 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                       ),
                     ),
               ],
-              if (contacts.isEmpty &&
-                  channels.where((c) => !c.isEmpty).isEmpty)
+              if (contacts.isEmpty && channels.where((c) => !c.isEmpty).isEmpty)
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(l10n.chat_forwardSelectTarget),

@@ -90,10 +90,7 @@ class SlopOSFonts {
   /// Monospace for code, coordinates, technical labels.
   static const mono = 'JetBrains Mono';
 
-  static const List<String> pixelFallback = [
-    'Courier',
-    'monospace',
-  ];
+  static const List<String> pixelFallback = ['Courier', 'monospace'];
   static const List<String> bodyFallback = [
     'system-ui',
     '-apple-system',
@@ -189,7 +186,11 @@ class SlopOSTheme {
     return _build(scheme, Brightness.light, usePixelFonts: usePixelFonts);
   }
 
-  static ThemeData _build(ColorScheme scheme, Brightness brightness, {bool usePixelFonts = false}) {
+  static ThemeData _build(
+    ColorScheme scheme,
+    Brightness brightness, {
+    bool usePixelFonts = false,
+  }) {
     final headingFont = usePixelFonts ? SlopOSFonts.pixel : 'Inter';
     final headingFallback = usePixelFonts ? SlopOSFonts.pixelFallback : null;
     final bodyFont = usePixelFonts ? SlopOSFonts.body : 'Inter';
