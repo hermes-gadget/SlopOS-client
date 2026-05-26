@@ -229,9 +229,7 @@ class _MapScreenState extends State<MapScreen> {
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(context.l10n.mapCache_downloadTilesTitle),
-        content: Text(
-          context.l10n.mapCache_downloadTilesPrompt(estimated),
-        ),
+        content: Text(context.l10n.mapCache_downloadTilesPrompt(estimated)),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext, false),
@@ -277,8 +275,7 @@ class _MapScreenState extends State<MapScreen> {
 
     if (!mounted) return;
     final message = result.failed > 0
-        ? l10n.mapCache_cachedTilesWithFailed(
-            result.downloaded, result.failed)
+        ? l10n.mapCache_cachedTilesWithFailed(result.downloaded, result.failed)
         : l10n.mapCache_cachedTiles(result.downloaded);
     showDismissibleSnackBar(context, content: Text(message));
   }
@@ -315,7 +312,9 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   Text(
                     context.l10n.mapCache_downloadedTiles(
-                      _cacheCompleted, _cacheTotal),
+                      _cacheCompleted,
+                      _cacheTotal,
+                    ),
                     style: const TextStyle(fontSize: 12),
                   ),
                 ],
@@ -551,12 +550,15 @@ class _MapScreenState extends State<MapScreen> {
                 if (!_isBuildingPathTrace)
                   IconButton(
                     icon: const Icon(Icons.radar),
-                    onPressed: connector.selfLatitude != null &&
+                    onPressed:
+                        connector.selfLatitude != null &&
                             connector.selfLongitude != null
                         ? () => _startPath(
-                              LatLng(connector.selfLatitude!,
-                                  connector.selfLongitude!),
-                            )
+                            LatLng(
+                              connector.selfLatitude!,
+                              connector.selfLongitude!,
+                            ),
+                          )
                         : null,
                     tooltip: context.l10n.contacts_pathTrace,
                   ),
@@ -756,8 +758,7 @@ class _MapScreenState extends State<MapScreen> {
                               ignoring: true,
                               child: NodeMarkerWidget(
                                 isSelf: true,
-                                usePixelShapes:
-                                    settings.usePixelFonts,
+                                usePixelShapes: settings.usePixelFonts,
                               ),
                             ),
                           ),
@@ -1201,10 +1202,7 @@ class _MapScreenState extends State<MapScreen> {
                   usePixelShapes ? SlopOSRadii.none : 8,
                 ),
                 border: usePixelShapes
-                    ? Border.all(
-                        color: SlopOSPalette.signal,
-                        width: 2,
-                      )
+                    ? Border.all(color: SlopOSPalette.signal, width: 2)
                     : null,
               ),
               alignment: Alignment.center,

@@ -160,7 +160,8 @@ class UiViewStateService extends ChangeNotifier {
     );
   }
 
-  bool isPinned(String publicKeyHex) => _pinnedContactKeys.contains(publicKeyHex);
+  bool isPinned(String publicKeyHex) =>
+      _pinnedContactKeys.contains(publicKeyHex);
 
   void togglePinned(String publicKeyHex) {
     if (_pinnedContactKeys.contains(publicKeyHex)) {

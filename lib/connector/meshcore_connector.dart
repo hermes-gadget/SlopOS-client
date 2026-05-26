@@ -5916,10 +5916,7 @@ class MeshCoreConnector extends ChangeNotifier {
     );
   }
 
-  void _removePendingGenericAckFor(
-    Uint8List data,
-    String? channelSendQueueId,
-  ) {
+  void _removePendingGenericAckFor(Uint8List data, String? channelSendQueueId) {
     if (data.isEmpty) return;
     final code = data[0];
     _pendingGenericAckQueue.removeWhere(

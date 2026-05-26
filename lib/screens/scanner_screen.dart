@@ -165,36 +165,36 @@ class _ScannerScreenState extends State<ScannerScreen> {
                     label: Text(context.l10n.connectionChoiceTcpLabel),
                   ),
                 FloatingActionButton.extended(
-                    heroTag: 'scanner_ble_action',
-                    onPressed: isBluetoothOff
-                        ? null
-                        : () {
-                            if (isScanning) {
-                              connector.stopScan();
-                            } else {
-                              unawaited(
-                                connector.startScan().catchError((e) {
-                                  appLogger.warn(
-                                    'startScan error: $e',
-                                    tag: 'ScannerScreen',
-                                  );
-                                }),
-                              );
-                            }
-                          },
-                    icon: isScanning
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : const Icon(Icons.bluetooth_searching),
-                    label: Text(
-                      isScanning
-                          ? context.l10n.scanner_stop
-                          : context.l10n.scanner_scan,
-                    ),
+                  heroTag: 'scanner_ble_action',
+                  onPressed: isBluetoothOff
+                      ? null
+                      : () {
+                          if (isScanning) {
+                            connector.stopScan();
+                          } else {
+                            unawaited(
+                              connector.startScan().catchError((e) {
+                                appLogger.warn(
+                                  'startScan error: $e',
+                                  tag: 'ScannerScreen',
+                                );
+                              }),
+                            );
+                          }
+                        },
+                  icon: isScanning
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.bluetooth_searching),
+                  label: Text(
+                    isScanning
+                        ? context.l10n.scanner_stop
+                        : context.l10n.scanner_scan,
                   ),
+                ),
               ],
             ),
           );
@@ -244,10 +244,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               statusText,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: statusColor,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(color: statusColor, fontWeight: FontWeight.w500),
             ),
           ),
         ],

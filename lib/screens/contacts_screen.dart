@@ -291,8 +291,7 @@ class _ContactsScreenState extends State<ContactsScreen>
       final bytes = hex2Uint8List(hexString);
       final importContactFrame = buildImportContactFrame(bytes);
       _pendingOperations.add(ContactOperationType.import);
-      await connector.sendFrame(importContactFrame,
-          expectsGenericAck: true);
+      await connector.sendFrame(importContactFrame, expectsGenericAck: true);
     } catch (e) {
       if (mounted) {
         showDismissibleSnackBar(
@@ -327,9 +326,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.connect_without_contact),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_zeroHopAdvert,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.contacts_zeroHopAdvert,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => {
@@ -345,9 +346,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.cell_tower),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_floodAdvert,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.contacts_floodAdvert,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => {
@@ -363,9 +366,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.copy),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_copyAdvertToClipboard,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.contacts_copyAdvertToClipboard,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => _contactExport(Uint8List.fromList([])),
@@ -375,9 +380,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.paste),
                       const SizedBox(width: 8),
-                      Text(context.l10n.contacts_addContactFromClipboard,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.contacts_addContactFromClipboard,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => _contactImport(),
@@ -392,9 +399,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.logout, color: Colors.red),
                       const SizedBox(width: 8),
-                      Text(context.l10n.common_disconnect,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.common_disconnect,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => _disconnect(context, connector),
@@ -404,9 +413,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.person_add_rounded),
                       const SizedBox(width: 8),
-                      Text(context.l10n.discoveredContacts_Title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.discoveredContacts_Title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => Navigator.push(
@@ -421,9 +432,11 @@ class _ContactsScreenState extends State<ContactsScreen>
                     children: [
                       const Icon(Icons.settings),
                       const SizedBox(width: 8),
-                      Text(context.l10n.settings_title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,),
+                      Text(
+                        context.l10n.settings_title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                   onTap: () => Navigator.push(
@@ -835,8 +848,7 @@ class _ContactsScreenState extends State<ContactsScreen>
                         lastSeen: _resolveLastSeen(contact),
                         unreadCount: unreadCount,
                         isFavorite: contact.isFavorite,
-                        isPinned:
-                            viewState.isPinned(contact.publicKeyHex),
+                        isPinned: viewState.isPinned(contact.publicKeyHex),
                         onTap: () => _openChat(context, contact),
                         onLongPress: () =>
                             _showContactOptions(context, connector, contact),
@@ -1276,8 +1288,9 @@ class _ContactsScreenState extends State<ContactsScreen>
     final isRepeater = contact.type == advTypeRepeater;
     final isRoom = contact.type == advTypeRoom;
     final isFavorite = contact.isFavorite;
-    final isPinned =
-        context.read<UiViewStateService>().isPinned(contact.publicKeyHex);
+    final isPinned = context.read<UiViewStateService>().isPinned(
+      contact.publicKeyHex,
+    );
 
     showModalBottomSheet(
       context: context,
@@ -1427,9 +1440,9 @@ class _ContactsScreenState extends State<ContactsScreen>
               ),
               onTap: () {
                 Navigator.pop(sheetContext);
-                context
-                    .read<UiViewStateService>()
-                    .togglePinned(contact.publicKeyHex);
+                context.read<UiViewStateService>().togglePinned(
+                  contact.publicKeyHex,
+                );
               },
             ),
             ListTile(
@@ -1572,7 +1585,11 @@ class _ContactTile extends StatelessWidget {
                     if (isPinned)
                       Padding(
                         padding: const EdgeInsets.only(right: 2),
-                        child: Icon(Icons.push_pin, size: 14, color: Colors.red[400]),
+                        child: Icon(
+                          Icons.push_pin,
+                          size: 14,
+                          color: Colors.red[400],
+                        ),
                       ),
                     if (isFavorite)
                       Icon(Icons.star, size: 14, color: Colors.amber[700]),

@@ -86,12 +86,12 @@ class DeviceTile extends StatelessWidget {
     final tier = rssi >= -60
         ? 0
         : rssi >= -70
-            ? 1
-            : rssi >= -80
-                ? 2
-                : rssi >= -90
-                    ? 3
-                    : 4;
+        ? 1
+        : rssi >= -80
+        ? 2
+        : rssi >= -90
+        ? 3
+        : 4;
     final signalUi = signalUiForStrengthTier(tier);
 
     return Column(

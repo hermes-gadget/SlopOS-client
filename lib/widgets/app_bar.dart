@@ -66,10 +66,7 @@ class AppBarTitle extends StatelessWidget {
               const SizedBox(width: 6),
               BatteryIndicator(connector: connector),
             ],
-            if (trailing != null) ...[
-              const SizedBox(width: 4),
-              trailing!,
-            ],
+            if (trailing != null) ...[const SizedBox(width: 4), trailing!],
           ],
         );
       },

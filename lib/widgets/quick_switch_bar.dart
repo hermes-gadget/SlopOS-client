@@ -26,72 +26,69 @@ class QuickSwitchBar extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainerLow,
-          border: Border.all(
-            color: colorScheme.outlineVariant,
-            width: 2,
-          ),
+          border: Border.all(color: colorScheme.outlineVariant, width: 2),
         ),
         child: NavigationBarTheme(
-              data: NavigationBarThemeData(
-                backgroundColor: Colors.transparent,
-                surfaceTintColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-                indicatorColor: colorScheme.primaryContainer,
-                labelTextStyle: WidgetStateProperty.resolveWith((states) {
-                  final isSelected = states.contains(WidgetState.selected);
-                  return labelStyle.copyWith(
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    color: isSelected
-                        ? colorScheme.onPrimaryContainer
-                        : colorScheme.onSurfaceVariant,
-                  );
-                }),
-                iconTheme: WidgetStateProperty.resolveWith((states) {
-                  final isSelected = states.contains(WidgetState.selected);
-                  return IconThemeData(
-                    color: isSelected
-                        ? colorScheme.onPrimaryContainer
-                        : colorScheme.onSurfaceVariant,
-                  );
-                }),
+          data: NavigationBarThemeData(
+            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            shadowColor: Colors.transparent,
+            indicatorColor: colorScheme.primaryContainer,
+            labelTextStyle: WidgetStateProperty.resolveWith((states) {
+              final isSelected = states.contains(WidgetState.selected);
+              return labelStyle.copyWith(
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                color: isSelected
+                    ? colorScheme.onPrimaryContainer
+                    : colorScheme.onSurfaceVariant,
+              );
+            }),
+            iconTheme: WidgetStateProperty.resolveWith((states) {
+              final isSelected = states.contains(WidgetState.selected);
+              return IconThemeData(
+                color: isSelected
+                    ? colorScheme.onPrimaryContainer
+                    : colorScheme.onSurfaceVariant,
+              );
+            }),
+          ),
+          child: NavigationBar(
+            height: 60,
+            selectedIndex: selectedIndex,
+            onDestinationSelected: onDestinationSelected,
+            labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+            destinations: [
+              NavigationDestination(
+                icon: _buildIconWithBadge(
+                  const Icon(Icons.people_outline),
+                  contactsUnreadCount,
+                ),
+                selectedIcon: _buildIconWithBadge(
+                  const Icon(Icons.people),
+                  contactsUnreadCount,
+                ),
+                label: context.l10n.nav_contacts,
               ),
-              child: NavigationBar(
-                height: 60,
-                selectedIndex: selectedIndex,
-                onDestinationSelected: onDestinationSelected,
-                labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-                destinations: [
-                  NavigationDestination(
-                    icon: _buildIconWithBadge(
-                      const Icon(Icons.people_outline),
-                      contactsUnreadCount,
-                    ),
-                    selectedIcon: _buildIconWithBadge(
-                      const Icon(Icons.people),
-                      contactsUnreadCount,
-                    ),
-                    label: context.l10n.nav_contacts,
-                  ),
-                  NavigationDestination(
-                    icon: _buildIconWithBadge(
-                      const Icon(Icons.tag),
-                      channelsUnreadCount,
-                    ),
-                    selectedIcon: _buildIconWithBadge(
-                      const Icon(Icons.tag),
-                      channelsUnreadCount,
-                    ),
-                    label: context.l10n.nav_channels,
-                  ),
-                  NavigationDestination(
-                    icon: const Icon(Icons.map_outlined),
-                    selectedIcon: const Icon(Icons.map),
-                    label: context.l10n.nav_map,
-                  ),
-                ],
+              NavigationDestination(
+                icon: _buildIconWithBadge(
+                  const Icon(Icons.tag),
+                  channelsUnreadCount,
+                ),
+                selectedIcon: _buildIconWithBadge(
+                  const Icon(Icons.tag),
+                  channelsUnreadCount,
+                ),
+                label: context.l10n.nav_channels,
               ),
-            ),
+              NavigationDestination(
+                icon: const Icon(Icons.map_outlined),
+                selectedIcon: const Icon(Icons.map),
+                label: context.l10n.nav_map,
+              ),
+            ],
+          ),
         ),
+      ),
     );
   }
 

@@ -706,7 +706,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _syncTime(
-      BuildContext context, MeshCoreConnector connector) async {
+    BuildContext context,
+    MeshCoreConnector connector,
+  ) async {
     final l10n = context.l10n;
     try {
       await connector.syncTime();
