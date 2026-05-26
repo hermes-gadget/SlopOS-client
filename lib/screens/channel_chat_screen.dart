@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math' as math;
 
@@ -1391,6 +1392,15 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
   }
 
   void _showMessageActions(ChannelMessage message) {
+    final translationService = context.read<TranslationService>();
+    final canTranslateMessage =
+        translationService.canTranslateIncoming(
+          text: message.text,
+          isCli: false,
+          isOutgoing: message.isOutgoing,
+        ) &&
+        (message.translatedText?.trim().isEmpty ?? true);
+
     showModalBottomSheet(
       context: context,
       builder: (sheetContext) => SafeArea(
@@ -1448,6 +1458,21 @@ class _ChannelChatScreenState extends State<ChannelChatScreen> {
                 _showForwardDialog(message);
               },
             ),
+            if (canTranslateMessage)
+              ListTile(
+                leading: const Icon(Icons.translate),
+                title: Text(context.l10n.translation_translateMessage),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  unawaited(
+                    context.read<MeshCoreConnector>().translateChannelMessage(
+                      widget.channel.index,
+                      message,
+                      manualTranslation: true,
+                    ),
+                  );
+                },
+              ),
             if (!message.isOutgoing)
               ListTile(
                 leading: const Icon(Icons.mark_chat_unread_outlined),
